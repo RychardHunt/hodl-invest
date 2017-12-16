@@ -1,0 +1,24 @@
+{
+  "name": "hodl-invest",
+  "version": "0.0.1",
+  "description": "Cryptocurrency Robo Investor",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RychardHunt/hodl-invest.git"
+  },
+  "keywords": [
+    "Cryptocurrency",
+    "Robo",
+    "Investor"
+  ],
+  "author": "RychardHunt",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/RychardHunt/hodl-invest/issues"
+  },
+  "homepage": "https://github.com/RychardHunt/hodl-invest#readme"
+}
