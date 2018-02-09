@@ -33,4 +33,4 @@ Vincent Cheng:
 Winston Mills:    
 Pong Cheecharern:     
 
-[![Gitter chat](https://badges.gitter.im/MutualFund/Lobby)](https://gitter.im/MutualFund/Lobby)
+[![Gitter chat](https://badges.gitter.im/MutualFund/Lobby.png)](https://gitter.im/MutualFund/Lobby)
