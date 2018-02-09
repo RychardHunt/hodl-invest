@@ -2,7 +2,12 @@
 
 Description:  
 Hodl Invest is a Mutual Fund with Algorithmic Trading for Cryptocurrencies.    
-Investors would be able to create an account on the website and invest their money and in return get shares of the mutual fund. Investors would be able to check the current portfolio allocations amongst various fund manager approved cryptocurrencies, but would be unable to individually change the portfolio allocations. 
+Minimum Viable Product:      
+Investors would be able to create an account on the website and invest their money and in return get shares of the mutual fund. Investors would be able to check the current portfolio allocations amongst various fund manager approved cryptocurrencies, but would be unable to individually change the portfolio allocations. Trading would be done algorithmically based on fund manager approved parameters.          
+Add Ons:     
+Investors would be able to withdrawal from the mutual fund.     
+Investors would be able to choose amongst different portfolios.        
+Investors would be able to refer other investors and get referral fees.     
 
 
 User Stories:  
@@ -27,3 +32,5 @@ Auxiliary Team:
 Vincent Cheng:  
 Winston Mills:    
 Pong Cheecharern:     
+
+[![Gitter chat](https://badges.gitter.im/MutualFund/Lobby)](https://gitter.im/MutualFund/Lobby)
