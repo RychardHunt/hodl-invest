@@ -3,12 +3,10 @@
 Description:  
 
 Hodl Invest is a Mutual Fund with Algorithmic Trading for Cryptocurrencies.    
-
 Investors would be able to create an account on the website and invest their money and in return get shares of the mutual fund. Investors would be able to check the current portfolio allocations amongst various fund manager approved cryptocurrencies, but would be unable to individually change the portfolio allocations. 
 
 
 User Stories:  
-
 As a user, I want to create an account and be able to login with that account.  
 As a user, I want to be able to transfer funds to purchase shares of the mutual fund.  
 As a user, I want to be able to check the current portfolio allocations amongst various cryptocurrencies.  
@@ -18,7 +16,6 @@ As an administrator, I want to be able to change the trading parameters.
 
 
 Core Team:  
-
 Wei Cheng (Richard) Guo - Product Manager/Full Stack Developer:  
 Provide requirements and develop user login and portfolio allocations page. 
 Alex Wu - Full Stack Developer:  
