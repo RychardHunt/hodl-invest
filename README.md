@@ -1,7 +1,6 @@
 # hodl-invest
 
 Description:  
-
 Hodl Invest is a Mutual Fund with Algorithmic Trading for Cryptocurrencies.    
 Investors would be able to create an account on the website and invest their money and in return get shares of the mutual fund. Investors would be able to check the current portfolio allocations amongst various fund manager approved cryptocurrencies, but would be unable to individually change the portfolio allocations. 
 
