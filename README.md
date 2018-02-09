@@ -25,4 +25,5 @@ Develop trading parameters and interfacing with various cryptocurrency exchanges
 
 Auxiliary Team:  
 Vincent Cheng:  
-Winston Mills:  
+Winston Mills:    
+Pong Cheecharern:     
