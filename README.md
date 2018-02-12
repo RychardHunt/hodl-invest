@@ -19,6 +19,12 @@ As an administrator, I want to interface with various cryptocurrency exchanges.
 As an administrator, I want to be able to change the trading parameters.  
 
 
+2/12/16 5-6PM Meeting Notes:  
+Discuss general scope of the project.   
+Wireframed the design of the project.   
+Decided on foundamental steps to take regarding the project.  
+
+
 Core Team:  
 Wei Cheng (Richard) Guo - Product Manager/Full Stack Developer:  
 Provide requirements and develop user login and portfolio allocations page.  
