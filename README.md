@@ -21,7 +21,7 @@ As an administrator, I want to be able to change the trading parameters.
 
 Core Team:  
 Wei Cheng (Richard) Guo - Product Manager/Full Stack Developer:  
-Provide requirements and develop user login and portfolio allocations page.  
+Provide requirements and develop landing, user login, and portfolio allocations page.  
 Alex Wu - Full Stack Developer:  
 Develop and maintain databases and security for sensitive user information.  
 Kenny Zhao - Full Stack Developer:  
