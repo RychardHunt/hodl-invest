@@ -19,18 +19,4 @@ As an administrator, I want to interface with various cryptocurrency exchanges.
 As an administrator, I want to be able to change the trading parameters.  
 
 
-Core Team:  
-Wei Cheng (Richard) Guo - Product Manager/Full Stack Developer:  
-Provide requirements and develop user login and portfolio allocations page.  
-Alex Wu - Full Stack Developer:  
-Develop and maintain databases and security for sensitive user information.  
-Kenny Zhao - Full Stack Developer:  
-Develop trading parameters and interfacing with various cryptocurrency exchanges. 
-
-
-Auxiliary Team:  
-Vincent Cheng:  
-Winston Mills:    
-Pong Cheecharern:     
-
 [![Gitter chat](https://badges.gitter.im/MutualFund/Lobby.png)](https://gitter.im/MutualFund/Lobby)
