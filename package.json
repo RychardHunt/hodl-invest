@@ -1,7 +1,7 @@
 {
   "name": "hodl-invest",
-  "version": "0.0.1",
-  "description": "Cryptocurrency Robo Investor",
+  "version": "0.1.0",
+  "description": "Mutual Fund with Algorithmic Trading for Cryptocurrencies",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,13 +12,21 @@
   },
   "keywords": [
     "Cryptocurrency",
-    "Robo",
-    "Investor"
+    "Mutual Fund",
+    "Invest"
   ],
   "author": "RychardHunt",
   "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/RychardHunt/hodl-invest/issues"
   },
-  "homepage": "https://github.com/RychardHunt/hodl-invest#readme"
+  "homepage": "https://github.com/RychardHunt/hodl-invest#readme",
+  "devDependencies": {
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "serve": "^6.4.9",
+    "webpack": "^3.11.0"
+  },
+  "dependencies": {}
 }
