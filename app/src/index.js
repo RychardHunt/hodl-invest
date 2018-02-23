@@ -8,5 +8,5 @@ link.href = favicon;
 document.head.appendChild(link);
 
 let title = document.createElement('h1');
-title.innerText = 'Hello Wepack';
+title.innerText = '';
 document.body.appendChild(title);
