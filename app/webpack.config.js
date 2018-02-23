@@ -6,7 +6,7 @@ const dashboardPlugin   = require('webpack-dashboard/plugin');
 const autoprefixer      = require('autoprefixer'); 
 
 const PATHS = {
-  app: path.join(__dirname, 'src'),
+  app: path.join(__dirname, 'src/index.js'),
   images:path.join(__dirname,'src/assets/'),
   build: path.join(__dirname, 'dist')
 };
