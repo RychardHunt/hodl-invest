@@ -8,5 +8,6 @@ link.href = favicon;
 document.head.appendChild(link);
 
 let title = document.createElement('h1');
-title.innerText = 'Welcome to Hodl Invest';
+
+title.innerText = '';
 document.body.appendChild(title);
