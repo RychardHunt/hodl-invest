@@ -18,5 +18,6 @@ As an administrator, I want to store sensitive user account information.
 As an administrator, I want to interface with various cryptocurrency exchanges.  
 As an administrator, I want to be able to change the trading parameters.  
 
+Prototype: https://youtu.be/SiF86jth5s8
 
 [![Gitter chat](https://badges.gitter.im/MutualFund/Lobby.png)](https://gitter.im/MutualFund/Lobby)
