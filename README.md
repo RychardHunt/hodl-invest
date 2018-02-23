@@ -20,4 +20,14 @@ As an administrator, I want to be able to change the trading parameters.
 
 Prototype: https://youtu.be/SiF86jth5s8
 
+
+Follow below for instruction to run prototype in Terminal and localhost.
+
+1) Clone the repo "git clone https://github.com/RychardHunt/hodl-invest.git"
+2) Go to "hodl-invest" and then "non React Native Prototype"
+3) In terminal, type "npm install"
+4) "npm start"
+5) Open any web broswer and enter: "localhost:8080"
+
+
 [![Gitter chat](https://badges.gitter.im/MutualFund/Lobby.png)](https://gitter.im/MutualFund/Lobby)
