@@ -15,6 +15,7 @@ public class TestUserDatabase implements UserDatabase {
 
     public TestUserDatabase() {
         this.database = new HashMap<>();
+        insertUser("zoro", new User("zoro", "kenny", "email@email.com", 1000));
     }
 
     @Override
