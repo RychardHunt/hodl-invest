@@ -43,7 +43,6 @@ public class TestUserDatabase implements UserDatabase {
     @Override
     public int deleteUserByName(String username) {
         database.remove(username);
-        
         return 1;
     }
 }
