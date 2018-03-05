@@ -19,6 +19,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    @CrossOrigin()
     @RequestMapping(
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
@@ -27,6 +28,7 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @CrossOrigin()
     @RequestMapping(
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE,
