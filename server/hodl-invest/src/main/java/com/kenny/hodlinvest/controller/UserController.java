@@ -4,9 +4,7 @@ import com.kenny.hodlinvest.model.User;
 import com.kenny.hodlinvest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +24,31 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public List<User> getAllUsers(){
-        return userService.getAlllUsers();
+        return userService.getAllUsers();
+    }
+
+    @RequestMapping(
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            path = "{username}"
+    )
+    public User getUserByName(@PathVariable("username") String username){
+        return userService.getUserByName(username);
+    }
+
+    @RequestMapping(
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public void addNewUser(@RequestBody User user){
+        userService.addUser(user.getUsername(), user);
+    }
+
+    @RequestMapping(
+            method = RequestMethod.DELETE,
+            path = "{username}"
+    )
+    public void deleteUserByName(@PathVariable("username") String username){
+        userService.deleteUserByName(username);
     }
 }

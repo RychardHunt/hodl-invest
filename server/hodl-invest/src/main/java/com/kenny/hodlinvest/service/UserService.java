@@ -31,7 +31,7 @@ public class UserService {
         return database.selectUserByName(username);
     }
 
-    public List<User> getAlllUsers(){
+    public List<User> getAllUsers(){
         return database.selectAllUsers();
     }
 
