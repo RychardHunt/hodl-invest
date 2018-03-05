@@ -34,3 +34,19 @@ Kenny: Create user objects to keep track of user information.
 Alex: Create transaction history and initiate Cryptocurrency Charts Page.
 Rych: Update landing page and initiate Cryptocurrency Charts Page.
 
+_____________________________________________________________________________    
+    
+Meeting date and time: 03/05/2018 5:00pm - 6:00pm
+Summary: We've discussed our general progress in this project, especially after our main project idea change. We decided to commit this new idea and meet up outside of our assigned meeting time to speed up our progress. Due to the recent change of direction for the project, we decided to open source the project after the alpha release in other to gather interests and development support from the community and to educate the general public on cryptocurrencies. We also restructured our codebase into two separate directories for the server side and client.
+
+
+Accomplishments from last week: 
+Kenny: Created user endpoints so that front end can make restful calls to access user information.
+Alex: Created transaction history and initiated Cryptocurrency Charts Page.
+Rych: Updated landing page and initiated Cryptocurrency Charts Page.
+
+Task assigned for next week: 
+Kenny: Create transaction endpoints for api calls
+Alex: Polish and update transaction history.
+Rych: Update landing page front end and update charts page.
+
