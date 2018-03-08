@@ -1,11 +1,9 @@
 package com.kenny.hodlinvest.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
 
 import java.util.Objects;
 
-@Data
 public class User {
     private final String username;
     private final String name;
@@ -13,8 +11,8 @@ public class User {
 
 
     private double playMoney;
-//  private List<Cryptocurrency> coins;
-//  private List<Transactions> history;
+//  private List<Cryptocoin> coins;
+//  private List<Transaction> history;
 
     public User(
             @JsonProperty("username") String username,
