@@ -1,5 +1,7 @@
 package com.kenny.hodlinvest.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDateTime;
 
 public class Transaction {
@@ -7,7 +9,10 @@ public class Transaction {
     private double price;
     private LocalDateTime localDateTime;
 
-    public Transaction(Cryptocoin cryptocoin, double price, LocalDateTime localDateTime) {
+    public Transaction(
+            @JsonProperty Cryptocoin cryptocoin,
+            @JsonProperty double price,
+            LocalDateTime localDateTime) {
         this.cryptocoin = cryptocoin;
         this.price = price;
         this.localDateTime = localDateTime;

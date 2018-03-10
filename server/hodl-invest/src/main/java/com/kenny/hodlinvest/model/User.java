@@ -2,15 +2,20 @@ package com.kenny.hodlinvest.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
+@Entity
 public class User {
+    @Id
     private final String username;
     private final String name;
     private final String email;
-
-
+    @NotNull
     private double playMoney;
+
 //  private List<Cryptocoin> coins;
 //  private List<Transaction> history;
 
