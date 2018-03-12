@@ -54,4 +54,15 @@ public class UserService {
     public boolean userExists(String username){
         return (getUserByName(username) != null);
     }
+
+    public int updateUserPlayMoney(String username, double amount){
+        if(!userExists(username)) {
+            return 0;
+        }
+
+        User user = getUserByName(username);
+        user.setPlayMoney(amount);
+        updateUserByName(username, user);
+        return 1;
+    }
 }

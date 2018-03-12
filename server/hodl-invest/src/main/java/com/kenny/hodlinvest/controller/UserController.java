@@ -19,6 +19,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    @CrossOrigin()
     @RequestMapping(
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
@@ -27,12 +28,13 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @CrossOrigin()
     @RequestMapping(
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE,
             path = "{username}"
     )
-    public User getUserByName(@PathVariable("username") String username){
+    public User getUserByName(@PathVariable String username){
         return userService.getUserByName(username);
     }
 
@@ -48,7 +50,15 @@ public class UserController {
             method = RequestMethod.DELETE,
             path = "{username}"
     )
-    public void deleteUserByName(@PathVariable("username") String username){
+    public void deleteUserByName(@PathVariable String username){
         userService.deleteUserByName(username);
+    }
+
+    @RequestMapping(
+            method = RequestMethod.POST,
+            path = "{username}/transactions/{amount}"
+    )
+    public void updateUserPlayMoney(@PathVariable String username, @PathVariable double amount){
+        userService.updateUserPlayMoney(username, amount);
     }
 }

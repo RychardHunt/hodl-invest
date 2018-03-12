@@ -18,7 +18,6 @@ public class TestUserDatabase implements UserDatabase {
         insertUser("zoro", new User("zoro", "kenny", "email@email.com", 1000));
         insertUser("ninja", new User("ninja", "tyler", "lol@email.com", 2000));
         insertUser("summit1g", new User("summit11g", "josh", "summit@email.com", 1000));
-
     }
 
     @Override
