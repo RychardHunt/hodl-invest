@@ -60,10 +60,10 @@ Summary: To implement our backend and handle requests from our front end, we hav
 Accomplishments from last week: 
 Kenny: Created transactions and cryptocoin endpoints so that front end can make restful calls to access user information as well as deployed the backend server to heroku. Also created in memory databases as a temporary solution.
 Alex: Polish and update transaction history in MERN, however, we're using Java as our backend.
-Rych: Updated landing page and initiated Cryptocurrency Charts Page.
+Rych: Update landing page front end and update charts page.
 
 Task assigned for next week 3/26/18: 
 Kenny: Create error checking and checking for data received from posts requests to backend server.
-Alex: Polish and update transaction history.
-Rych: Update landing page front end and update charts page.
+Alex: Implement transaction history and learning about post PostgreSQL and HeroKu for backend use.
+Rych: Complete the bulk of the Front End.
 
