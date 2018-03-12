@@ -50,3 +50,20 @@ Kenny: Create transaction endpoints for api calls
 Alex: Polish and update transaction history.
 Rych: Update landing page front end and update charts page.
 
+
+_____________________________________________________________________________    
+    
+Meeting date and time: 03/12/2018 5:00pm - 6:00pm
+Summary: To implement our backend and handle requests from our front end, we have java with spring boot to support api calls. THe backend server is deployed to heroku and calls to the endpoints serve json reponses. Our deadline is extended by the voting in today's class, hence, our deadline is extended to after Spring Break. By next week, we mean next week not including Spring Break, so everything will be due for review 3/26/18.
+
+
+Accomplishments from last week: 
+Kenny: Created transactions and cryptocoin endpoints so that front end can make restful calls to access user information as well as deployed the backend server to heroku. Also created in memory databases as a temporary solution.
+Alex: Polish and update transaction history in MERN, however, we're using Java as our backend.
+Rych: Updated landing page and initiated Cryptocurrency Charts Page.
+
+Task assigned for next week 3/26/18: 
+Kenny: Create error checking and checking for data received from posts requests to backend server.
+Alex: Polish and update transaction history.
+Rych: Update landing page front end and update charts page.
+
