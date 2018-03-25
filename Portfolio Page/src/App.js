@@ -14,6 +14,23 @@ function Get(url){
 
 var json_obj = JSON.parse(Get(url));
 
+var timeArray = [];
+var priceArray = [];
+
+for (var time in json_obj) {
+  if (json_obj.hasOwnProperty(time)) {
+    var val = json_obj[time];
+    timeArray.push(val);
+  }
+}
+
+for (var open in json_obj) {
+  if (json_obj.hasOwnProperty(open)) {
+    var val = json_obj[open];
+    priceArray.push(val);
+  }
+}
+
 class App extends Component {
   constructor(){
     super();
@@ -26,20 +43,15 @@ class App extends Component {
     this.getChartData();
   }
 
-  // var datareq = new XMLHttpRequest();
-
   getChartData(){
     // Ajax calls here
     this.setState({
       chartData:{
-        labels: ['BTC', 'ETH', 'LTC', 'XLM', 'XRP', 'ARK'],
+        labels: timeArray,
         datasets:[
           {
-            label:'Percentage',
-            data:[
-              20,
-              20,
-            ],
+            label:'Price',
+            data:priceArray,
             backgroundColor:[
               'rgba(255, 99, 132, 0.6)',
               'rgba(54, 162, 235, 0.6)',
