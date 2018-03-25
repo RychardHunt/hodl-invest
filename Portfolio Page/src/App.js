@@ -14,22 +14,43 @@ function Get(url){
 
 var json_obj = JSON.parse(Get(url));
 
-var timeArray = [];
-var priceArray = [];
+var timesArr = [];
+var opensArr = [];
 
-for (var time in json_obj) {
-  if (json_obj.hasOwnProperty(time)) {
-    var val = json_obj[time];
-    timeArray.push(val);
-  }
+var data = json_obj.Data;
+
+for(var i = 0; i < data.length; i++) {
+    var obj = data[i];
+
+    timesArr.push(obj.time);
+    opensArr.push(obj.open);
 }
 
-for (var open in json_obj) {
-  if (json_obj.hasOwnProperty(open)) {
-    var val = json_obj[open];
-    priceArray.push(val);
-  }
-}
+// for(var i=0; i< json_obj.length;i++){
+//     timesArr.push(json_obj.data[i]['time']);
+//     opensArr.push(json_obj.data[i]['open']);
+// }
+
+console.log('these are the times:' + timesArr);
+console.log('here are the opens' + opensArr);
+
+//bugged implementation but gets values
+// var timeArray = [];
+// var priceArray = [];
+
+// for (var time in json_obj) {
+//   if (json_obj.hasOwnProperty(time)) {
+//     var val = json_obj[time];
+//     timeArray.push(val);
+//   }
+// }
+//
+// for (var open in json_obj) {
+//   if (json_obj.hasOwnProperty(open)) {
+//     var val = json_obj[open];
+//     priceArray.push(val);
+//   }
+// }
 
 class App extends Component {
   constructor(){
@@ -47,11 +68,11 @@ class App extends Component {
     // Ajax calls here
     this.setState({
       chartData:{
-        labels: timeArray,
+        labels: timesArr,
         datasets:[
           {
             label:'Price',
-            data:priceArray,
+            data:opensArr,
             backgroundColor:[
               'rgba(255, 99, 132, 0.6)',
               'rgba(54, 162, 235, 0.6)',
