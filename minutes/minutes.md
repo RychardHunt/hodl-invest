@@ -23,7 +23,6 @@ _____________________________________________________________________________
 Meeting date and time: 02/26/2018 5:00pm - 7:00pm
 Summary: General change of idea. We discussed and agreed to change our project idea into a mock cryptocurrency market where users will have play money and have the ability to invest it and see it go up or down depending on real cryptocurrency market. We changed the overall description of our new project in the README file.
 
-
 Accomplishments from last week: 
 Kenny: Accomplished backend logging into Facebook and/or Google.
 Alex: Accomplished sign in, landing page, and a page to see coin prices live in prototype.
@@ -38,7 +37,6 @@ _____________________________________________________________________________
     
 Meeting date and time: 03/05/2018 5:00pm - 6:00pm
 Summary: We've discussed our general progress in this project, especially after our main project idea change. We decided to commit this new idea and meet up outside of our assigned meeting time to speed up our progress. Due to the recent change of direction for the project, we decided to open source the project after the alpha release in other to gather interests and development support from the community and to educate the general public on cryptocurrencies. We also restructured our codebase into two separate directories for the server side and client.
-
 
 Accomplishments from last week: 
 Kenny: Created user endpoints so that front end can make restful calls to access user information.
@@ -56,7 +54,6 @@ _____________________________________________________________________________
 Meeting date and time: 03/12/2018 5:00pm - 6:00pm
 Summary: To implement our backend and handle requests from our front end, we have java with spring boot to support api calls. THe backend server is deployed to heroku and calls to the endpoints serve json reponses. Our deadline is extended by the voting in today's class, hence, our deadline is extended to after Spring Break. By next week, we mean next week not including Spring Break, so everything will be due for review 3/26/18.
 
-
 Accomplishments from last week: 
 Kenny: Created transactions and cryptocoin endpoints so that front end can make restful calls to access user information as well as deployed the backend server to heroku. Also created in memory databases as a temporary solution.
 Alex: Polish and update transaction history in MERN, however, we're using Java as our backend.
@@ -66,4 +63,19 @@ Task assigned for next week 3/26/18:
 Kenny: Create error checking and checking for data received from posts requests to backend server.
 Alex: Implement transaction history and learning about post PostgreSQL and HeroKu for backend use.
 Rych: Complete the bulk of the Front End.
+
+_____________________________________________________________________________    
+    
+Meeting date and time: 03/26/2018 5:00pm - 6:00pm
+Summary: We are working on to polish any implemenations we have yet to complete. These issues include front end, and backend (postgresql, PostgreSQL and HeroKu). To meet the alpha deadline, we also need to do a YouTube video for demonstration. Talked about what we need for the frontend UI and database. Overall, we are continuing to complete and perfect the product.
+
+Accomplishments from last week: 
+Kenny: Created new front end client and routed the directories. Refactored repository and cleaned it up. Added cryptocoin endpoint to keep track of crytocurrencies. 
+Alex: Created PostgreSQL with user information.
+Rych: Created Login/Signup/Forgot Password page frontend. Supervised the creation of price history charts frontend and backend from API.
+
+Task assigned for next week 3/26/18: 
+Kenny: Create login and register endpoints and update user endpoint.
+Alex: Integrate existing Java and PostgreSQL data structure, as well as HeroKu to ensure the everything is up online running.
+Rych: Hook up the Login/Signup/Forgot Password page to backend. Supervise the creation of buying/selling and history frontend and backend.
 
