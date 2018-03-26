@@ -21,7 +21,6 @@ var data = json_obj.Data;
 
 for(var i = 0; i < data.length; i++) {
     var obj = data[i];
-
     timesArr.push(obj.time);
     opensArr.push(obj.open);
 }
@@ -31,8 +30,8 @@ for(var i = 0; i < data.length; i++) {
 //     opensArr.push(json_obj.data[i]['open']);
 // }
 
-console.log('these are the times:' + timesArr);
-console.log('here are the opens' + opensArr);
+console.log('these are the times: ' + timesArr);
+console.log('here are the opens: ' + opensArr);
 
 //bugged implementation but gets values
 // var timeArray = [];
@@ -93,7 +92,7 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Your Hodl Invest Portfolio</h2>
+          <h2>BTC Historical Chart</h2>
         </div>
         <Chart chartData={this.state.chartData} location="" legendPosition="bottom"/>
       </div>
