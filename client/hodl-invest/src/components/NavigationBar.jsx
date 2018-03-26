@@ -20,6 +20,9 @@ export default class NavigationBar extends Component {
 							<NavItem eventKey={2} componentClass={Link} href="/login" to="/login">
 								Login
 							</NavItem>
+							<NavItem eventKey={3} componentClass={Link} href="/chart" to="/chart">
+								Chart
+							</NavItem>
 						</Nav>
 					</Navbar.Collapse>
 				</Navbar>
