@@ -1,6 +1,7 @@
 package com.kenny.hodlinvest.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.kenny.hodlinvest.util.Secure;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -27,7 +28,7 @@ public class User {
             @JsonProperty("email") String email,
             @JsonProperty("playMoney") double playMoney) {
         this.username = username;
-        this.passwordHash = password;
+        this.passwordHash = Secure.generateHash(password);
         this.name = name;
         this.email = email;
         this.playMoney = playMoney;
