@@ -11,8 +11,9 @@ import java.util.Objects;
 public class User {
     @Id
     private final String username;
-    private final String name;
-    private final String email;
+    private String passwordHash;
+    private String name;
+    private String email;
     @NotNull
     private double playMoney;
 
@@ -21,10 +22,12 @@ public class User {
 
     public User(
             @JsonProperty("username") String username,
+            @JsonProperty("passwordHash") String password,
             @JsonProperty("name") String name,
             @JsonProperty("email") String email,
             @JsonProperty("playMoney") double playMoney) {
         this.username = username;
+        this.passwordHash = password;
         this.name = name;
         this.email = email;
         this.playMoney = playMoney;
@@ -33,6 +36,8 @@ public class User {
     public String getUsername() {
         return username;
     }
+
+    public String getPasswordHash() {return passwordHash; }
 
     public String getName() {
         return name;
