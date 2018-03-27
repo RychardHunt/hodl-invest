@@ -2,6 +2,8 @@ package com.kenny.hodlinvest.controller;
 
 import com.kenny.hodlinvest.exception.UserException;
 import com.kenny.hodlinvest.exception.UserNotFoundException;
+import com.kenny.hodlinvest.model.Cryptocoin;
+import com.kenny.hodlinvest.model.Transaction;
 import com.kenny.hodlinvest.model.User;
 import com.kenny.hodlinvest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +43,6 @@ public class UserController {
             throw new UserNotFoundException("User does not exist");
 
             return userService.getUserByName(username);
-
     }
 
     @RequestMapping(
@@ -75,5 +76,31 @@ public class UserController {
             throw new UserNotFoundException("User does not exist");
 
         userService.updateUserPlayMoney(username, amount);
+    }
+
+    @RequestMapping(
+            method = RequestMethod.POST,
+            path = "{username}/transactions",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public void addTransaction(@RequestBody Cryptocoin cryptocoin, @PathVariable("username") String username){
+        if(!userService.userExists(username))
+            throw new UserNotFoundException("User does not exist");
+
+        System.out.println(cryptocoin.getTicker() + " price: " + cryptocoin.getPrice());
+        userService.addTransaction(username, cryptocoin.getTicker(), cryptocoin.getPrice());
+    }
+
+    @CrossOrigin()
+    @RequestMapping(
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            path = "{username}/transactions"
+    )
+    public List<Transaction> getUserTransactions(@PathVariable String username){
+        if(!userService.userExists(username))
+            throw new UserNotFoundException("User does not exist");
+
+        return userService.getUserTransactions(username);
     }
 }

@@ -2,6 +2,7 @@ package com.kenny.hodlinvest.service;
 
 import com.kenny.hodlinvest.database.TestUserDatabase;
 import com.kenny.hodlinvest.exception.UserNotFoundException;
+import com.kenny.hodlinvest.model.Transaction;
 import com.kenny.hodlinvest.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -48,10 +49,17 @@ public class UserService {
     }
 
     public int updateUserPlayMoney(String username, double amount){
-
         User user = getUserByName(username);
         user.setPlayMoney(amount);
         updateUserByName(username, user);
         return 1;
+    }
+
+    public int addTransaction(String username, String ticker, double price){
+        return database.updateTransactions(username, ticker, price);
+    }
+
+    public List<Transaction> getUserTransactions(String username){
+        return database.selectAllTransactions(username);
     }
 }
