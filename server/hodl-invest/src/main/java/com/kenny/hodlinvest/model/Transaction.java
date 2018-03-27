@@ -10,8 +10,8 @@ public class Transaction {
     private LocalDateTime localDateTime;
 
     public Transaction(
-            @JsonProperty Cryptocoin cryptocoin,
-            @JsonProperty double price,
+            @JsonProperty("cryptocoin") Cryptocoin cryptocoin,
+            @JsonProperty("price") double price,
             LocalDateTime localDateTime) {
         this.cryptocoin = cryptocoin;
         this.price = price;

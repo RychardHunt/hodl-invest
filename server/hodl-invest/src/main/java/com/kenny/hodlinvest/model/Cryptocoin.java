@@ -1,11 +1,21 @@
 package com.kenny.hodlinvest.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Cryptocoin {
+    @Id
     private String ticker;
     private double price;
     private double marketCap;
 
-    public Cryptocoin(String ticker, double price, double marketCap) {
+    public Cryptocoin(
+            @JsonProperty("ticker") String ticker,
+            @JsonProperty("price") double price,
+            @JsonProperty("marketCap") double marketCap) {
         this.ticker = ticker;
         this.price = price;
         this.marketCap = marketCap;
