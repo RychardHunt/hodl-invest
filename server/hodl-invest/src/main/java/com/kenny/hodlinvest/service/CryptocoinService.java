@@ -26,7 +26,7 @@ public class CryptocoinService {
     }
 
     public List<Cryptocoin> getAllCryptocoin(){
-        return database.selectAllCryptocoin();
+        return database.selectAllCryptocoins();
     }
 
     public int updateCryptocoin(String ticker, Cryptocoin cryptocoin){

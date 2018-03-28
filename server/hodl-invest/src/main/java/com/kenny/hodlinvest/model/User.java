@@ -1,38 +1,44 @@
 package com.kenny.hodlinvest.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.kenny.hodlinvest.util.Secure;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-@Entity
 public class User {
-    @Id
     private final String username;
-    private final String name;
-    private final String email;
-    @NotNull
+    private String passwordHash;
+    private String name;
+    private String email;
     private double playMoney;
 
-//  private List<Cryptocoin> coins;
-//  private List<Transaction> history;
+    private List<Transaction> transactions;
 
     public User(
             @JsonProperty("username") String username,
+            @JsonProperty("passwordHash") String password,
             @JsonProperty("name") String name,
             @JsonProperty("email") String email,
-            @JsonProperty("playMoney") double playMoney) {
+            @JsonProperty("playMoney") double playMoney,
+            @JsonProperty("transactions") List<Transaction> transactions) {
         this.username = username;
+        this.passwordHash = Secure.generateHash(password);
         this.name = name;
         this.email = email;
         this.playMoney = playMoney;
+        this.transactions = transactions;
     }
 
     public String getUsername() {
         return username;
     }
+
+    public String getPasswordHash() {return passwordHash; }
 
     public String getName() {
         return name;
@@ -50,6 +56,13 @@ public class User {
         this.playMoney = playMoney;
     }
 
+    public void addTransaction(Transaction transaction){
+        transactions.add(transaction);
+    }
+
+    public List<Transaction> getTransactions(){
+        return this.transactions;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
