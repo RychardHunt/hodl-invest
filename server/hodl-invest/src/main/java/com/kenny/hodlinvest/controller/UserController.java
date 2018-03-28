@@ -87,7 +87,7 @@ public class UserController {
         if(!userService.userExists(username))
             throw new UserNotFoundException("User does not exist");
 
-        System.out.println(cryptocoin.getTicker() + " price: " + cryptocoin.getPrice());
+        System.out.println("Added transaction: " + cryptocoin.getTicker() + " with price: " + cryptocoin.getPrice() + " to user: " + username);
         userService.addTransaction(username, cryptocoin.getTicker(), cryptocoin.getPrice());
     }
 

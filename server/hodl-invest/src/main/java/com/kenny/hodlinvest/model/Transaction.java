@@ -2,6 +2,8 @@ package com.kenny.hodlinvest.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 public class Transaction {
