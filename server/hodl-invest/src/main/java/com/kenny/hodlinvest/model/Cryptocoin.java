@@ -1,14 +1,21 @@
 package com.kenny.hodlinvest.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Cryptocoin {
+    @Id
     private String ticker;
     private double price;
-    private double marketCap;
 
-    public Cryptocoin(String ticker, double price, double marketCap) {
+    public Cryptocoin(
+            @JsonProperty("ticker") String ticker,
+            @JsonProperty("price") double price) {
         this.ticker = ticker;
         this.price = price;
-        this.marketCap = marketCap;
     }
 
     public String getTicker() {
@@ -27,20 +34,11 @@ public class Cryptocoin {
         this.price = price;
     }
 
-    public double getMarketCap() {
-        return marketCap;
-    }
-
-    public void setMarketCap(double marketCap) {
-        this.marketCap = marketCap;
-    }
-
     @Override
     public String toString() {
         return "Cryptocoin{" +
                 "ticker='" + ticker + '\'' +
                 ", price=" + price +
-                ", marketCap=" + marketCap +
                 '}';
     }
 }
