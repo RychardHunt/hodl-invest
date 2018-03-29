@@ -1,0 +1,25 @@
+.transaction-history {
+    width: 40%;
+    display: inline-block;
+    padding: 16px;
+}
+
+/*
+Source for table CSS:
+https://www.w3schools.com/html/tryit.asp?filename=tryhtml_table_intro
+*/
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
