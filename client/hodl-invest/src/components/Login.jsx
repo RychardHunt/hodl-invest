@@ -5,15 +5,39 @@ import './Login.css';
 const LoginPage = (props) => {
   const signupWasClickedCallback = (data) => {
     console.log(data);
-    alert('Signup callback, see log on the console to see the data.');
+    xhrt.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/", true);
+    xhrt.send(data);
+    console.log(xhrt.status);
+    alert('Signup callback, see log on the console to see the data. testing');
   };
   const loginWasClickedCallback = (data) => {
     console.log(data);
-    alert('Login callback, see log on the console to see the data.');
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/users/", false);
+    xhr.setRequestHeader("content-type", "application/json");
+    xhr.setRequestHeader("cache-control", "no-cache");
+
+    xhr.send();
+    var userstring=xhr.responseText;
+    var JSONTWO= JSON.parse(userstring);
+    alert('Login callback, see log on the console to see the data. testing');
   };
   const recoverPasswordWasClickedCallback = (data) => {
     console.log(data);
-    alert('Recover password callback, see log on the console to see the data.');
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/users/", false);
+    xhr.setRequestHeader("content-type", "application/json");
+    xhr.setRequestHeader("cache-control", "no-cache");
+
+    xhr.send();
+    var correctindex=-1;
+    var userstring=xhr.responseText;
+    var JSONTWO= JSON.parse(userstring);
+    for(i=0;i<JSONTWO.length;i++){
+    if(JSONTWO[i].username==data.username){
+    correctindex=i;}}
+    }
+    alert('Recover password callback, see log on the console to see the data. testing');
   };
   return (
     <div>
