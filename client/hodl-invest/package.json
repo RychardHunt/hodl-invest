@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "ajv": "^6.4.0",
     "chart.js": "^2.7.2",
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.1",

@@ -1,6 +1,8 @@
 package com.kenny.hodlinvest.service;
 
 import com.kenny.hodlinvest.database.TestUserDatabase;
+import com.kenny.hodlinvest.exception.UserNotFoundException;
+import com.kenny.hodlinvest.model.Transaction;
 import com.kenny.hodlinvest.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,11 +21,10 @@ public class UserService {
 
     public int addUser(String username, User user){
         if(userExists(username)){
-            return -1;
+            throw new IllegalStateException("Username already exists");
         }
         else{
-            database.insertUser(username, user);
-            return 1;
+            return database.insertUser(username, user);
         }
     }
 
@@ -36,19 +37,11 @@ public class UserService {
     }
 
     public int updateUserByName(String username, User user){
-        if(!userExists(username)){
-            return -1;
-        }
-        database.updateUserByName(username, user);
-        return 1;
+        return database.updateUserByName(username, user);
     }
 
     public int deleteUserByName(String username){
-        if(!userExists(username)){
-            return -1;
-        }
-        database.deleteUserByName(username);
-        return 1;
+        return database.deleteUserByName(username);
     }
 
     public boolean userExists(String username){
@@ -56,13 +49,17 @@ public class UserService {
     }
 
     public int updateUserPlayMoney(String username, double amount){
-        if(!userExists(username)) {
-            return 0;
-        }
-
         User user = getUserByName(username);
         user.setPlayMoney(amount);
         updateUserByName(username, user);
         return 1;
+    }
+
+    public int addTransaction(String username, String ticker, double price){
+        return database.updateTransactions(username, ticker, price);
+    }
+
+    public List<Transaction> getUserTransactions(String username){
+        return database.selectAllTransactions(username);
     }
 }
