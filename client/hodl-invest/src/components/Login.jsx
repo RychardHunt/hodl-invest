@@ -5,6 +5,9 @@ import './Login.css';
 const LoginPage = (props) => {
   const signupWasClickedCallback = (data) => {
     console.log(data);
+    xhrt.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/", true);
+    xhrt.send(data);
+    console.log(xhrt.status);
     alert('Signup callback, see log on the console to see the data. testing');
   };
   const loginWasClickedCallback = (data) => {
