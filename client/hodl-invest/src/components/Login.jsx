@@ -13,13 +13,11 @@ const LoginPage = (props) => {
   const loginWasClickedCallback = (data) => {
     console.log(data);
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/users/", false);
+    xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/login", true);
     xhr.setRequestHeader("content-type", "application/json");
     xhr.setRequestHeader("cache-control", "no-cache");
 
-    xhr.send();
-    var userstring=xhr.responseText;
-    var JSONTWO= JSON.parse(userstring);
+    xhr.send(data);
     alert('Login callback, see log on the console to see the data. testing');
   };
   const recoverPasswordWasClickedCallback = (data) => {
