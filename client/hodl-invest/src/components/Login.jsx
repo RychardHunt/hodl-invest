@@ -5,10 +5,11 @@ import './Login.css';
 const LoginPage = (props) => {
   const signupWasClickedCallback = (data) => {
     console.log(data);
-    xhrt.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/", true);
-    xhrt.send(data);
-    console.log(xhrt.status);
-    alert('Signup callback, see log on the console to see the data. testing');
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/", true);
+    xhr.send(data);
+    console.log(xhr.status);
+    alert('Signup Successful');
   };
   const loginWasClickedCallback = (data) => {
     console.log(data);
@@ -18,7 +19,7 @@ const LoginPage = (props) => {
     xhr.setRequestHeader("cache-control", "no-cache");
 
     xhr.send(data);
-    alert('Login callback, see log on the console to see the data. testing');
+    alert('Login Successful');
   };
   /*const recoverPasswordWasClickedCallback = (data) => {
     console.log(data);
@@ -36,7 +37,7 @@ const LoginPage = (props) => {
     correctindex=i;}}
     }
     alert('Recover password callback, see log on the console to see the data. testing');*/
-  };
+
   return (
     <div>
     <ReactSignupLoginComponent
@@ -60,14 +61,14 @@ const LoginPage = (props) => {
         recoverPasswordWrapper: { backgroundColor: '#53a7df' },
         recoverPasswordButton: { backgroundColor: 'LavenderBlush' },
         button: { backgroundColor: 'LavenderBlush' },
-      },
+      }
       /*recoverPassword: {
         wrapper: { backgroundColor: 'yellow' },
         inputWrapper: { backgroundColor: '#53a7df' },
         buttonsWrapper: { backgroundColor: '#53a7df' },
         input: { backgroundColor: 'LavenderBlush' },
         button: { backgroundColor: 'LavenderBlush' },
-      }*/,
+      }*/
     }}
     title="Hodl Invest"
     handleSignup={signupWasClickedCallback}
