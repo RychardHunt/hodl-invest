@@ -27,7 +27,7 @@ export default class About extends Component {
             <h2> Goal </h2>
             </center>
             <p>At the current moment, we are supporting some of the biggest cryptocurrencies
-            by market capitalization, but we will eventually add the ability of security
+            by market capitalization, but we will eventually add support for various security
             tokens once they are approved for the general public by regulators.</p>
 
             <center>
