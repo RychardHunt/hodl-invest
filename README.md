@@ -1,6 +1,6 @@
-# Hodl Invest
+# hodl-invest
 
-https://www.hodlinvest.com/
+https://hodl-invest.herokuapp.com/
 
 Alpha video: https://www.youtube.com/watch?v=iFnggckebBI&feature=youtu.be
 
