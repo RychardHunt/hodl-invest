@@ -1,8 +1,11 @@
 /* Style the tab */
 .tab {
+    display: flex;
+    align-items: center;
     overflow: hidden;
     border: 1px solid #ccc;
     background-color: #f1f1f1;
+    justify-content: center;
 }
 
 /* Style the buttons inside the tab */
@@ -12,7 +15,7 @@
     border: none;
     outline: none;
     cursor: pointer;
-    padding: 14px 16px;
+    padding: 14px 40px;
     transition: 0.3s;
     font-size: 17px;
 }
@@ -42,6 +45,10 @@ https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_tabs
 
 .buy-sell-panel {
     padding: 16px;
-    display: inline-block;
+    float: left;
     width: 40%;
+}
+
+.tabcontent form {
+    padding-left: 20%;
 }

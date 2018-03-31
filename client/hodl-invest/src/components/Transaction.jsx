@@ -6,9 +6,9 @@ import BuySellPanel from "./BuySellPanel";
 export default class Transaction extends Component {
     render() {
         return (
-            <div>
+            <div className="transaction">
                 <BuySellPanel/>
-                <TransactionHistory transactionArray={[{date:"april",amount:"400"},{date:"august",amount:"300"}]}/>
+                <TransactionHistory transactionArray={[{amount: "$30", date: "yesterday"}]}/>
             </div>
         )
     }

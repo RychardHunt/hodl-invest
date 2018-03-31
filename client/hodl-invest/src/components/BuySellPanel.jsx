@@ -5,37 +5,62 @@ export default class BuySellPanel extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            menuDisplayed: this.sellMenu()
+            buyIsSelected : true,
+            dollars: "",
+            coins: "",
+            buyInput: "",
+            sellInput: ""
         }
     }
 
-    buyMenu() {
-        return <form>
-            Enter amount: <input type="text" />
-            <br/>
-            Total: 0 BTC
-            <br/>
-            <button>Buy</button>
-        </form>
+    buy(event) {
+        event.preventDefault();
+        console.log(this.state.buyInput)
     }
 
-    sellMenu() {
-        return <form>
-            Enter amount: <input type="text" />
-            <br/>
-            Total: $0
-            <br/>
-            <button>Sell</button>
-        </form>
+    sell(event) {
+        event.preventDefault();
+        console.log(this.state.sellInput)
     }
 
-    renderBuy() {
-        this.setState({menuDisplayed: this.buyMenu()});
+    displayBuy(){
+        this.setState({
+            buyIsSelected: true,
+            dollars: "0",
+            coins: this.state.coins,
+            buyInput: this.state.buyInput,
+            sellInput: ""
+        })
     }
 
-    renderSell() {
-        this.setState({menuDisplayed: this.sellMenu()});
-        alert('Hellow!')
+    displaySell(){
+        this.setState({
+            buyIsSelected: false,
+            dollars: this.state.dollars,
+            coins: "0",
+            buyInput: "",
+            sellInput: this.state.sellInput
+        })
+    }
+
+    handleBuyInput(event) {
+        this.setState({
+            buyIsSelected: this.state.buyIsSelected,
+            dollars: this.state.dollars,
+            coins: "processing",
+            buyInput: event.target.value,
+            sellInput: this.state.sellInput
+        })
+    }
+
+    handleSellInput(event) {
+        this.setState({
+            buyIsSelected: this.state.buyIsSelected,
+            dollars: "processing",
+            coins: this.state.coins,
+            buyInput: this.state.buyInput,
+            sellInput: event.target.value
+        })
     }
 
     render() {
@@ -43,11 +68,28 @@ export default class BuySellPanel extends Component {
             <div className="buy-sell-panel" >
                 <h1>Purchase / Sell</h1>
                 <div className="tab">
-                    <button onClick={() => alert('will change menu to buy')}>Buy</button>
-                    <button onClick={() => alert('will change menu to sell')}>Sell</button>
+                    <button onClick={this.displayBuy.bind(this)}>Buy</button>
+                    <button onClick={this.displaySell.bind(this)}>Sell</button>
                 </div>
                 <div className="tabcontent">
-                    {this.state.menuDisplayed}
+                    {
+                        this.state.buyIsSelected?
+                        <form>
+                            Enter amount: <input className="buy" value={this.state.buyInput} onChange={this.handleBuyInput.bind(this)} type="text" />
+                            <br/>
+                            Total: {this.state.coins} BTC
+                            <br/>
+                            <button onClick={this.buy.bind(this)}>Buy</button>
+                        </form>
+                        :
+                        <form>
+                            Enter amount: <input className="sell" value={this.state.sellInput} onChange={this.handleSellInput.bind(this)} type="text" />
+                            <br/>
+                            Total: ${this.state.dollars}
+                            <br/>
+                            <button onClick={this.buy.bind(this)}>Sell</button>
+                        </form>
+                    }
                 </div>
             </div>
         )
