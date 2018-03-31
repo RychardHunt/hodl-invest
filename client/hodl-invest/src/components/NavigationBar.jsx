@@ -8,7 +8,7 @@ export default class NavigationBar extends Component {
 				<Navbar default collapseOnSelect>
 					<Navbar.Header>
 						<Navbar.Brand>
-							<Link to="/">hodl-invest</Link>
+							<Link to="/">Hodl Invest</Link>
 						</Navbar.Brand>
 						<Navbar.Toggle />
 					</Navbar.Header>
