@@ -9,8 +9,8 @@ export default class Home extends Component {
 			<div>
 				<Grid>
 					<Jumbotron>
-						<h2> Welcome to hodl-invest	</h2>
-						<p> This is a Mock Cryptocurrency Simulator </p>
+						<h1> Welcome to Hodl Invest	</h1>
+						<p> This is a Virtual Cryptocurrency Simulator </p>
 
 						<Link to="/about">
 							<Button bsStyle="primary"> Learn more </Button>

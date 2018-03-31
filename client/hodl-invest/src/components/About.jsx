@@ -1,11 +1,43 @@
 import React, {Component} from 'react';
+import {Jumbotron, Grid, Row, Col, Image, Button} from 'react-bootstrap';
 
 export default class About extends Component {
-	render(){
-		return(
-			<div>
-				ABOUT STUFF HERE
-			</div>
-		);
-	}
+  render(){
+    return(
+      <div>
+        <Grid>
+          <Jumbotron>
+            <center>
+            <h1> About Us </h1>
+            <h2> Team </h2>
+            </center>
+            <p>We are a team of Blockchain Evangelists who seek to educate the masses of investors
+            about the viability of digital assets on the blockchain as a form of liquid security.</p>
+
+            <p>
+            <strong>Richard Guo</strong>: Product Manager & Frontend Software Engineer <br/>
+            <strong>Aaron Lin*</strong>: Frontend Software Engineer <br/>
+            <strong>Luis Lopez-Cardona*</strong>: Frontend Software Engineer & UI Designer <br/>
+            <strong>Thomas Ly*</strong>: Frontend Software Engineer <br/>
+            <strong>Alex Wu</strong>: Backend Software Engineer <br/>
+            <strong>Kenny Zhao</strong>: Backend Software Engineer
+            </p>
+
+            <center>
+            <h2> Goal </h2>
+            </center>
+            <p>At the current moment, we are supporting some of the biggest cryptocurrencies
+            by market capitalization, but we will eventually add the ability of security
+            tokens once they are approved for the general public by regulators.</p>
+
+            <center>
+            <h2> Note </h2>
+            </center>
+            <p>
+            * indicates the team member is not enrolled in CSE 442 Software Engineering Concepts at the University at Buffalo for Spring 2018 </p>
+          </Jumbotron>
+        </Grid>
+      </div>
+    );
+  }
 }
