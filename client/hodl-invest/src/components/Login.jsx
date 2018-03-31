@@ -20,7 +20,7 @@ const LoginPage = (props) => {
     xhr.send(data);
     alert('Login callback, see log on the console to see the data. testing');
   };
-  const recoverPasswordWasClickedCallback = (data) => {
+  /*const recoverPasswordWasClickedCallback = (data) => {
     console.log(data);
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/users/", false);
@@ -35,7 +35,7 @@ const LoginPage = (props) => {
     if(JSONTWO[i].username==data.username){
     correctindex=i;}}
     }
-    alert('Recover password callback, see log on the console to see the data. testing');
+    alert('Recover password callback, see log on the console to see the data. testing');*/
   };
   return (
     <div>
@@ -61,18 +61,18 @@ const LoginPage = (props) => {
         recoverPasswordButton: { backgroundColor: 'LavenderBlush' },
         button: { backgroundColor: 'LavenderBlush' },
       },
-      recoverPassword: {
+      /*recoverPassword: {
         wrapper: { backgroundColor: 'yellow' },
         inputWrapper: { backgroundColor: '#53a7df' },
         buttonsWrapper: { backgroundColor: '#53a7df' },
         input: { backgroundColor: 'LavenderBlush' },
         button: { backgroundColor: 'LavenderBlush' },
-      },
+      }*/,
     }}
     title="Hodl Invest"
     handleSignup={signupWasClickedCallback}
     handleLogin={loginWasClickedCallback}
-    handleRecoverPassword={recoverPasswordWasClickedCallback}
+   // handleRecoverPassword={recoverPasswordWasClickedCallback}
     />
     </div>
   );
