@@ -7,9 +7,14 @@ const LoginPage = (props) => {
     console.log(data);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/", true);
-    xhr.send(data);
+    if(data.password==data.passwordConfirmation){
+   var sendobject={username:data.username,passwordHash:data.password};
+    xhr.send(sendobject);
     console.log(xhr.status);
-    alert('Signup Successful');
+    alert('Signup Successful');}
+    else{
+    alert('passwords dont match');
+    }
   };
   const loginWasClickedCallback = (data) => {
     console.log(data);
@@ -17,8 +22,8 @@ const LoginPage = (props) => {
     xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/login", true);
     xhr.setRequestHeader("content-type", "application/json");
     xhr.setRequestHeader("cache-control", "no-cache");
-
-    xhr.send(data);
+    var sendobject={username:data.username,passwordHash:data.password};
+    xhr.send(sendobject);
     alert('Login Successful');
   };
   /*const recoverPasswordWasClickedCallback = (data) => {
