@@ -7,6 +7,8 @@ import About from './components/About'
 import Login from './components/Login'
 import NavigationBar from './components/NavigationBar'
 import Chart from './components/Chart'
+import Transaction from './components/Transaction'
+
 class App extends Component {
   render() {
     return (
@@ -17,7 +19,7 @@ class App extends Component {
           <Route path ="/login" component={Login} />
           <Route path ="/about" component={About} />
           <Route path ="/chart" component={Chart} />
-
+          <Route path ="/transaction" component={Transaction} />
         </div>
       </Router>
     );
