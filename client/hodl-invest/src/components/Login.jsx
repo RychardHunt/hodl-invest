@@ -8,7 +8,10 @@ const LoginPage = (props) => {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/", true);
     if(data.password===data.passwordConfirmation){
-      var sendobject={username:data.username,passwordHash:data.password};
+      var sendobject={
+        username:data.username,
+        passwordHash:data.password
+      };
       xhr.send(sendobject);
       console.log(xhr.status);
       alert('Signup Successful');
@@ -22,7 +25,10 @@ const LoginPage = (props) => {
     xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/login", true);
     xhr.setRequestHeader("content-type", "application/json");
     xhr.setRequestHeader("cache-control", "no-cache");
-    var sendobject={username:data.username,passwordHash:data.password};
+    var sendobject={
+      username:data.username,
+      passwordHash:data.password
+    };
     xhr.send(sendobject);
     alert('Login Successful');
   };
