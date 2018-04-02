@@ -6,13 +6,21 @@ const LoginPage = (props) => {
   const signupWasClickedCallback = (data) => {
     console.log(data);
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/", true);
+    // xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/", true);
+    xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/");
+    xhr.setRequestHeader("content-type", "application/json");
+    xhr.setRequestHeader("cache-control", "no-cache");
     if(data.password===data.passwordConfirmation){
-      var sendobject={
-        username:data.username,
-        passwordHash:data.password
-      };
-      xhr.send(sendobject);
+      var sendObject = JSON.stringify({
+        "username": data.username,
+        "passwordHash": data.password,
+        "name": "meep",
+        "email": "j@gmail.com",
+        "playMoney": 100,
+        "transaction":[]
+      });
+      console.log(sendObject);
+      xhr.send(sendObject);
       console.log(xhr.status);
       alert('Signup Successful');
     } else{
@@ -21,15 +29,26 @@ const LoginPage = (props) => {
   };
   const loginWasClickedCallback = (data) => {
     console.log(data);
+    var sendObject = JSON.stringify({
+      "username": data.username,
+      "passwordHash": data.password
+    });
+
+    console.log(sendObject);
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/login", true);
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+      if (this.readyState === 4) {
+        console.log(this.responseText);
+      }
+    });
+
+    xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/login");
     xhr.setRequestHeader("content-type", "application/json");
     xhr.setRequestHeader("cache-control", "no-cache");
-    var sendobject={
-      username:data.username,
-      passwordHash:data.password
-    };
-    xhr.send(sendobject);
+
+    xhr.send(sendObject);
     alert('Login Successful');
   };
   /*const recoverPasswordWasClickedCallback = (data) => {
