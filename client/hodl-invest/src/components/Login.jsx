@@ -31,12 +31,12 @@ const LoginPage = (props) => {
     console.log(data);
     var sendObject = JSON.stringify({
       "username": data.username,
-      "passwordHash": data.password
+      "password": data.password
     });
 
     console.log(sendObject);
     var xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
+    xhr.withCredentials = false;
 
     xhr.addEventListener("readystatechange", function () {
       if (this.readyState === 4) {
