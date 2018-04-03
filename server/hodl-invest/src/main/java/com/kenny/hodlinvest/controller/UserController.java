@@ -1,5 +1,6 @@
 package com.kenny.hodlinvest.controller;
 
+import com.kenny.hodlinvest.exception.InvalidTokenException;
 import com.kenny.hodlinvest.exception.UserException;
 import com.kenny.hodlinvest.exception.UserNotFoundException;
 import com.kenny.hodlinvest.model.Cryptocoin;
@@ -17,6 +18,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/users")
+@CrossOrigin(origins = "https://hodl-invest.herokuapp.com/")
 public class UserController {
 
     private final UserService userService;
@@ -58,6 +60,7 @@ public class UserController {
         if(userService.userExists(user.getUsername())){
             throw new UserException("Username already exists.");
         }
+
         userService.addUser(user.getUsername(), user);
     }
 
@@ -66,10 +69,18 @@ public class UserController {
             method = RequestMethod.DELETE,
             path = "{username}"
     )
-    public void deleteUserByName(@PathVariable String username){
+    public void deleteUserByName(@PathVariable String username,@RequestBody Map<String, String> token){
         if(!userService.userExists(username))
             throw new UserNotFoundException("User does not exist");
 
+        Token tok = tokenMap.get(token.get("token"));
+        if(tok == null)
+            throw new InvalidTokenException("Invalid token: " + token.toString());
+
+        if(!tok.getUsername().equals(username))
+            throw new UserException("Unauthorized requests to delete user.");
+
+        tokenMap.remove(token);
         userService.deleteUserByName(username);
     }
 
