@@ -8,6 +8,7 @@ import Login from './components/Login'
 import NavigationBar from './components/NavigationBar'
 import Chart from './components/Chart'
 import Transaction from './components/Transaction'
+import Dashboard from './components/Dashboard'
 
 class App extends Component {
   render() {
@@ -20,6 +21,8 @@ class App extends Component {
           <Route path ="/about" component={About} />
           <Route path ="/chart" component={Chart} />
           <Route path ="/transaction" component={Transaction} />
+		<Route path ="/dashboard" component={Dashboard} />
+
         </div>
       </Router>
     );
@@ -27,3 +30,4 @@ class App extends Component {
 }
 
 export default App;
+
