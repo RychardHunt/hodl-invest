@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
 import ReactSignupLoginComponent from 'react-signup-login-component';
 import {Link} from 'react-router-dom';
-import { withRouter } from 'react-router';
 import './Login.css';
 
 const LoginPage = (props) => {
   const signupWasClickedCallback = (data) => {
     console.log(data);
     var xhr = new XMLHttpRequest();
-    // xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/", true);
     xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/");
     xhr.setRequestHeader("content-type", "application/json");
     xhr.setRequestHeader("cache-control", "no-cache");
@@ -53,8 +51,7 @@ const LoginPage = (props) => {
 
     xhr.send(sendObject);
     alert('Login Successful');
-    this.props.history.push('/dashboard');
-    //withRouter doesn't work
+    window.location.href = './dashboard';
   }
 
   /*const recoverPasswordWasClickedCallback = (data) => {
@@ -116,4 +113,4 @@ const LoginPage = (props) => {
   );
 };
 
-export default withRouter(LoginPage);
+export default LoginPage;
