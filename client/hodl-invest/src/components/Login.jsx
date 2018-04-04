@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import ReactSignupLoginComponent from 'react-signup-login-component';
+import {Link} from 'react-router-dom';
+import { withRouter } from 'react-router';
 import './Login.css';
 
 const LoginPage = (props) => {
@@ -27,6 +29,7 @@ const LoginPage = (props) => {
         alert('passwords dont match');
     }
   };
+
   const loginWasClickedCallback = (data) => {
     console.log(data);
     var sendObject = JSON.stringify({
@@ -50,7 +53,10 @@ const LoginPage = (props) => {
 
     xhr.send(sendObject);
     alert('Login Successful');
-  };
+    this.props.history.push('/dashboard');
+    //withRouter doesn't work
+  }
+
   /*const recoverPasswordWasClickedCallback = (data) => {
     console.log(data);
     var xhr = new XMLHttpRequest();
@@ -109,4 +115,4 @@ const LoginPage = (props) => {
   );
 };
 
-export default LoginPage;
+export default withRouter(LoginPage);
