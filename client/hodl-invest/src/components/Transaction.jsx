@@ -3,7 +3,7 @@ import './Transaction.css'
 import TransactionHistory from './TransactionHistory'
 import BuySellPanel from "./BuySellPanel";
 
-export default class Transaction extends Component {
+class Transaction extends Component {
     render() {
         return (
             <div className="transaction">
@@ -13,3 +13,5 @@ export default class Transaction extends Component {
         )
     }
 }
+
+export default Transaction;

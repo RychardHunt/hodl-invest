@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import './NavigationBar.css'
-export default class NavigationBar extends Component {
+
+class NavigationBar extends Component {
 	render(){
 		return(
 				<Navbar default collapseOnSelect>
@@ -17,13 +18,10 @@ export default class NavigationBar extends Component {
 							<NavItem eventKey={1} componentClass={Link} href="/" to="/">
 								Home
 							</NavItem>
-							<NavItem eventKey={2} componentClass={Link} href="/chart" to="/chart">
-								Chart
+							<NavItem eventKey={2} componentClass={Link} href="/dashboard" to="/dashboard">
+								Dashboard
 							</NavItem>
-							<NavItem eventKey={3} componentClass={Link} href="/transaction" to="/transaction">
-								Transaction
-							</NavItem>
-							<NavItem eventKey={4} componentClass={Link} href="/login" to="/login">
+							<NavItem eventKey={3} componentClass={Link} href="/login" to="/login">
 								Login
 							</NavItem>
 							<NavItem eventKey={5} componentClass={Link} href="/dashboard" to="/dashboard">
@@ -35,3 +33,5 @@ export default class NavigationBar extends Component {
 		);
 	}
 }
+
+export default NavigationBar;
