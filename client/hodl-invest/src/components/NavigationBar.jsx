@@ -24,6 +24,9 @@ class NavigationBar extends Component {
 							<NavItem eventKey={3} componentClass={Link} href="/login" to="/login">
 								Login
 							</NavItem>
+							<NavItem eventKey={5} componentClass={Link} href="/dashboard" to="/dashboard">
+								Dashboard
+							</NavItem>
 						</Nav>
 					</Navbar.Collapse>
 				</Navbar>
