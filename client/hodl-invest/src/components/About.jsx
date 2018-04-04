@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Jumbotron, Grid, Row, Col, Image, Button} from 'react-bootstrap';
 
-export default class About extends Component {
+class About extends Component {
   render(){
     return(
       <div>
@@ -41,3 +41,5 @@ export default class About extends Component {
     );
   }
 }
+
+export default About;
