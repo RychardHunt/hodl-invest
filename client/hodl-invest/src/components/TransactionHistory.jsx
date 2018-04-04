@@ -10,7 +10,7 @@ TODO:
     Limit number of transactions visible
     Button to expand transaction list
  */
-export default class TransactionHistory extends Component {
+class TransactionHistory extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -43,7 +43,7 @@ export default class TransactionHistory extends Component {
     render() {
         return (
             <div className="transaction-history" >
-                <h1>Transaction History</h1>
+                <center> <h1>Transaction History</h1> </center>
                 <table>
                     <tr>
                         <th>Date</th>
@@ -55,3 +55,5 @@ export default class TransactionHistory extends Component {
         )
     }
 }
+
+export default TransactionHistory;

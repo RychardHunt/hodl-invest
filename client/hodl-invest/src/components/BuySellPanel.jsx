@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import './BuySellPanel.css'
 
-export default class BuySellPanel extends Component {
+class BuySellPanel extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -66,7 +66,7 @@ export default class BuySellPanel extends Component {
     render() {
         return (
             <div className="buy-sell-panel" >
-                <h1>Purchase / Sell</h1>
+                <center> <h1>Buy / Sell</h1> </center>
                 <div className="tab">
                     <button onClick={this.displayBuy.bind(this)}>Buy</button>
                     <button onClick={this.displaySell.bind(this)}>Sell</button>
@@ -95,3 +95,5 @@ export default class BuySellPanel extends Component {
         )
     }
 }
+
+export default BuySellPanel;
