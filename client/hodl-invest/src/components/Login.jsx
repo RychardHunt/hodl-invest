@@ -78,7 +78,8 @@ const LoginPage = (props) => {
     <div>
     <ReactSignupLoginComponent
     styles={{
-      mainWrapper: { backgroundColor: '#2892D7' },
+      mainWrapper: { backgroundColor: '#2892D7',
+                     margin: 'auto'},
       mainTitle: { color: 'white' },
       flipper: { transition: '0.1s' },
       signup: {
