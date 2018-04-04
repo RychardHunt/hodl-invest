@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
@@ -5,10 +6,9 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Home from './components/Home'
 import About from './components/About'
 import Login from './components/Login'
-import NavigationBar from './components/NavigationBar'
-import Chart from './components/Chart'
-import Transaction from './components/Transaction'
 import Dashboard from './components/Dashboard'
+import NavigationBar from './components/NavigationBar'
+
 class App extends Component {
   render() {
     return (
@@ -18,8 +18,6 @@ class App extends Component {
           <Route exact path ="/" component={Home} />
           <Route path ="/login" component={Login} />
           <Route path ="/about" component={About} />
-          <Route path ="/chart" component={Chart} />
-          <Route path ="/transaction" component={Transaction} />
           <Route path ="/dashboard" component={Dashboard} />
         </div>
       </Router>
