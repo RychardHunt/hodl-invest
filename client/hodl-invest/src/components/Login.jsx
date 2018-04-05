@@ -22,7 +22,7 @@ const LoginPage = (props) => {
       console.log(sendObject);
       xhr.send(sendObject);
       console.log(xhr.status);
-      alert('Signup Successful');
+      alert('Signup Successful! Please login with your credentials!');
     } else{
         alert('passwords dont match');
     }
@@ -50,7 +50,7 @@ const LoginPage = (props) => {
     xhr.setRequestHeader("cache-control", "no-cache");
 
     xhr.send(sendObject);
-    alert('Login Successful');
+    alert('Login Successful!');
     window.location.href = './dashboard';
   }
 
