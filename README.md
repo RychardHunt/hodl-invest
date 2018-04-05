@@ -1,5 +1,9 @@
 # hodl-invest
 
+https://hodl-invest.herokuapp.com/
+
+Alpha video: https://www.youtube.com/watch?v=iFnggckebBI&feature=youtu.be
+
 <h2> Description: </h2>
 
 Hodl Invest is a mock crypto currency exchange simulator where users can use play money to buy and sell virtual bitcoins and see how well they did if they actually made the decision on the real cryptocurrency exchange. Our mission is to make it easier and less daunting for people to get into cryptocurrencies while also creating a fun and interactive experience for intermediate cryptocurrency traders who are interested in testing their investment strategies.
