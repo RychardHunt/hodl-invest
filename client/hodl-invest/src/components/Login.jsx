@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ReactSignupLoginComponent from 'react-signup-login-component';
 import {Link} from 'react-router-dom';
+import FacebookLogin from './FacebookLogin.jsx';
 import './Login.css';
 
 const LoginPage = (props) => {
@@ -109,7 +110,11 @@ const LoginPage = (props) => {
     handleLogin={loginWasClickedCallback}
    // handleRecoverPassword={recoverPasswordWasClickedCallback}
     />
-    </div>
+
+  <FacebookLogin/>
+
+
+  </div>
   );
 };
 
