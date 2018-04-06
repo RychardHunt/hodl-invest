@@ -119,6 +119,7 @@ const LoginPage = (props) => {
     />
   <Registration/>,
   <Log/>
+  <FacebookLogin/>
 
   </div>
   );
