@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import ReactSignupLoginComponent from 'react-signup-login-component';
 import {Link} from 'react-router-dom';
 import FacebookLogin from './FacebookLogin.jsx';
+import Registration from './Registration.jsx';
+import Log from './Log.jsx';
 import './Login.css';
 
 const LoginPage = (props) => {
@@ -115,9 +117,8 @@ const LoginPage = (props) => {
     handleLogin={loginWasClickedCallback}
    // handleRecoverPassword={recoverPasswordWasClickedCallback}
     />
-
-    <FacebookLogin />,
-
+  <Registration/>,
+  <Log/>
 
   </div>
   );

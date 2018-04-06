@@ -1,0 +1,28 @@
+.container{
+  width: 500px;
+  background: #2892D7;
+  text-align: center;
+
+}
+.header{
+  color: white;
+}
+
+
+.RegistrationForm{
+  background:  #53a7df;
+  width: 98%;
+  margin: auto;
+  margin-bottom: 15px;
+}
+.RegistrationForm form *{
+  display: block;
+  margin: auto;
+  padding: 12px;
+
+}
+.RegistrationForm form label input{
+  width: 80%;
+  padding: 8px;
+
+}
