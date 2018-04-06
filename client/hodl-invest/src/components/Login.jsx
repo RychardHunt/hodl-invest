@@ -72,6 +72,11 @@ const LoginPage = (props) => {
     }
     alert('Recover password callback, see log on the console to see the data. testing');*/
 
+    const responseFacebook = (response) => {
+      console.log(response);
+    }
+
+
   return (
     <div>
     <ReactSignupLoginComponent
@@ -111,7 +116,7 @@ const LoginPage = (props) => {
    // handleRecoverPassword={recoverPasswordWasClickedCallback}
     />
 
-  <FacebookLogin/>
+    <FacebookLogin />,
 
 
   </div>
