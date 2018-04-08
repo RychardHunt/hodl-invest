@@ -79,3 +79,18 @@ Kenny: Create login and register endpoints and update user endpoint.
 Alex: Integrate existing Java and PostgreSQL data structure, as well as HeroKu to ensure the everything is up online running.
 Rych: Hook up the Login/Signup/Forgot Password page to backend. Supervise the creation of buying/selling and history frontend and backend.
 
+_____________________________________________________________________________    
+
+Meeting date and time: 04/02/2018 5:00pm - 6:00pm
+Summary: Working on fixing up our Alpha release in regards to our frontend client and making api calls to the server. Also setting up database so that we can store persistence user information.
+
+Accomplishments from last week: 
+Kenny: Created login endpoint which grants a token basedq authentication and logout endpoints which unauthorizes the token. Made the alpha youtube video, documented the project and server api, and deployed front end client.
+Alex: Researched Heroku, Postqresql, and JDBC documentations and implementation method.
+Rych: Hooked up the Login/Signup page to backend. Decided to not include Forgot Password page. Supervised the creation of buying/selling and history frontend and backend.
+
+Task assigned for next week 04/02/2018: 
+Kenny: Restructure api to only allow api calls to authorized tokens.
+Alex: Responsible for the connect to database from our server and to implement methods for database so backend doesn't break.
+Rych: Fix various bugs throughout the frontend. Integrate the transaction and charts component into the dashboard component.
+
