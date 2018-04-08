@@ -1,5 +1,6 @@
 package com.kenny.hodlinvest.controller;
 
+import com.kenny.hodlinvest.exception.InvalidInputException;
 import com.kenny.hodlinvest.exception.InvalidTokenException;
 import com.kenny.hodlinvest.exception.UserException;
 import com.kenny.hodlinvest.exception.UserNotFoundException;
@@ -73,12 +74,7 @@ public class UserController {
         if(!userService.userExists(username))
             throw new UserNotFoundException("User does not exist");
 
-        Token tok = tokenMap.get(token.get("token"));
-        if(tok == null)
-            throw new InvalidTokenException("Invalid token: " + token.toString());
-
-        if(!tok.getUsername().equals(username))
-            throw new UserException("Unauthorized requests to delete user.");
+        checkToken(username, token);
 
         tokenMap.remove(token);
         userService.deleteUserByName(username);
@@ -89,9 +85,11 @@ public class UserController {
             method = RequestMethod.POST,
             path = "{username}/transactions/{amount}"
     )
-    public void updateUserPlayMoney(@PathVariable String username, @PathVariable double amount){
+    public void updateUserPlayMoney(@PathVariable String username, @PathVariable double amount, @RequestBody Map<String, String> token){
         if(!userService.userExists(username))
             throw new UserNotFoundException("User does not exist");
+
+        checkToken(username, token);
 
         userService.updateUserPlayMoney(username, amount);
     }
@@ -102,12 +100,27 @@ public class UserController {
             path = "{username}/transactions",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public void addTransaction(@RequestBody Cryptocoin cryptocoin, @PathVariable("username") String username){
+    public void addTransaction(@RequestBody Map<String, String> body, @PathVariable("username") String username){
+        checkToken(username, body);
+
         if(!userService.userExists(username))
             throw new UserNotFoundException("User does not exist");
 
-        System.out.println("Added transaction: " + cryptocoin.getTicker() + " with price: " + cryptocoin.getPrice() + " to user: " + username);
-        userService.addTransaction(username, cryptocoin.getTicker(), cryptocoin.getPrice());
+        try{
+            String ticker = body.get("ticker");
+            double price = Double.parseDouble(body.get("price"));
+            if(body.get("ticker") == null || body.get("price") == null){
+                throw new InvalidInputException("Please enter the ticker and price in JSON format. Request body is: + token.toString()");
+            }
+
+            Cryptocoin cryptocoin = new Cryptocoin(ticker, price);
+
+            System.out.println("Added transaction: " + cryptocoin.getTicker() + " with price: " + cryptocoin.getPrice() + " to user: " + username);
+            userService.addTransaction(username, cryptocoin.getTicker(), cryptocoin.getPrice());
+
+        } catch (NumberFormatException e){
+            throw new InvalidInputException("Price is not a number. Price: " + body.get("price"));
+        }
     }
 
     @CrossOrigin()
@@ -165,5 +178,15 @@ public class UserController {
             tokenMap.remove(token);
             System.out.println("Successfully logged out user " + curToken.getUsername());
         }
+    }
+
+
+    private void checkToken(String username, Map<String, String> token){
+        Token tok = tokenMap.get(token.get("token"));
+        if(tok == null)
+            throw new InvalidTokenException("Token is missing or is invalid. Request body is: " + token.toString());
+
+        if(!tok.getUsername().equals(username))
+            throw new UserException("Unauthorized requests to delete user.");
     }
 }
