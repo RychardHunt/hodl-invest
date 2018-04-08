@@ -1,37 +1,59 @@
 import React, {Component} from 'react';
 import ReactSignupLoginComponent from 'react-signup-login-component';
+import {Link} from 'react-router-dom';
 import './Login.css';
 
 const LoginPage = (props) => {
   const signupWasClickedCallback = (data) => {
     console.log(data);
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/", true);
+    xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/");
+    xhr.setRequestHeader("content-type", "application/json");
+    xhr.setRequestHeader("cache-control", "no-cache");
     if(data.password===data.passwordConfirmation){
-      var sendobject={
-        username:data.username,
-        passwordHash:data.password
-      };
-      xhr.send(sendobject);
+      var sendObject = JSON.stringify({
+        "username": data.username,
+        "passwordHash": data.password,
+        "name": "meep",
+        "email": "j@gmail.com",
+        "playMoney": 100,
+        "transaction":[]
+      });
+      console.log(sendObject);
+      xhr.send(sendObject);
       console.log(xhr.status);
-      alert('Signup Successful');
+      alert('Signup Successful! Please login with your credentials!');
     } else{
         alert('passwords dont match');
     }
   };
+
   const loginWasClickedCallback = (data) => {
     console.log(data);
+    var sendObject = JSON.stringify({
+      "username": data.username,
+      "password": data.password
+    });
+
+    console.log(sendObject);
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/login", true);
+    xhr.withCredentials = false;
+
+    xhr.addEventListener("readystatechange", function () {
+      if (this.readyState === 4) {
+        console.log(this.responseText);
+      }
+    });
+
+    xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/login");
     xhr.setRequestHeader("content-type", "application/json");
     xhr.setRequestHeader("cache-control", "no-cache");
-    var sendobject={
-      username:data.username,
-      passwordHash:data.password
-    };
-    xhr.send(sendobject);
-    alert('Login Successful');
-  };
+
+    xhr.send(sendObject);
+    alert('Login Successful!');
+    window.location.href = './dashboard';
+  }
+
   /*const recoverPasswordWasClickedCallback = (data) => {
     console.log(data);
     var xhr = new XMLHttpRequest();
@@ -53,7 +75,8 @@ const LoginPage = (props) => {
     <div>
     <ReactSignupLoginComponent
     styles={{
-      mainWrapper: { backgroundColor: '#2892D7' },
+      mainWrapper: { backgroundColor: '#2892D7',
+                     margin: 'auto'},
       mainTitle: { color: 'white' },
       flipper: { transition: '0.1s' },
       signup: {
