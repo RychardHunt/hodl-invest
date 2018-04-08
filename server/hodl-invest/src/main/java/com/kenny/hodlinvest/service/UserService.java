@@ -4,11 +4,14 @@ import com.kenny.hodlinvest.database.TestUserDatabase;
 import com.kenny.hodlinvest.exception.UserNotFoundException;
 import com.kenny.hodlinvest.model.Transaction;
 import com.kenny.hodlinvest.model.User;
+import com.kenny.hodlinvest.util.Secure;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService {
@@ -61,5 +64,14 @@ public class UserService {
 
     public List<Transaction> getUserTransactions(String username){
         return database.selectAllTransactions(username);
+    }
+
+    public boolean authenticateUser(String username, String password){
+        if(username == null || password == null || !userExists(username))
+            return false;
+
+        User user = getUserByName(username);
+        System.out.println(user.getPasswordHash() + " " + Secure.generateHash(password) + " " + Secure.generateHash(password));
+        return user.getPasswordHash().equals(Secure.generateHash(password));
     }
 }
