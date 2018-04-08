@@ -1,14 +1,46 @@
 import React, {Component} from 'react'
 import './Transaction.css'
 import TransactionHistory from './TransactionHistory'
-import BuySellPanel from "./BuySellPanel";
+import BuySellPanel from "./BuySellPanel"
+import request from 'request'
+
+
 
 export default class Transaction extends Component {
+    constructor (props) {
+        super(props);
+        this.getTransactions();
+        this.state = {
+            transactions : [{amount: "$30", date: "yesterday"}]
+        }
+    }
+
+    getTransactions() {
+        let url = 'https://hodl-invest-server.herokuapp.com/api/v1/users/zoro/transactions';
+
+        request.get({
+            url: url,
+            json: true,
+            headers: {'User-Agent': 'request'}
+        }, (err, res, data) => {
+            if (err) {
+                console.log('Error:', err);
+            } else if (res.statusCode !== 200) {
+                console.log('Status:', res.statusCode);
+            } else {
+                // data is already parsed as JSON:
+                this.setState ({
+                    transactions : data
+                })
+            }
+        });
+    }
+
     render() {
         return (
             <div className="transaction">
                 <BuySellPanel/>
-                <TransactionHistory transactionArray={[{amount: "$30", date: "yesterday"}]}/>
+                <TransactionHistory transactionArray={this.state.transactions}/>
             </div>
         )
     }
