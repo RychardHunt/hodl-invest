@@ -37,9 +37,9 @@ class Log extends Component{
   render(){
 
     return(
-      <div class="container">
+      <div class="logContainer">
         <div class="header">
-        <h1> Log In</h1>
+        <h1> Log </h1>
           </div>
       <div class="RegistrationForm">
       <form onSubmit={this.handleSubmit}>

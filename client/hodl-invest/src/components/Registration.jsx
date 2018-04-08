@@ -40,7 +40,7 @@ class Registration extends Component{
   render(){
 
     return(
-      <div class="container">
+      <div class="logContainer">
         <div class="header">
         <h1> Registration</h1>
           </div>
