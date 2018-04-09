@@ -96,4 +96,20 @@ Kenny: Restructure api to only allow api calls to authorized tokens.
 Alex: Responsible for the connect to database from our server and to implement methods for database so backend doesn't break.
 Rych: Fix various bugs throughout the frontend. Integrate the transaction and charts component into the dashboard component.
 
+_____________________________________________________________________________    
+
+Meeting date and time: 04/09/2018 5:00pm - 6:00pm
+Summary: We talked about the overall progress of our project and the voting system in lecture. There was a miscommunication amongst us regarding the Heroku database connection, provision, and implementation with our application. We also talked about the colloration phase in the class and we need to make sure that we need to put extra effort not to let the phase distract us from our project. We will keep each other accountable for time management.
+
+Accomplishments from last week: 
+Kenny: Added token authentication to post requests and also created exception classes. Set up server to only allow cross origin requests from front end client. Created updated alpha video. 
+Alex: Researched Heroku, Postqresql, and JDBC documentations and implementation method.
+Rych: Fixed various bugs throughout the frontend. Integrated the transaction and charts component into the dashboard component.
+
+Task assigned for next week 04/16/2018: 
+Kenny: Add list of cryptocoins owned by user and amount owned and create endpoints to update them.
+Alex: Responsible for the provision of our database to our server and to ensure funcitionality of our backend to interact with Heroku Postgresql.
+Rych: Fix various bugs throughout the frontend. Supervise and faciliate hooking up other components of the frontend to the database.
+
+
 
