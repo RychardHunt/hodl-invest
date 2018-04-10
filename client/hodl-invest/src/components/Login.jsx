@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
 import ReactSignupLoginComponent from 'react-signup-login-component';
 import {Link} from 'react-router-dom';
-import { withRouter } from 'react-router';
 import './Login.css';
 
 const LoginPage = (props) => {
   const signupWasClickedCallback = (data) => {
     console.log(data);
     var xhr = new XMLHttpRequest();
-    // xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/", true);
     xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/");
     xhr.setRequestHeader("content-type", "application/json");
     xhr.setRequestHeader("cache-control", "no-cache");
@@ -24,7 +22,7 @@ const LoginPage = (props) => {
       console.log(sendObject);
       xhr.send(sendObject);
       console.log(xhr.status);
-      alert('Signup Successful');
+      alert('Signup Successful! Please login with your credentials!');
     } else{
         alert('passwords dont match');
     }
@@ -52,9 +50,8 @@ const LoginPage = (props) => {
     xhr.setRequestHeader("cache-control", "no-cache");
 
     xhr.send(sendObject);
-    alert('Login Successful');
-    this.props.history.push('/dashboard');
-    //withRouter doesn't work
+    alert('Login Successful!');
+    window.location.href = './dashboard';
   }
 
   /*const recoverPasswordWasClickedCallback = (data) => {
@@ -78,7 +75,8 @@ const LoginPage = (props) => {
     <div>
     <ReactSignupLoginComponent
     styles={{
-      mainWrapper: { backgroundColor: '#2892D7' },
+      mainWrapper: { backgroundColor: '#2892D7',
+                     margin: 'auto'},
       mainTitle: { color: 'white' },
       flipper: { transition: '0.1s' },
       signup: {
@@ -115,4 +113,4 @@ const LoginPage = (props) => {
   );
 };
 
-export default withRouter(LoginPage);
+export default LoginPage;
