@@ -14,7 +14,7 @@ class App extends Component {
       <Router>
         <div>
           <NavigationBar />
-            <Transaction/>
+            <Transaction transactionHistoryURL={'https://hodl-invest-server.herokuapp.com/api/v1/users/zoro/transactions'}/>
         </div>
       </Router>
     );

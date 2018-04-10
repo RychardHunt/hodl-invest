@@ -14,18 +14,15 @@ TODO:
 export default class TransactionHistory extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            transactionArray : this.props.transactionArray
-        }
     }
 
     static renderSingleTransaction(date,ticker,price,time) {
         return <tr>
             <th>{date}</th>
-            <th>{price}</th>
-            <th>{ticker}</th>
-            <th>TBD</th>
             <th>{time}</th>
+            <th>{ticker}</th>
+            <th>{price}</th>
+            <th>TBD</th>
         </tr>
     }
 
@@ -62,10 +59,10 @@ export default class TransactionHistory extends Component {
                 <table>
                     <tr>
                         <th>Date</th>
-                        <th>Price</th>
-                        <th>Crypto</th>
-                        <th>USD</th>
                         <th>Time</th>
+                        <th>Crypto</th>
+                        <th>Price</th>
+                        <th>USD</th>
                     </tr>
                     {this.renderTransactions()}
                 </table>

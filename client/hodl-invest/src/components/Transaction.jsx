@@ -16,7 +16,7 @@ export default class Transaction extends Component {
     }
 
     getTransactions() {
-        let url = 'https://hodl-invest-server.herokuapp.com/api/v1/users/zoro/transactions';
+        let url = this.props.transactionHistoryURL;
 
         request.get({
             url: url,
