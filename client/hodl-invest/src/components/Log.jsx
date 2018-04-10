@@ -22,6 +22,7 @@ class Log extends Component{
    }
 
    handleSubmit(event) {
+
      var sendObject=JSON.stringify({
        "username": this.state.username,
        "password": this.state.password,
@@ -30,6 +31,7 @@ class Log extends Component{
      });
      console.log(sendObject);
      event.preventDefault();
+
    }
 
 
@@ -39,7 +41,7 @@ class Log extends Component{
     return(
       <div class="logContainer">
         <div class="header">
-        <h1> Log </h1>
+        <h1> Log  In </h1>
           </div>
       <div class="RegistrationForm">
       <form onSubmit={this.handleSubmit}>
@@ -47,11 +49,14 @@ class Log extends Component{
     <input type="text" name="username" value={this.state.username} onChange={this.handleChange} placeHolder="Username" />
   </label>
   <label>
-    <input type="text" name="password" value={this.state.password}  onChange={this.handleChange}placeholder="Password" />
+    <input type="password" name="password" value={this.state.password}  onChange={this.handleChange}placeholder="Password" />
   </label>
+  <div class="row">
+  <input name="submit" type="submit" value="Submit" />
 
-  <input type="submit" value="Submit" />
+  </div>
 </form>
+  <button onClick={this.props.myClick}> or Register</button>
   </div>
 
   </div>

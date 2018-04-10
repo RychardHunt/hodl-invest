@@ -6,6 +6,7 @@
 
 }
 .header{
+  padding-top:  20px;
   color: white;
 }
 
@@ -16,14 +17,25 @@
   margin: auto;
   margin-bottom: 15px;
 }
-.RegistrationForm form *{
+.RegistrationForm form label{
   display: block;
   margin: auto;
   padding: 12px;
 
 }
+
+.row {
+ display: inline;
+
+}
+
 .RegistrationForm form label input{
   width: 80%;
   padding: 8px;
+
+}
+.RegistrationForm button, input{
+  border-radius: 7px;
+  padding: 10px;
 
 }
