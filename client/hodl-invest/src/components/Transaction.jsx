@@ -39,7 +39,7 @@ export default class Transaction extends Component {
     render() {
         return (
             <div className="transaction">
-                <BuySellPanel/>
+                <BuySellPanel transactionURL={this.props.transactionHistoryURL}/>
                 <TransactionHistory transactionArray={this.state.transactions}/>
             </div>
         )

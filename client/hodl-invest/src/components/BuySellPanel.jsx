@@ -38,7 +38,7 @@ export default class BuySellPanel extends Component {
             }
         });
 
-        xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/zoro/transactions");
+        xhr.open("POST", this.props.transactionURL);
         xhr.setRequestHeader("content-type", "application/json");
         xhr.setRequestHeader("cache-control", "no-cache");
 
@@ -68,7 +68,7 @@ export default class BuySellPanel extends Component {
             }
         });
 
-        xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/zoro/transactions");
+        xhr.open("POST", this.props.transactionURL);
         xhr.setRequestHeader("content-type", "application/json");
         xhr.setRequestHeader("cache-control", "no-cache");
 
