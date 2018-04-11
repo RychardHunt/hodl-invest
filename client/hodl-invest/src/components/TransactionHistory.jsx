@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import './TransactionHistory.css'
+import tinyDate from 'tinydate'
 
 /*
 This handles the transaction history chart only.
@@ -10,31 +11,42 @@ TODO:
     Limit number of transactions visible
     Button to expand transaction list
  */
-class TransactionHistory extends Component {
+export default class TransactionHistory extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            transactionArray : this.props.transactionArray
-        }
     }
 
-    static renderSingleTransaction(transactionObject) {
+    static renderSingleTransaction(date,ticker,price,time) {
         return <tr>
-            <th>{transactionObject.date}</th>
-            <th>{transactionObject.amount}</th>
+            <th>{date}</th>
+            <th>{time}</th>
+            <th>{ticker}</th>
+            <th>{price}</th>
+            <th>TBD</th>
         </tr>
     }
 
 
 
     renderTransactions() {
-        if(this.state.transactionArray === null || this.state.transactionArray.length === 0) {
+        if(this.props.transactionArray === null || this.props.transactionArray.length === 0) {
             return <p>Nothing here!</p>
         } else {
             let renderedTransactionsArray = [];
-            for(let i = 0;i < this.state.transactionArray.length ; ++i) {
-                let currentTransaction = this.state.transactionArray[i];
-                renderedTransactionsArray.push(TransactionHistory.renderSingleTransaction(currentTransaction));
+            for(let i = 0;i < this.props.transactionArray.length ; ++i) {
+                let stamp = tinyDate('{MM}/{DD}/{YY}');
+                let currentTransaction = this.props.transactionArray[i];
+                let temp = currentTransaction.timestamp;
+                let date = stamp(new Date(temp));
+                stamp = tinyDate('{HH}:{MM}');
+                let time = stamp(new Date(temp));
+                let ticker;
+                let price;
+                if(typeof currentTransaction.cryptocoin !== 'undefined') {
+                    ticker = currentTransaction.cryptocoin.ticker;
+                    price = currentTransaction.cryptocoin.price;
+                }
+                renderedTransactionsArray.push(TransactionHistory.renderSingleTransaction(date,ticker,price,time));
             }
             return renderedTransactionsArray;
         }
@@ -43,11 +55,14 @@ class TransactionHistory extends Component {
     render() {
         return (
             <div className="transaction-history" >
-                <center> <h1>Transaction History</h1> </center>
+                <h1>Transaction History</h1>
                 <table>
                     <tr>
                         <th>Date</th>
-                        <th>Amount</th>
+                        <th>Time</th>
+                        <th>Crypto</th>
+                        <th>Price</th>
+                        <th>USD</th>
                     </tr>
                     {this.renderTransactions()}
                 </table>
@@ -55,5 +70,3 @@ class TransactionHistory extends Component {
         )
     }
 }
-
-export default TransactionHistory;
