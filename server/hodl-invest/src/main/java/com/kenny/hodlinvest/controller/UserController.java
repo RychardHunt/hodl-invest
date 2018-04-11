@@ -31,12 +31,13 @@ public class UserController {
     }
 
     @CrossOrigin()
+    @ResponseBody
     @RequestMapping(
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public List<User> getAllUsers(){
-        return userService.getAllUsers();
+    public String message(){
+        return "API documentation can be found here: https://github.com/RychardHunt/hodl-invest/wiki/Project-Documentation";
     }
 
     @CrossOrigin()
@@ -180,13 +181,12 @@ public class UserController {
         }
     }
 
-
     private void checkToken(String username, Map<String, String> token){
         Token tok = tokenMap.get(token.get("token"));
         if(tok == null)
             throw new InvalidTokenException("Token is missing or is invalid. Request body is: " + token.toString());
 
         if(!tok.getUsername().equals(username))
-            throw new UserException("Unauthorized requests to delete user.");
+            throw new UserException("Unauthorized requests to user.");
     }
 }

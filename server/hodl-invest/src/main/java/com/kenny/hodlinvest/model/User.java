@@ -1,15 +1,14 @@
 package com.kenny.hodlinvest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kenny.hodlinvest.util.Secure;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@JsonIgnoreProperties(value = {"passwordHash", "email"}, allowSetters = true)
 public class User {
     private final String username;
     private String passwordHash;

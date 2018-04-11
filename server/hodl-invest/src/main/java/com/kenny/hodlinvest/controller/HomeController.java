@@ -10,6 +10,6 @@ public class HomeController {
     @RequestMapping("/")
     @ResponseBody
     public String instructions(){
-        return "https://hodl-invest-server.herokuapp.com/api/v1/users/ to get all users.";
+        return "API documentation can be found here: https://github.com/RychardHunt/hodl-invest/wiki/Project-Documentation";
     }
 }
