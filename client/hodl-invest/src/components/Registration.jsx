@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './Registration.css';
+import FacebookLogin from './FacebookLogin.jsx';
 
 class Registration extends Component{
 
@@ -64,7 +65,7 @@ class Registration extends Component{
   <input type="submit" value="Submit" />
 </form>
   </div>
-
+  <FacebookLogin/>
   </div>
     );
   }
