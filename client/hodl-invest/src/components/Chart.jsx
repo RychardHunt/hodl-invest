@@ -13,16 +13,13 @@ function Get(url){
 var json_obj = JSON.parse(Get(url));
 
 var timesArr = [];
-var unixArr = [];
 var opensArr = [];
 
 var data = json_obj.Data;
 
 for(var i = 0; i < data.length; i++) {
     var obj = data[i];
-    var date = new Date((obj.time)*1000);
-    var formattedDate = (date.getUTCMonth() + 1)+'-'+date.getUTCDate()+'-'+date.getUTCFullYear();
-    timesArr.push(formattedDate);
+    timesArr.push(obj.time);
     opensArr.push(obj.open);
 }
 
@@ -38,7 +35,7 @@ class Chart extends Component{
     displayTitle:true,
     displayLegend: true,
     legendPosition:'right',
-    coin:'BTC'
+    location:'City'
   }
 
   getChartData(){
@@ -77,7 +74,7 @@ class Chart extends Component{
           options={{
             title:{
               display:this.props.displayTitle,
-              text:this.props.coin + '\'s\ ' +  'Historical Prices',
+              text:this.props.location + '\'s \ ' +  'BTC Historical Prices',
               fontSize:25
             },
             legend:{
@@ -91,7 +88,7 @@ class Chart extends Component{
           options={{
             title:{
               display:this.props.displayTitle,
-              text:'Portfolio test for User',
+              text:'Pie graph Implementation for '+this.props.location,
               fontSize:25
             },
             legend:{
@@ -105,7 +102,7 @@ class Chart extends Component{
           options={{
             title:{
               display:this.props.displayTitle,
-              text:'Bar implementation for '+this.props.coin,
+              text:'Bar implementation for '+this.props.location,
               fontSize:25
             },
             legend:{

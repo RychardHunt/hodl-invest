@@ -21,31 +21,17 @@ public class User {
 
     public User(
             @JsonProperty("username") String username,
-            @JsonProperty("password") String password,
+            @JsonProperty("passwordHash") String password,
             @JsonProperty("name") String name,
             @JsonProperty("email") String email,
             @JsonProperty("playMoney") double playMoney,
             @JsonProperty("transactions") List<Transaction> transactions) {
         this.username = username;
         this.passwordHash = Secure.generateHash(password);
-
-        if(name == null)
-            this.name = "";
-        else
-            this.name = name;
-        if(email == null)
-            this.email = "";
-        else
-            this.email = email;
-        if(playMoney == 0)
-            playMoney = 10000;
-        else
-            this.playMoney = playMoney;
-
-        if(transactions == null)
-            this.transactions = new ArrayList<>();
-        else
-            this.transactions = transactions;
+        this.name = name;
+        this.email = email;
+        this.playMoney = playMoney;
+        this.transactions = transactions;
     }
 
     public String getUsername() {
@@ -72,14 +58,6 @@ public class User {
 
     public void addTransaction(Transaction transaction){
         transactions.add(transaction);
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public List<Transaction> getTransactions(){
