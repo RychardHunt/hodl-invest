@@ -21,8 +21,7 @@ export default class TransactionHistory extends Component {
             <th>{date}</th>
             <th>{time}</th>
             <th>{ticker}</th>
-            <th>{price}</th>
-            <th>TBD</th>
+            <th>${price}</th>
         </tr>
     }
 
@@ -61,7 +60,6 @@ export default class TransactionHistory extends Component {
                         <th>Date</th>
                         <th>Time</th>
                         <th>Crypto</th>
-                        <th>Price</th>
                         <th>USD</th>
                     </tr>
                     {this.renderTransactions()}
