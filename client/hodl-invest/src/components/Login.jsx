@@ -22,7 +22,7 @@ const LoginPage = (props) => {
       console.log(sendObject);
       xhr.send(sendObject);
       console.log(xhr.status);
-      alert('Signup Successful');
+      alert('Signup Successful! Please login with your credentials!');
     } else{
         alert('passwords dont match');
     }
@@ -42,6 +42,9 @@ const LoginPage = (props) => {
     xhr.addEventListener("readystatechange", function () {
       if (this.readyState === 4) {
         console.log(this.responseText);
+        var result=JSON.parse(this.responseText);
+	      document.cookie="token="+result.token;
+	      console.log(document.cookie);
       }
     });
 
@@ -50,7 +53,7 @@ const LoginPage = (props) => {
     xhr.setRequestHeader("cache-control", "no-cache");
 
     xhr.send(sendObject);
-    alert('Login Successful');
+    alert('Login Successful!');
     window.location.href = './dashboard';
   }
 
