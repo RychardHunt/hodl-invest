@@ -8,11 +8,14 @@ import com.kenny.hodlinvest.model.Cryptocoin;
 import com.kenny.hodlinvest.model.Token;
 import com.kenny.hodlinvest.model.Transaction;
 import com.kenny.hodlinvest.model.User;
+import com.kenny.hodlinvest.service.CryptocoinService;
 import com.kenny.hodlinvest.service.UserService;
+import com.kenny.hodlinvest.util.Secure;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.ws.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +26,13 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
+    private final CryptocoinService cryptocoinService;
     private final Map<String, Token> tokenMap = new HashMap<>();
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, CryptocoinService cryptocoinService) {
         this.userService = userService;
+        this.cryptocoinService = cryptocoinService;
     }
 
     @ResponseBody
@@ -52,12 +57,17 @@ public class UserController {
 
     @RequestMapping(
             method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public void addNewUser(@RequestBody User user){
+        if(user.getUsername() == null || user.getPasswordHash().equals(""))
+            throw new UserException("Username or password is null. Please put in a username and password field in order to create the user");
+
         if(userService.userExists(user.getUsername())){
             throw new UserException("Username already exists.");
         }
+
         userService.addUser(user.getUsername(), user);
     }
 
@@ -69,7 +79,7 @@ public class UserController {
         if(!userService.userExists(username))
             throw new UserNotFoundException("User does not exist");
 
-        checkToken(username, token);
+        Secure.checkToken(username, token, tokenMap);
 
         tokenMap.remove(token);
         userService.deleteUserByName(username);
@@ -83,7 +93,7 @@ public class UserController {
         if(!userService.userExists(username))
             throw new UserNotFoundException("User does not exist");
 
-        checkToken(username, token);
+        Secure.checkToken(username, token, tokenMap);
 
         userService.updateUserPlayMoney(username, amount);
     }
@@ -94,7 +104,7 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public void addTransaction(@RequestBody Map<String, String> body, @PathVariable("username") String username){
-        checkToken(username, body);
+        Secure.checkToken(username, body, tokenMap);
 
         if(!userService.userExists(username))
             throw new UserNotFoundException("User does not exist");
@@ -133,7 +143,7 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             path = "{username}/portfolio"
     )
-    public Map<Cryptocoin, Double> getUserPortfolio(@PathVariable String username){
+    public Map<String, Double> getUserPortfolio(@PathVariable String username){
         if(!userService.userExists(username))
             throw new UserNotFoundException("User does not exist");
 
@@ -150,6 +160,9 @@ public class UserController {
         String username = userInfo.get("username");
         String password = userInfo.get("password");
 
+        if(username == null || password == null)
+            throw new UserException("Username or password is null.");
+
         System.out.println("Attempting to login user " + username + " password " + password);
         if(!userService.userExists(username))
             throw new UserNotFoundException("User does not exist");
@@ -162,7 +175,7 @@ public class UserController {
             tokenMap.put(token.getToken(), token);
             return token;
         } else{
-            throw new UserException("Failed to authenticate user. Either username or password is incorrect or null.");
+            throw new UserException("Failed to authenticate user.");
         }
     }
 
@@ -182,12 +195,21 @@ public class UserController {
         }
     }
 
-    private void checkToken(String username, Map<String, String> token){
-        Token tok = tokenMap.get(token.get("token"));
-        if(tok == null)
-            throw new InvalidTokenException("Token is missing or is invalid. Request body is: " + token.toString());
+    @RequestMapping(
+            method = RequestMethod.POST,
+            path = "buy/{ticker}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public void buyCryptocoin(@RequestBody Map<String, String> bodyMap){
+        String username = "summit1g";
+        System.out.println("buy endpoint reached");
+        if(!userService.userExists(username))
+            throw new UserNotFoundException("User does not exist");
 
-        if(!tok.getUsername().equals(username))
-            throw new UserException("Unauthorized requests to user.");
+        Secure.checkToken(username, bodyMap, tokenMap);
+        System.out.println("Price of btc: " + cryptocoinService.getPriceFromCoinApi("BTC"));
+        System.out.println("Price of eth: " + cryptocoinService.getPriceFromCoinApi("ETH"));
+        System.out.println("Price of xrp: " + cryptocoinService.getPriceFromCoinApi("XRP"));
+        System.out.println(cryptocoinService.getCryptocoinPrice("btc"));
     }
 }

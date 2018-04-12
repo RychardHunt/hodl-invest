@@ -15,5 +15,5 @@ public interface UserDatabase {
     int deleteUserByName(String username);
     int updateTransactions(String username, String ticker, double price);
     List<Transaction> selectAllTransactions(String username);
-    Map<Cryptocoin, Double> selectPortfolio(String username);
+    Map<String, Double> selectPortfolio(String username);
 }

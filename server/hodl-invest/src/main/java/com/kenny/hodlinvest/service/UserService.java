@@ -63,7 +63,7 @@ public class UserService {
         return database.updateTransactions(username, ticker, price);
     }
 
-    public Map<Cryptocoin, Double> getPortfolio(String username) {
+    public Map<String, Double> getPortfolio(String username) {
         return database.selectPortfolio(username);
     }
 

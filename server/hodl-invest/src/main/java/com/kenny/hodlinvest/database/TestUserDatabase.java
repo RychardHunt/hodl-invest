@@ -67,7 +67,7 @@ public class TestUserDatabase implements UserDatabase {
     }
 
     @Override
-    public Map<Cryptocoin, Double> selectPortfolio(String username) {
+    public Map<String, Double> selectPortfolio(String username) {
         return database.get(username).getPortfolio();
     }
 
