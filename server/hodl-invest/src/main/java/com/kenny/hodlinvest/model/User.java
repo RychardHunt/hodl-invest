@@ -93,6 +93,8 @@ public class User {
         this.portfolio = portfolio;
     }
 
+    public void addToPortfolio(String ticker, double amout){getPortfolio().put(ticker, amout);}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

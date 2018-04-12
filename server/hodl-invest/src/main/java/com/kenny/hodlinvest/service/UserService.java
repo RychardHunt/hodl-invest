@@ -1,6 +1,7 @@
 package com.kenny.hodlinvest.service;
 
 import com.kenny.hodlinvest.database.TestUserDatabase;
+import com.kenny.hodlinvest.exception.TransactionException;
 import com.kenny.hodlinvest.exception.UserNotFoundException;
 import com.kenny.hodlinvest.model.Cryptocoin;
 import com.kenny.hodlinvest.model.Transaction;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,8 +61,8 @@ public class UserService {
         return 1;
     }
 
-    public int addTransaction(String username, String ticker, double price){
-        return database.updateTransactions(username, ticker, price);
+    public int addTransaction(String username, String ticker, double amount, double price, String transactionType){
+        return database.updateTransactions(username, ticker, amount, price, transactionType);
     }
 
     public Map<String, Double> getPortfolio(String username) {

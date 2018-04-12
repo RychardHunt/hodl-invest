@@ -77,6 +77,7 @@ public class CryptocoinService {
             JsonParser jsonParser = new JsonParser();
             JsonObject obj = jsonParser.parse(jsonResponse).getAsJsonObject();
             Double rate = obj.get("rate").getAsDouble();
+
             if(rate == null){
                 throw new CryptocoinUpdateException("Unable to retrieve cryptocoin rate. Rate is null");
             }

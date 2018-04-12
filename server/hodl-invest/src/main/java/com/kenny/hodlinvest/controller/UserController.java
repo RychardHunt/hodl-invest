@@ -1,21 +1,18 @@
 package com.kenny.hodlinvest.controller;
 
-import com.kenny.hodlinvest.exception.InvalidInputException;
-import com.kenny.hodlinvest.exception.InvalidTokenException;
 import com.kenny.hodlinvest.exception.UserException;
 import com.kenny.hodlinvest.exception.UserNotFoundException;
-import com.kenny.hodlinvest.model.Cryptocoin;
 import com.kenny.hodlinvest.model.Token;
 import com.kenny.hodlinvest.model.Transaction;
 import com.kenny.hodlinvest.model.User;
 import com.kenny.hodlinvest.service.CryptocoinService;
+import com.kenny.hodlinvest.service.TransactionService;
 import com.kenny.hodlinvest.service.UserService;
 import com.kenny.hodlinvest.util.Secure;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,12 +24,14 @@ public class UserController {
 
     private final UserService userService;
     private final CryptocoinService cryptocoinService;
+    private final TransactionService transactionService;
     private final Map<String, Token> tokenMap = new HashMap<>();
 
     @Autowired
-    public UserController(UserService userService, CryptocoinService cryptocoinService) {
+    public UserController(UserService userService, CryptocoinService cryptocoinService, TransactionService transactionService) {
         this.userService = userService;
         this.cryptocoinService = cryptocoinService;
+        this.transactionService = transactionService;
     }
 
     @ResponseBody
@@ -98,33 +97,33 @@ public class UserController {
         userService.updateUserPlayMoney(username, amount);
     }
 
-    @RequestMapping(
-            method = RequestMethod.POST,
-            path = "{username}/transactions",
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public void addTransaction(@RequestBody Map<String, String> body, @PathVariable("username") String username){
-        Secure.checkToken(username, body, tokenMap);
-
-        if(!userService.userExists(username))
-            throw new UserNotFoundException("User does not exist");
-
-        try{
-            String ticker = body.get("ticker");
-            double price = Double.parseDouble(body.get("price"));
-            if(body.get("ticker") == null || body.get("price") == null){
-                throw new InvalidInputException("Please enter the ticker and price in JSON format. Request body is: + token.toString()");
-            }
-
-            Cryptocoin cryptocoin = new Cryptocoin(ticker, price);
-
-            System.out.println("Added transaction: " + cryptocoin.getTicker() + " with price: " + cryptocoin.getPrice() + " to user: " + username);
-            userService.addTransaction(username, cryptocoin.getTicker(), cryptocoin.getPrice());
-
-        } catch (NumberFormatException e){
-            throw new InvalidInputException("Price is not a number. Price: " + body.get("price"));
-        }
-    }
+//    @RequestMapping(
+//            method = RequestMethod.POST,
+//            path = "{username}/transactions",
+//            produces = MediaType.APPLICATION_JSON_VALUE
+//    )
+//    public void addTransaction(@RequestBody Map<String, String> body, @PathVariable("username") String username){
+//        Secure.checkToken(username, body, tokenMap);
+//
+//        if(!userService.userExists(username))
+//            throw new UserNotFoundException("User does not exist");
+//
+//        try{
+//            String ticker = body.get("ticker");
+//            double price = Double.parseDouble(body.get("price"));
+//            if(body.get("ticker") == null || body.get("price") == null){
+//                throw new InvalidInputException("Please enter the ticker and price in JSON format. Request body is: + token.toString()");
+//            }
+//
+//            Cryptocoin cryptocoin = new Cryptocoin(ticker, price);
+//
+//            System.out.println("Added transaction: " + cryptocoin.getTicker() + " with price: " + cryptocoin.getPrice() + " to user: " + username);
+//            userService.addTransaction(username, cryptocoin.getTicker(), cryptocoin.getPrice());
+//
+//        } catch (NumberFormatException e){
+//            throw new InvalidInputException("Price is not a number. Price: " + body.get("price"));
+//        }
+//    }
 
     @RequestMapping(
             method = RequestMethod.GET,
@@ -197,19 +196,34 @@ public class UserController {
 
     @RequestMapping(
             method = RequestMethod.POST,
-            path = "buy/{ticker}",
+            path = "buy/{ticker}/{amount}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public void buyCryptocoin(@RequestBody Map<String, String> bodyMap){
-        String username = "summit1g";
-        System.out.println("buy endpoint reached");
-        if(!userService.userExists(username))
+    public void buyCryptocoin(@RequestBody Map<String, String> bodyMap, @PathVariable("ticker") String ticker, @PathVariable("amount") double amount){
+        System.out.println("Buy endpoint reached");
+        String username = bodyMap.get("username");
+        if(username == null || !userService.userExists(username))
             throw new UserNotFoundException("User does not exist");
 
         Secure.checkToken(username, bodyMap, tokenMap);
-        System.out.println("Price of btc: " + cryptocoinService.getPriceFromCoinApi("BTC"));
-        System.out.println("Price of eth: " + cryptocoinService.getPriceFromCoinApi("ETH"));
-        System.out.println("Price of xrp: " + cryptocoinService.getPriceFromCoinApi("XRP"));
-        System.out.println(cryptocoinService.getCryptocoinPrice("btc"));
+
+        transactionService.processBuyRequest(userService.getUserByName(username), ticker.toUpperCase(), amount, cryptocoinService.getPriceFromCoinApi(ticker.toUpperCase()));
+    }
+
+    @RequestMapping(
+            method = RequestMethod.POST,
+            path = "sell/{ticker}/{amount}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public void sellCryptocoin(@RequestBody Map<String, String> bodyMap, @PathVariable String ticker, @PathVariable double amount){
+        System.out.println("Sell endpoint reached");
+        String username = bodyMap.get("username");
+
+        if(username == null || !userService.userExists(username))
+            throw new UserNotFoundException("User does not exist");
+
+        Secure.checkToken(username, bodyMap, tokenMap);
+
+        transactionService.processSellRequest(userService.getUserByName(username), ticker.toUpperCase(), amount, cryptocoinService.getPriceFromCoinApi(ticker.toUpperCase()));
     }
 }
