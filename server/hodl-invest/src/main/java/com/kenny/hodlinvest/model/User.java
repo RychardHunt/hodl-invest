@@ -4,9 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kenny.hodlinvest.util.Secure;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @JsonIgnoreProperties(value = {"passwordHash", "email"}, allowSetters = true)
 public class User {
@@ -17,6 +15,7 @@ public class User {
     private double playMoney;
 
     private List<Transaction> transactions;
+    private Map<Cryptocoin, Double> portfolio;
 
     public User(
             @JsonProperty("username") String username,
@@ -24,7 +23,8 @@ public class User {
             @JsonProperty("name") String name,
             @JsonProperty("email") String email,
             @JsonProperty("playMoney") double playMoney,
-            @JsonProperty("transactions") List<Transaction> transactions) {
+            @JsonProperty("transactions") List<Transaction> transactions,
+            @JsonProperty("portfolio") Map<Cryptocoin, Double> portfolio) {
         this.username = username;
         this.passwordHash = Secure.generateHash(password);
 
@@ -45,6 +45,11 @@ public class User {
             this.transactions = new ArrayList<>();
         else
             this.transactions = transactions;
+
+        if(portfolio == null)
+            this.portfolio = new HashMap<>();
+        else
+            this.portfolio = portfolio;
     }
 
     public String getUsername() {
@@ -84,6 +89,15 @@ public class User {
     public List<Transaction> getTransactions(){
         return this.transactions;
     }
+
+    public Map<Cryptocoin, Double> getPortfolio() {
+        return portfolio;
+    }
+
+    public void setPortfolio(Map<Cryptocoin, Double> portfolio) {
+        this.portfolio = portfolio;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

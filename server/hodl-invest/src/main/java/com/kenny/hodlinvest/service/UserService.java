@@ -2,6 +2,7 @@ package com.kenny.hodlinvest.service;
 
 import com.kenny.hodlinvest.database.TestUserDatabase;
 import com.kenny.hodlinvest.exception.UserNotFoundException;
+import com.kenny.hodlinvest.model.Cryptocoin;
 import com.kenny.hodlinvest.model.Transaction;
 import com.kenny.hodlinvest.model.User;
 import com.kenny.hodlinvest.util.Secure;
@@ -62,6 +63,10 @@ public class UserService {
         return database.updateTransactions(username, ticker, price);
     }
 
+    public Map<Cryptocoin, Double> getPortfolio(String username) {
+        return database.selectPortfolio(username);
+    }
+
     public List<Transaction> getUserTransactions(String username){
         return database.selectAllTransactions(username);
     }
@@ -74,4 +79,5 @@ public class UserService {
         System.out.println(user.getPasswordHash() + " " + Secure.generateHash(password) + " " + Secure.generateHash(password));
         return user.getPasswordHash().equals(Secure.generateHash(password));
     }
+
 }
