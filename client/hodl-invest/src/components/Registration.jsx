@@ -10,7 +10,7 @@ class Registration extends Component{
      this.state={confirmPassword: ''}
      this.state = {name: ''};
      this.state = {email: ''};
-     this.state = {playMoney: ''};
+
 
      this.handleChange = this.handleChange.bind(this);
      this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,7 +28,7 @@ class Registration extends Component{
        "passwordHash": this.state.password,
        "name": this.state.name,
        "email": this.state.email,
-       "playMoney": this.state.playMoney,
+
 
      });
      console.log(sendObject);
@@ -60,9 +60,6 @@ class Registration extends Component{
   </label>
   <label>
     <input type="text" name="email" value={this.state.email} onChange={this.handleChange} placeHolder="Email" />
-  </label>
-  <label>
-    <input type="text" name="playMoney" value={this.state.playMoney} onChange={this.handleChange} placeHolder="Initial Capital" />
   </label>
   <input type="submit" value="Submit" />
 </form>
