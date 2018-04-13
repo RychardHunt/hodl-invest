@@ -162,7 +162,7 @@ public class UserController {
         if(username == null || password == null)
             throw new UserException("Username or password is null.");
 
-        System.out.println("Attempting to login user " + username + " password " + password);
+        System.out.println("Attempting to login user " + username);
         if(!userService.userExists(username))
             throw new UserNotFoundException("User does not exist");
 

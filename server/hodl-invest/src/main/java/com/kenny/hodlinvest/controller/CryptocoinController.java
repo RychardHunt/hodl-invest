@@ -41,6 +41,6 @@ public class CryptocoinController {
             path = "{ticker}"
     )
     public double getCryptcoin(@PathVariable String ticker){
-        return cryptocoinService.getPriceFromCoinApi(ticker);
+        return cryptocoinService.getPriceFromCoinApi(ticker.toUpperCase());
     }
 }
