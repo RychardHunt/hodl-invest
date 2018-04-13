@@ -8,10 +8,14 @@ import java.time.LocalDateTime;
 
 public class Transaction {
     private Cryptocoin cryptocoin;
+    private double amount;
+    private String transactionType;
     private LocalDateTime localDateTime;
 
     public Transaction(
             @JsonProperty("cryptocoin") Cryptocoin cryptocoin,
+            @JsonProperty("amount") double amount,
+            @JsonProperty("transactionType") String transactionType,
             @JsonProperty("timestamp") LocalDateTime localDateTime) {
         this.cryptocoin = cryptocoin;
 
@@ -19,6 +23,9 @@ public class Transaction {
             localDateTime = LocalDateTime.now();
         else
             this.localDateTime = localDateTime;
+
+        this.amount = amount;
+        this.transactionType = transactionType;
     }
 
     public Cryptocoin getCryptocoin() {
@@ -35,5 +42,21 @@ public class Transaction {
 
     public void setLocalDateTime(LocalDateTime localDateTime) {
         this.localDateTime = localDateTime;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public String getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(String transactionType) {
+        this.transactionType = transactionType;
     }
 }

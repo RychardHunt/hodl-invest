@@ -1,0 +1,54 @@
+/* Style the tab */
+.tab {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    justify-content: center;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 40px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+/*
+CSS Source:
+https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_tabs
+*/
+
+
+.buy-sell-panel {
+    padding: 16px;
+    float: left;
+    width: 40%;
+}
+
+.tabcontent form {
+    padding-left: 20%;
+}
