@@ -15,7 +15,7 @@ public class User {
     private double playMoney;
 
     private List<Transaction> transactions;
-    private Map<Cryptocoin, Double> portfolio;
+    private Map<String, Double> portfolio;
 
     public User(
             @JsonProperty("username") String username,
@@ -24,9 +24,14 @@ public class User {
             @JsonProperty("email") String email,
             @JsonProperty("playMoney") double playMoney,
             @JsonProperty("transactions") List<Transaction> transactions,
-            @JsonProperty("portfolio") Map<Cryptocoin, Double> portfolio) {
+            @JsonProperty("portfolio") Map<String, Double> portfolio) {
+
         this.username = username;
-        this.passwordHash = Secure.generateHash(password);
+
+        if(password == null)
+            this.passwordHash = "";
+        else
+            this.passwordHash = Secure.generateHash(password);
 
         if(name == null)
             this.name = "";
@@ -36,20 +41,10 @@ public class User {
             this.email = "";
         else
             this.email = email;
-        if(playMoney == 0)
-            playMoney = 10000;
-        else
-            this.playMoney = playMoney;
 
-        if(transactions == null)
-            this.transactions = new ArrayList<>();
-        else
-            this.transactions = transactions;
-
-        if(portfolio == null)
-            this.portfolio = new HashMap<>();
-        else
-            this.portfolio = portfolio;
+        this.transactions = new ArrayList<>();
+        this.portfolio = new HashMap<>();
+        this.playMoney = 100000;
     }
 
     public String getUsername() {
@@ -90,13 +85,15 @@ public class User {
         return this.transactions;
     }
 
-    public Map<Cryptocoin, Double> getPortfolio() {
+    public Map<String, Double> getPortfolio() {
         return portfolio;
     }
 
-    public void setPortfolio(Map<Cryptocoin, Double> portfolio) {
+    public void setPortfolio(Map<String, Double> portfolio) {
         this.portfolio = portfolio;
     }
+
+    public void addToPortfolio(String ticker, double amout){getPortfolio().put(ticker, amout);}
 
     @Override
     public boolean equals(Object o) {
