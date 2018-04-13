@@ -19,9 +19,9 @@ public class TestUserDatabase implements UserDatabase {
 
     public TestUserDatabase() {
         this.database = new HashMap<>();
-        insertUser("zoro", new User("zoro", "fakepassword","kenny", "email@email.com", 1000, new ArrayList<>()));
-        insertUser("ninja", new User("ninja", "testpassword", "tyler", "lol@email.com", 2000, new ArrayList<>()));
-        insertUser("summit1g", new User("summit1g","lol123", "josh", "summit@email.com", 1000, new ArrayList<>()));
+        insertUser("zoro", new User("zoro", "fakepassword","kenny", "email@email.com", 1000, new ArrayList<>(), null));
+        insertUser("ninja", new User("ninja", "testpassword", "tyler", "lol@email.com", 2000, new ArrayList<>(), null));
+        insertUser("summit1g", new User("summit1g","lol123", "josh", "summit@email.com", 1000, new ArrayList<>(), null));
         database.get("zoro").addTransaction(new Transaction(new Cryptocoin("btc", 6543), LocalDateTime.now()));
         database.get("zoro").addTransaction(new Transaction(new Cryptocoin("eth", 525), LocalDateTime.now()));
     }
@@ -65,4 +65,11 @@ public class TestUserDatabase implements UserDatabase {
     public List<Transaction> selectAllTransactions(String username) {
         return database.get(username).getTransactions();
     }
+
+    @Override
+    public Map<Cryptocoin, Double> selectPortfolio(String username) {
+        return database.get(username).getPortfolio();
+    }
+
+
 }

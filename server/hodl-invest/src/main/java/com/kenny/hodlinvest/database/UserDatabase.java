@@ -1,9 +1,11 @@
 package com.kenny.hodlinvest.database;
 
+import com.kenny.hodlinvest.model.Cryptocoin;
 import com.kenny.hodlinvest.model.Transaction;
 import com.kenny.hodlinvest.model.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserDatabase {
     int insertUser(String username, User user);
@@ -13,4 +15,5 @@ public interface UserDatabase {
     int deleteUserByName(String username);
     int updateTransactions(String username, String ticker, double price);
     List<Transaction> selectAllTransactions(String username);
+    Map<Cryptocoin, Double> selectPortfolio(String username);
 }

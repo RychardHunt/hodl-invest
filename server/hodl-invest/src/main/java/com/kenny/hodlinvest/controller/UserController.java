@@ -30,16 +30,14 @@ public class UserController {
         this.userService = userService;
     }
 
-    @CrossOrigin()
+    @ResponseBody
     @RequestMapping(
-            method = RequestMethod.GET,
-            produces = MediaType.APPLICATION_JSON_VALUE
+            method = RequestMethod.GET
     )
-    public List<User> getAllUsers(){
-        return userService.getAllUsers();
+    public String message(){
+        return "API documentation can be found here: https://github.com/RychardHunt/hodl-invest/wiki/Project-Documentation";
     }
 
-    @CrossOrigin()
     @RequestMapping(
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE,
@@ -52,7 +50,6 @@ public class UserController {
             return userService.getUserByName(username);
     }
 
-    @CrossOrigin()
     @RequestMapping(
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE
@@ -61,11 +58,9 @@ public class UserController {
         if(userService.userExists(user.getUsername())){
             throw new UserException("Username already exists.");
         }
-
         userService.addUser(user.getUsername(), user);
     }
 
-    @CrossOrigin()
     @RequestMapping(
             method = RequestMethod.DELETE,
             path = "{username}"
@@ -80,7 +75,6 @@ public class UserController {
         userService.deleteUserByName(username);
     }
 
-    @CrossOrigin()
     @RequestMapping(
             method = RequestMethod.POST,
             path = "{username}/transactions/{amount}"
@@ -94,7 +88,6 @@ public class UserController {
         userService.updateUserPlayMoney(username, amount);
     }
 
-    @CrossOrigin()
     @RequestMapping(
             method = RequestMethod.POST,
             path = "{username}/transactions",
@@ -123,7 +116,6 @@ public class UserController {
         }
     }
 
-    @CrossOrigin()
     @RequestMapping(
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE,
@@ -136,7 +128,18 @@ public class UserController {
         return userService.getUserTransactions(username);
     }
 
-    @CrossOrigin()
+    @RequestMapping(
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            path = "{username}/portfolio"
+    )
+    public Map<Cryptocoin, Double> getUserPortfolio(@PathVariable String username){
+        if(!userService.userExists(username))
+            throw new UserNotFoundException("User does not exist");
+
+        return userService.getPortfolio(username);
+    }
+
     @RequestMapping(
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -163,7 +166,6 @@ public class UserController {
         }
     }
 
-    @CrossOrigin()
     @RequestMapping(
             method = RequestMethod.POST,
             path = "logout"
@@ -180,13 +182,12 @@ public class UserController {
         }
     }
 
-
     private void checkToken(String username, Map<String, String> token){
         Token tok = tokenMap.get(token.get("token"));
         if(tok == null)
             throw new InvalidTokenException("Token is missing or is invalid. Request body is: " + token.toString());
 
         if(!tok.getUsername().equals(username))
-            throw new UserException("Unauthorized requests to delete user.");
+            throw new UserException("Unauthorized requests to user.");
     }
 }
