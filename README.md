@@ -1,8 +1,12 @@
 # hodl-invest
 
 https://hodl-invest.herokuapp.com/
+https://hodl-invest-server.herokuapp.com/
 
-Alpha video: https://www.youtube.com/watch?v=iFnggckebBI&feature=youtu.be
+Beta video: https://www.youtube.com/watch?v=PzSBN1chqCE&feature=youtu.be
+Landing page: https://hodl-invest.herokuapp.com/landingpage
+
+[![Gitter chat](https://badges.gitter.im/MutualFund/Lobby.png)](https://gitter.im/MutualFund/Lobby)
 
 <h2> Description: </h2>
 
@@ -40,6 +44,8 @@ Users would be able to login to our platform to perform buying and selling virtu
   
 <ol>5. As an administrator, I want to interface with cryptocurrency exchanges so that I can have the reliable data for my users to understand the current market movements.</ol>
 
+***
+
 **hodl-invest server API documentation**
 https://hodl-invest-server.herokuapp.com/
 ----
@@ -51,12 +57,14 @@ https://hodl-invest-server.herokuapp.com/
   
 
   `GET`  
+
 *  **URL Params**
 
-   **Required:** N/A
- 
+   **Required:**
 
-   **Optional:** N/A
+* **Data Params**
+
+   **Required:**
    
  * **Sample Call:**
 
@@ -74,26 +82,9 @@ xhr.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/users/");
 xhr.setRequestHeader("content-type", "application/json");
 xhr.setRequestHeader("cache-control", "no-cache");
 
-xhr.send(data);
+xhr.send(null);
  ```
 
-**Returns JSON**
-```
-var xhr = new XMLHttpRequest();
-xhr.withCredentials = true;
-
-xhr.addEventListener("readystatechange", function () {
-  if (this.readyState === 4) {
-    console.log(this.responseText);
-  }
-});
-
-xhr.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/users");
-xhr.setRequestHeader("content-type", "application/json");
-xhr.setRequestHeader("cache-control", "no-cache");
-
-xhr.send(data);
-```
 * **Method:**
 
   `POST`
@@ -101,25 +92,23 @@ xhr.send(data);
 *  **URL Params**
 
    **Required:**
- 
+
+* **Data Params**
+
+   **Required:**
+
    `username=[string]`
-   `passwordHash=[string]`
+   `password=[string]`
    `name=[string]`
    `email=[string]`
-   `playMoney=[integer]`
-
-   **Optional:**
-
 
 * **Sample Call:**
 ```
 var data = JSON.stringify({
-  "username": "bobthebuilder",
-  "passwordHash": "fakepassword",
-  "name": "johnny",
-  "email": "johnny@email.com",
-  "playMoney": 2000,
-  "transactions": []
+  "username": "user",
+  "name": "tyler",
+  "email": "email@email.com",
+  "password": "password"
 });
 
 var xhr = new XMLHttpRequest();
@@ -132,8 +121,8 @@ xhr.addEventListener("readystatechange", function () {
 });
 
 xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/");
-xhr.setRequestHeader("content-type", "application/json");
-xhr.setRequestHeader("cache-control", "no-cache");
+xhr.setRequestHeader("Content-Type", "application/json");
+xhr.setRequestHeader("Cache-Control", "no-cache");
 
 xhr.send(data);
 ```  
@@ -141,17 +130,22 @@ xhr.send(data);
 
 * **Method:**
   `GET`
-  `DELETE`
   
 *  **URL Params**
-  {username} (string)
 
-   **Optional:**
+   **Required:**
 
+   `username=[string]`
+
+* **Data Params**
+
+   **Required:**
 
 * **Sample Call:**
 
 ```
+var data = null;
+
 var xhr = new XMLHttpRequest();
 xhr.withCredentials = true;
 
@@ -161,13 +155,73 @@ xhr.addEventListener("readystatechange", function () {
   }
 });
 
-xhr.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/users/ninja");
-xhr.setRequestHeader("content-type", "application/json");
-xhr.setRequestHeader("cache-control", "no-cache");
+xhr.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/users/zoro");
+xhr.setRequestHeader("Content-Type", "application/json");
+xhr.setRequestHeader("Cache-Control", "no-cache");
 
 xhr.send(data);
 ```
 
+* **Returns JSON:**
+
+```
+{
+    "username": "zoro",
+    "name": "kenny",
+    "playMoney": 76909.33368264533,
+    "transactions": [
+        {
+            "cryptocoin": {
+                "ticker": "btc",
+                "price": 6543
+            },
+            "amount": 5,
+            "transactionType": "BUY",
+            "timestamp": "2018-04-12T18:45:49.741"
+        },
+        {
+            "cryptocoin": {
+                "ticker": "eth",
+                "price": 525
+            },
+            "amount": 3,
+            "transactionType": "SELL",
+            "timestamp": "2018-04-12T18:45:49.741"
+        },
+        {
+            "cryptocoin": {
+                "ticker": "BTC",
+                "price": 7696.888772451555
+            },
+            "amount": 3,
+            "transactionType": "BUY",
+            "timestamp": "2018-04-12T19:02:54.113"
+        }
+    ],
+    "portfolio": {
+        "BTC": 3
+    }
+}
+```
+
+* **Method:**
+  `DELETE`
+
+*  **URL Params**
+
+   **Required:**
+
+   `username=[string]`
+
+
+* **Data Params**
+
+   **Required:**
+
+   `token=[string]`
+
+
+* **Sample Call:**
 
 ```
 var xhr = new XMLHttpRequest();
@@ -185,23 +239,8 @@ xhr.setRequestHeader("cache-control", "no-cache");
 
 xhr.send(data);
 ```
-
-  
-* **https://hodl-invest-server.herokuapp.com/api/v1/users/{username}/transactions/{amount}**
-
-
-* **Method:**
-
-  `POST`
-  
-*  **URL Params**
- {username}   {string}
- {amount}     {double}
-   **Required:** N/A
-
-   **Optional:** N/A
  
-* **https://hodl-invest-server.herokuapp.com/api/v1/users/zoro/transactions**
+* **https://hodl-invest-server.herokuapp.com/api/v1/users/{username}/transactions**
 
 * **Method:**
   
@@ -213,44 +252,52 @@ xhr.send(data);
 
    **Optional:**
 
-    **Returns JSON**
+* **Returns JSON:**
 ```
-     [
+   [
     {
         "cryptocoin": {
             "ticker": "btc",
             "price": 6543
         },
-        "timestamp": "2018-03-28T04:28:13.756"
+        "amount": 5,
+        "transactionType": "BUY",
+        "timestamp": "2018-04-12T18:45:49.741"
     },
     {
         "cryptocoin": {
             "ticker": "eth",
             "price": 525
         },
-        "timestamp": "2018-03-28T04:28:13.756"
+        "amount": 3,
+        "transactionType": "SELL",
+        "timestamp": "2018-04-12T18:45:49.741"
     }
-  ]
+]
 ```
-* **Notes:**
+
+* **https://hodl-invest-server.herokuapp.com/api/v1/users/login**
 
 * **Method:**
   
   `POST`
-  
+
 *  **URL Params**
 
    **Required:**
-    `ticker=[string]`
-   `price=[double]`
-   **Optional:**
-   
-* **Sample Call:**
 
+* **Data Params**
+
+   **Required:**
+
+   `username=[string]` 
+   `password=[string]`
+
+* **Sample Call:**
 ```
 var data = JSON.stringify({
-  "ticker": "abc",
-  "price": 22
+  "username": "zoro",
+  "password": "fakepassword"
 });
 
 var xhr = new XMLHttpRequest();
@@ -262,7 +309,54 @@ xhr.addEventListener("readystatechange", function () {
   }
 });
 
-xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/zoro/transactions");
+xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/login");
+xhr.setRequestHeader("content-type", "application/json");
+xhr.setRequestHeader("cache-control", "no-cache");
+
+xhr.send(data);
+```
+
+* **Returns JSON:**
+
+```
+   {
+    "token": "bS30Kkpbwj8rvUXtWVZzOKzWGoJjyatLVF17397vNW329gY6wdqJDdlj8BrNhif3",
+    "username": "zoro"
+}
+```
+
+* **https://hodl-invest-server.herokuapp.com/api/v1/users/logout**
+
+* **Method:**
+  
+  `POST`
+  
+  **URL Params**
+
+   **Required:**
+
+* **Data Params**
+
+   **Required:**
+
+   `token=[string]`
+
+* **Sample Call:**
+```
+var data = JSON.stringify({
+  "token": "id8qGYO1ClxCIBqZNfUTX9W5EzKgzWJ8unCXcbN3iuTh2qRPTNcYACk2GJKHdkOV"
+});
+
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === 4) {
+    console.log(this.responseText);
+  }
+});
+
+xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/logout");
 xhr.setRequestHeader("content-type", "application/json");
 xhr.setRequestHeader("cache-control", "no-cache");
 
@@ -270,5 +364,133 @@ xhr.send(data);
 ```
 
 
+* **https://hodl-invest-server.herokuapp.com/api/v1/users/buy/{ticker}/{amount}**
 
-[![Gitter chat](https://badges.gitter.im/MutualFund/Lobby.png)](https://gitter.im/MutualFund/Lobby)
+
+* **Method:**
+
+  `POST`  
+
+  **URL Params**
+
+   **Required:**
+   
+   `ticker=[string]`
+   `amount=[double]`
+
+* **Data Params**
+
+   **Required:**
+
+   `token=[string]`
+   
+ * **Sample Call:**
+
+```
+var data = JSON.stringify({
+  "token": "sBaDqq91QKYfPSILejlE7mlHttqbykbT2EgVZJrGqwroyci9rJRaBvW4WomKBXaD",
+  "username": "user"
+});
+
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === 4) {
+    console.log(this.responseText);
+  }
+});
+
+xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/buy/xrp/500");
+xhr.setRequestHeader("Content-Type", "application/json");
+xhr.setRequestHeader("Cache-Control", "no-cache");
+
+xhr.send(data);
+```
+
+* **https://hodl-invest-server.herokuapp.com/api/v1/users/sell/{ticker}/{amount}**
+
+
+* **Method:**
+
+  `POST`  
+
+  **URL Params**
+
+   **Required:**
+   
+   `ticker=[string]`
+   `amount=[double]`
+
+* **Data Params**
+
+   **Required:**
+
+   `token=[string]`
+   
+ * **Sample Call:**
+
+```
+var data = JSON.stringify({
+  "token": "sBaDqq91QKYfPSILejlE7mlHttqbykbT2EgVZJrGqwroyci9rJRaBvW4WomKBXaD",
+  "username": "user"
+});
+
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === 4) {
+    console.log(this.responseText);
+  }
+});
+
+xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/sell/xrp/500");
+xhr.setRequestHeader("Content-Type", "application/json");
+xhr.setRequestHeader("Cache-Control", "no-cache");
+
+xhr.send(data);
+```
+
+
+* **https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/{ticker}*
+
+
+* **Method:**
+
+  `GET`  
+
+  **URL Params**
+
+   **Required:**
+   
+   `ticker=[string]`
+
+* **Data Params**
+
+   **Required:**
+   
+ * **Sample Call:**
+
+```
+var data = null;
+
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === 4) {
+    console.log(this.responseText);
+  }
+});
+
+xhr.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/BTC");
+xhr.setRequestHeader("Content-Type", "application/json");
+xhr.setRequestHeader("Cache-Control", "no-cache");
+xhr.setRequestHeader("Postman-Token", "daead1f1-6344-42b5-89dc-92981df21b62");
+
+xhr.send(data);
+```
+
+
+

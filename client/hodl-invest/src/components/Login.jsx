@@ -1,58 +1,77 @@
 import React, {Component} from 'react';
 import ReactSignupLoginComponent from 'react-signup-login-component';
+import {Link} from 'react-router-dom';
+import Registration from './Registration.jsx';
+import Log from './Log.jsx';
 import './Login.css';
 
 const LoginPage = (props) => {
   const signupWasClickedCallback = (data) => {
     console.log(data);
-    alert('Signup callback, see log on the console to see the data.');
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/");
+    xhr.setRequestHeader("content-type", "application/json");
+    xhr.setRequestHeader("cache-control", "no-cache");
+    if(data.password===data.passwordConfirmation){
+      var sendObject = JSON.stringify({
+        "username": data.username,
+        "passwordHash": data.password,
+        "name": "meep",
+        "email": "j@gmail.com",
+        "playMoney": 100,
+        "transaction":[]
+      });
+      console.log(sendObject);
+      xhr.send(sendObject);
+      console.log(xhr.status);
+      alert('Signup Successful! Please login with your credentials!');
+    } else{
+        alert('passwords dont match');
+    }
   };
+
   const loginWasClickedCallback = (data) => {
     console.log(data);
-    alert('Login callback, see log on the console to see the data.');
-  };
-  const recoverPasswordWasClickedCallback = (data) => {
-    console.log(data);
-    alert('Recover password callback, see log on the console to see the data.');
-  };
+    var sendObject = JSON.stringify({
+      "username": data.username,
+      "password": data.password
+    });
+
+    console.log(sendObject);
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = false;
+
+    xhr.addEventListener("readystatechange", function () {
+      if (this.readyState === 4) {
+        console.log(this.responseText);
+        var result=JSON.parse(this.responseText);
+	      document.cookie="token="+result.token;
+	      console.log(document.cookie);
+      }
+    });
+
+    xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/login");
+    xhr.setRequestHeader("content-type", "application/json");
+    xhr.setRequestHeader("cache-control", "no-cache");
+
+    xhr.send(sendObject);
+    alert('Login Successful!');
+    window.location.href = './dashboard';
+  }
+
+
+    const responseFacebook = (response) => {
+      console.log(response);
+    }
+
+
   return (
     <div>
-    <ReactSignupLoginComponent
-    styles={{
-      mainWrapper: { backgroundColor: '#2892D7' },
-      mainTitle: { color: 'white' },
-      flipper: { transition: '0.1s' },
-      signup: {
-        wrapper: { backgroundColor: 'yellow' },
-        inputWrapper: { backgroundColor: '#53a7df' },
-        buttonsWrapper: { backgroundColor: '#53a7df' },
-        input: { backgroundColor: 'LavenderBlush' },
-        recoverPassword: {},
-        button: { backgroundColor: 'LavenderBlush' },
-      },
-      login: {
-        wrapper: { backgroundColor: 'yellow' },
-        inputWrapper: { backgroundColor: '#53a7df' },
-        buttonsWrapper: { backgroundColor: '#53a7df' },
-        input: { backgroundColor: 'LavenderBlush' },
-        recoverPasswordWrapper: { backgroundColor: '#53a7df' },
-        recoverPasswordButton: { backgroundColor: 'LavenderBlush' },
-        button: { backgroundColor: 'LavenderBlush' },
-      },
-      recoverPassword: {
-        wrapper: { backgroundColor: 'yellow' },
-        inputWrapper: { backgroundColor: '#53a7df' },
-        buttonsWrapper: { backgroundColor: '#53a7df' },
-        input: { backgroundColor: 'LavenderBlush' },
-        button: { backgroundColor: 'LavenderBlush' },
-      },
-    }}
-    title="Hodl Invest"
-    handleSignup={signupWasClickedCallback}
-    handleLogin={loginWasClickedCallback}
-    handleRecoverPassword={recoverPasswordWasClickedCallback}
-    />
-    </div>
+  <Registration/>,
+  <Log/>
+
+
+  </div>
   );
 };
 
