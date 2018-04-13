@@ -10,8 +10,8 @@ export default class BuySellPanel extends Component {
             coins: "0",
             buyInput: "",
             sellInput: "",
-            buySelect: "btc",
-            sellSelect: "btc"
+            buySelect: "BTC",
+            sellSelect: "BTC"
         }
     }
 
@@ -176,7 +176,7 @@ export default class BuySellPanel extends Component {
                         <form>
                             Select crypto:
                             <select value={this.state.buySelect} onChange={this.handleBuySelect.bind(this)}>
-                                <option value="btc">BTC</option>
+                                <option value="BTC">BTC</option>
                             </select>
                             <br/>
                             Enter amount: <input className="buy" value={this.state.buyInput} onChange={this.handleBuyInput.bind(this)} type="text" />
@@ -189,7 +189,7 @@ export default class BuySellPanel extends Component {
                         <form>
                             Select crypto:
                             <select value={this.state.sellSelect} onChange={this.handleSellSelect.bind(this)}>
-                                <option value="btc">BTC</option>
+                                <option value="BTC">BTC</option>
                             </select>
                             <br/>
                             Enter amount: <input className="sell" value={this.state.sellInput} onChange={this.handleSellInput.bind(this)} type="text" />
