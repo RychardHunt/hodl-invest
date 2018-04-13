@@ -51,6 +51,24 @@ class Chart extends Component{
             label:'Price',
             data:opensArr,
             backgroundColor:[
+              'rgba(255, 255, 255, .6)'
+            ]
+          }
+        ]
+      }
+    });
+  }
+
+  getUserData(){
+    // Ajax calls here
+    this.setState({
+      userData:{
+        labels: ['Play Money', 'Coin2', 'Coin3', 'Coin4', 'Coin5','Coin6'],
+        datasets:[
+          {
+            label:'Price',
+            data:[10, 10, 10, 10, 10, 10], //sample numbers waiting to connect to database
+            backgroundColor:[
               'rgba(255, 99, 132, 0.6)',
               'rgba(54, 162, 235, 0.6)',
               'rgba(255, 206, 86, 0.6)',
@@ -67,6 +85,7 @@ class Chart extends Component{
 
   componentWillMount(){
     this.getChartData();
+    this.getUserData();
   }
 
   render(){
@@ -87,7 +106,7 @@ class Chart extends Component{
           }}
         />
         <Pie
-          data={this.state.chartData}
+          data={this.state.userData}
           options={{
             title:{
               display:this.props.displayTitle,
