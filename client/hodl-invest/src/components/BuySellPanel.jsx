@@ -84,7 +84,7 @@ export default class BuySellPanel extends Component {
             buyInput: this.state.buyInput,
             sellInput: "",
             buySelect: this.state.buySelect,
-            sellSelect: "btc"
+            sellSelect: "BTC"
         })
     }
 
@@ -95,7 +95,7 @@ export default class BuySellPanel extends Component {
             coins: "0",
             buyInput: "",
             sellInput: this.state.sellInput,
-            buySelect: "btc",
+            buySelect: "BTC",
             sellSelect: this.state.sellSelect
         })
     }
