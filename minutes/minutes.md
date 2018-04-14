@@ -26,7 +26,6 @@ _____________________________________________________________________________
 Meeting date and time: 02/26/2018 5:00pm - 7:00pm
 Summary: General change of idea. We discussed and agreed to change our project idea into a mock cryptocurrency market where users will have play money and have the ability to invest it and see it go up or down depending on real cryptocurrency market. We changed the overall description of our new project in the README file.
 
-
 Accomplishments from last week: 
 Kenny: Accomplished backend logging into Facebook and/or Google.
 Alex: Accomplished sign in, landing page, and a page to see coin prices live in prototype.
@@ -37,9 +36,6 @@ Kenny: Create user objects to keep track of user information.
 Alex: Create transaction history and initiate Cryptocurrency Charts Page.
 Rych: Update landing page and initiate Cryptocurrency Charts Page.
 
-
-_____________________________________________________________________________    
-    
 Meeting date and time: 03/05/2018 5:00pm - 6:00pm
 Summary: We've discussed our general progress in this project, especially after our main project idea change. We decided to commit this new idea and meet up outside of our assigned meeting time to speed up our progress. Due to the recent change of direction for the project, we decided to open source the project after the alpha release in other to gather interests and development support from the community and to educate the general public on cryptocurrencies. We also restructured our codebase into two separate directories for the server side and client.
 
@@ -95,6 +91,7 @@ Alex: Researched Heroku, Postqresql, and JDBC documentations and implementation 
 Rych: Hooked up the Login/Signup page to backend. Decided to not include Forgot Password page. Supervised the creation of buying/selling and history frontend and backend.
 
 Task assigned for next week 04/02/2018: 
+<<<<<<< HEAD
 
 Kenny: Restructure api to only allow api calls to authorized tokens.
 
@@ -121,4 +118,9 @@ Alex: Responsible for the provision of our database to our server and to ensure 
 Rych: Fix various bugs throughout the frontend. Supervise and faciliate hooking up other components of the frontend to the database.
 
 
+
+=======
+Kenny: Restructure api to only allow api calls to authorized tokens.
+Alex: Responsible for the connect to database from our server and to implement methods for database so backend doesn't break.
+Rych: Fix various bugs throughout the frontend. Integrate the transaction and charts component into the dashboard component.
 

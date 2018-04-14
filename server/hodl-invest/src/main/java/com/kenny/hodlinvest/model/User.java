@@ -1,15 +1,12 @@
 package com.kenny.hodlinvest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kenny.hodlinvest.util.Secure;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
+@JsonIgnoreProperties(value = {"passwordHash", "email"}, allowSetters = true)
 public class User {
     private final String username;
     private String passwordHash;
@@ -18,6 +15,7 @@ public class User {
     private double playMoney;
 
     private List<Transaction> transactions;
+    private Map<String, Double> portfolio;
 
     public User(
             @JsonProperty("username") String username,
@@ -25,9 +23,15 @@ public class User {
             @JsonProperty("name") String name,
             @JsonProperty("email") String email,
             @JsonProperty("playMoney") double playMoney,
-            @JsonProperty("transactions") List<Transaction> transactions) {
+            @JsonProperty("transactions") List<Transaction> transactions,
+            @JsonProperty("portfolio") Map<String, Double> portfolio) {
+
         this.username = username;
-        this.passwordHash = Secure.generateHash(password);
+
+        if(password == null)
+            this.passwordHash = "";
+        else
+            this.passwordHash = Secure.generateHash(password);
 
         if(name == null)
             this.name = "";
@@ -37,15 +41,10 @@ public class User {
             this.email = "";
         else
             this.email = email;
-        if(playMoney == 0)
-            playMoney = 10000;
-        else
-            this.playMoney = playMoney;
 
-        if(transactions == null)
-            this.transactions = new ArrayList<>();
-        else
-            this.transactions = transactions;
+        this.transactions = new ArrayList<>();
+        this.portfolio = new HashMap<>();
+        this.playMoney = 100000;
     }
 
     public String getUsername() {
@@ -85,6 +84,17 @@ public class User {
     public List<Transaction> getTransactions(){
         return this.transactions;
     }
+
+    public Map<String, Double> getPortfolio() {
+        return portfolio;
+    }
+
+    public void setPortfolio(Map<String, Double> portfolio) {
+        this.portfolio = portfolio;
+    }
+
+    public void addToPortfolio(String ticker, double amout){getPortfolio().put(ticker, amout);}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
