@@ -14,8 +14,11 @@ Summary: Discussed about the overall project process in details and how each mem
 Accomplishments from last week: Everyone was able to finish initiate React Native environment following a YouTube tutorial using React Native. During the process, we researched about the technical advantages and disadvantages of using React Native Web comparing to other programing platforms such React Native XP.
 
 Task assigned for next week: 
+
 Kenny- Work on backend logging into Facebook and/or Google.
+
 Alex: Sign in and landing page. This will be the first page which visitors come and learn more about our project.
+
 Rych: Portfolio Page. Diagram representation of different cryptocurrency allocations currently in the portfolio.
 
 _____________________________________________________________________________    
@@ -33,8 +36,6 @@ Kenny: Create user objects to keep track of user information.
 Alex: Create transaction history and initiate Cryptocurrency Charts Page.
 Rych: Update landing page and initiate Cryptocurrency Charts Page.
 
-_____________________________________________________________________________    
-    
 Meeting date and time: 03/05/2018 5:00pm - 6:00pm
 Summary: We've discussed our general progress in this project, especially after our main project idea change. We decided to commit this new idea and meet up outside of our assigned meeting time to speed up our progress. Due to the recent change of direction for the project, we decided to open source the project after the alpha release in other to gather interests and development support from the community and to educate the general public on cryptocurrencies. We also restructured our codebase into two separate directories for the server side and client.
 
@@ -90,6 +91,35 @@ Alex: Researched Heroku, Postqresql, and JDBC documentations and implementation 
 Rych: Hooked up the Login/Signup page to backend. Decided to not include Forgot Password page. Supervised the creation of buying/selling and history frontend and backend.
 
 Task assigned for next week 04/02/2018: 
+<<<<<<< HEAD
+
+Kenny: Restructure api to only allow api calls to authorized tokens.
+
+Alex: Responsible for the connect to database from our server and to implement methods for database so backend doesn't break.
+
+Rych: Fix various bugs throughout the frontend. Integrate the transaction and charts component into the dashboard component.
+
+_____________________________________________________________________________    
+
+Meeting date and time: 04/09/2018 5:00pm - 6:00pm
+Summary: We talked about the overall progress of our project and the voting system in lecture. There was a miscommunication amongst us regarding the Heroku database connection, provision, and implementation with our application. We also talked about the colloration phase in the class and we need to make sure that we need to put extra effort not to let the phase distract us from our project. We will keep each other accountable for time management.
+
+Accomplishments from last week: 
+
+Kenny: Added token authentication to post requests and also created exception classes. Set up server to only allow cross origin requests from front end client. Created updated alpha video. 
+
+Alex: Researched Heroku, Postqresql, and JDBC documentations and implementation method.
+
+Rych: Fixed various bugs throughout the frontend. Integrated the transaction and charts component into the dashboard component.
+
+Task assigned for next week 04/16/2018: 
+Kenny: Add list of cryptocoins owned by user and amount owned and create endpoints to update them.
+Alex: Responsible for the provision of our database to our server and to ensure funcitionality of our backend to interact with Heroku Postgresql.
+Rych: Fix various bugs throughout the frontend. Supervise and faciliate hooking up other components of the frontend to the database.
+
+
+
+=======
 Kenny: Restructure api to only allow api calls to authorized tokens.
 Alex: Responsible for the connect to database from our server and to implement methods for database so backend doesn't break.
 Rych: Fix various bugs throughout the frontend. Integrate the transaction and charts component into the dashboard component.

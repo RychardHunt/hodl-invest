@@ -3,14 +3,14 @@ import {Link} from 'react-router-dom';
 import {Jumbotron, Grid, Row, Col, Image, Button} from 'react-bootstrap';
 import './Home.css';
 
-export default class Home extends Component {
+class Home extends Component {
 	render(){
 		return (
 			<div>
 				<Grid>
 					<Jumbotron>
-						<h2> Welcome to hodl-invest	</h2>
-						<p> This is a Mock Cryptocurrency Simulator </p>
+						<h1> Welcome to Hodl Invest	</h1>
+						<p> This is a Virtual Cryptocurrency Simulator </p>
 
 						<Link to="/about">
 							<Button bsStyle="primary"> Learn more </Button>
@@ -24,3 +24,5 @@ export default class Home extends Component {
 		);
 	}
 }
+
+export default Home;

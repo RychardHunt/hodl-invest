@@ -4,15 +4,13 @@ import com.kenny.hodlinvest.model.Cryptocoin;
 import com.kenny.hodlinvest.service.CryptocoinService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/cryptocoins")
+@CrossOrigin(origins = "https://hodl-invest.herokuapp.com/")
 public class CryptocoinController {
     private final CryptocoinService cryptocoinService;
 
@@ -35,5 +33,14 @@ public class CryptocoinController {
     )
     public void addNewCryptocoin(@RequestBody Cryptocoin cryptocoin){
         cryptocoinService.addCryptocoin(cryptocoin.getTicker(), cryptocoin);
+    }
+
+    @RequestMapping(
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            path = "{ticker}"
+    )
+    public double getCryptcoin(@PathVariable String ticker){
+        return cryptocoinService.getPriceFromCoinApi(ticker);
     }
 }
