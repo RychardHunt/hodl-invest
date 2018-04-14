@@ -19,6 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/users")
+@CrossOrigin(origins = {"https://hodl-invest.herokuapp.com/", "http://localhost:3000"})
 public class UserController {
 
     private final UserService userService;
@@ -36,7 +37,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(
             method = RequestMethod.GET
-    )
+   )
     public String message(){
         return "API documentation can be found here: https://github.com/RychardHunt/hodl-invest/wiki/Project-Documentation";
     }
@@ -65,6 +66,7 @@ public class UserController {
         if(userService.userExists(user.getUsername())){
             throw new UserException("Username already exists.");
         }
+
         userService.addUser(user.getUsername(), user);
     }
 
@@ -72,7 +74,7 @@ public class UserController {
             method = RequestMethod.DELETE,
             path = "{username}"
     )
-    public void deleteUserByName(@PathVariable String username){
+    public void deleteUserByName(@PathVariable String username,@RequestBody Map<String, String> token){
         if(!userService.userExists(username))
             throw new UserNotFoundException("User does not exist");
 
@@ -86,7 +88,7 @@ public class UserController {
             method = RequestMethod.POST,
             path = "{username}/transactions/{amount}"
     )
-    public void updateUserPlayMoney(@PathVariable String username, @PathVariable double amount){
+    public void updateUserPlayMoney(@PathVariable String username, @PathVariable double amount, @RequestBody Map<String, String> token){
         if(!userService.userExists(username))
             throw new UserNotFoundException("User does not exist");
 

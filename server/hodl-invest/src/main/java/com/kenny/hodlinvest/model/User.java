@@ -19,7 +19,7 @@ public class User {
 
     public User(
             @JsonProperty("username") String username,
-            @JsonProperty("passwordHash") String password,
+            @JsonProperty("password") String password,
             @JsonProperty("name") String name,
             @JsonProperty("email") String email,
             @JsonProperty("playMoney") double playMoney,
@@ -71,6 +71,14 @@ public class User {
 
     public void addTransaction(Transaction transaction){
         transactions.add(transaction);
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<Transaction> getTransactions(){
