@@ -13,6 +13,7 @@ class Log extends Component{
 
      this.handleChange = this.handleChange.bind(this);
      this.handleSubmit = this.handleSubmit.bind(this);
+
    }
 
    handleChange(event) {
@@ -23,16 +24,26 @@ class Log extends Component{
 
    handleSubmit(event) {
 
+           var xhr = new XMLHttpRequest();
+           xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/");
+           xhr.setRequestHeader("content-type", "application/json");
+           xhr.setRequestHeader("cache-control", "no-cache");var sendObject = JSON.stringify({"username": this.state.username, "passwordHash": this.state.password, "name": this.state.name, "email": this.state.email});
+
+
+
      var sendObject=JSON.stringify({
        "username": this.state.username,
-       "password": this.state.password,
+       "password": this.state.password
 
 
      });
+     xhr.send(sendObject);
      console.log(sendObject);
      event.preventDefault();
 
    }
+
+
 
 
 

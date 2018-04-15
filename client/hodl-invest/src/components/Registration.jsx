@@ -2,72 +2,82 @@ import React, {Component} from 'react';
 import './Registration.css';
 import FacebookLogin from './FacebookLogin.jsx';
 
-class Registration extends Component{
+class Registration extends Component {
 
   constructor(props) {
-     super(props);
-     this.state={username: ''}
-     this.state={password: ''}
-     this.state={confirmPassword: ''}
-     this.state = {name: ''};
-     this.state = {email: ''};
+    super(props);
+    this.state = {
+      username: ''
+    }
+    this.state = {
+      password: ''
+    }
+    this.state = {
+      confirmPassword: ''
+    }
+    this.state = {
+      name: ''
+    };
+    this.state = {
+      email: ''
+    };
 
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-     this.handleChange = this.handleChange.bind(this);
-     this.handleSubmit = this.handleSubmit.bind(this);
-   }
+  handleChange(event) {
+    var name = event.target.name;
+    this.setState({[name]: event.target.value});
 
-   handleChange(event) {
-     var name=event.target.name;
-     this.setState({[name]: event.target.value});
+  }
 
-   }
+  handleSubmit(event) {
 
-   handleSubmit(event) {
-     var sendObject=JSON.stringify({
-       "username": this.state.username,
-       "passwordHash": this.state.password,
-       "name": this.state.name,
-       "email": this.state.email,
+    if (this.state.password === this.state.confirmPassword) {
 
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/");
+      xhr.setRequestHeader("content-type", "application/json");
+      xhr.setRequestHeader("cache-control", "no-cache");var sendObject = JSON.stringify({"username": this.state.username, "passwordHash": this.state.password, "name": this.state.name, "email": this.state.email});
+      xhr.send(sendObject);
+    }
+    else{
+      alert("Username and Password do not match");
+    }
+    console.log(sendObject);
+    event.preventDefault();
+  }
 
-     });
-     console.log(sendObject);
-     event.preventDefault();
-   }
+  render() {
 
-
-
-  render(){
-
-    return(
-      <div class="logContainer">
-        <div class="header">
-        <h1> Registration</h1>
-          </div>
+    return (<div class="logContainer">
+      <div class="header">
+        <h1>
+          Registration</h1>
+      </div>
       <div class="RegistrationForm">
-      <form onSubmit={this.handleSubmit}>
-  <label>
-    <input type="text" name="username" value={this.state.username} onChange={this.handleChange} placeHolder="Username" />
-  </label>
-  <label>
-    <input type="password" name="password" value={this.state.password}  onChange={this.handleChange}placeholder="Password" />
-  </label>
-  <label>
-    <input type="password" name="confirmPassword" value={this.state.confirmPassword} onChange={this.handleChange} placeHolder="Confirm Password" />
-  </label>
-  <label>
-    <input type="text" name="name" value={this.state.name} onChange={this.handleChange} placeHolder="Name" />
-  </label>
-  <label>
-    <input type="text" name="email" value={this.state.email} onChange={this.handleChange} placeHolder="Email" />
-  </label>
-  <input type="submit" value="Submit" />
-</form>
-  </div>
-  <FacebookLogin/>
-  </div>
-    );
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            <input type="text" name="username" value={this.state.username} onChange={this.handleChange} placeHolder="Username"/>
+          </label>
+          <label>
+            <input placeholder="Password" type="password" name="password" value={this.state.password} onChange={this.handleChange}/>
+          </label>
+          <label>
+            <input type="password" name="confirmPassword" value={this.state.confirmPassword} onChange={this.handleChange} placeHolder="Confirm Password"/>
+          </label>
+          <label>
+            <input type="text" name="name" value={this.state.name} onChange={this.handleChange} placeHolder="Name"/>
+          </label>
+          <label>
+            <input type="text" name="email" value={this.state.email} onChange={this.handleChange} placeHolder="Email"/>
+          </label>
+          <input type="submit" value="Submit"/>
+        </form>
+      </div>
+      <FacebookLogin/>
+    </div>);
   }
 
 }
