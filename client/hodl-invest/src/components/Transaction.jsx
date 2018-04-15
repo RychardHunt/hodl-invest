@@ -4,25 +4,35 @@ import TransactionHistory from './TransactionHistory'
 import BuySellPanel from "./BuySellPanel";
 
 class Transaction extends Component {
-    render() {
-        var username="zoro";
-        var userinfo;
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/users/"+username,true);
-        xhr.send();
-        xhr.addEventListener("readystatechange", function () {
-        if (this.readyState === 4) {
-            console.log(this.responseText);
-	        userinfo=JSON.parse(this.responseText);
-		    console.log(userinfo.transactions);
+    constructor(props) {
+        super(props);
+        this.getTransactions();
+        this.state = {
+            transactions: []//Array of objects
+        }
+    }
 
-         }
+    getTransactions() {
+        let transaction = this;
+        let username = 'zoro';
+        let url = 'https://hodl-invest-server.herokuapp.com/api/v1/users/' + username + '/transactions';
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.addEventListener('readystatechange',function () {
+            if (this.readyState === 4) {
+                transaction.setState ({
+                    transactions: JSON.parse(this.responseText)//An array of objects
                 });
+            }
+        });
+        xhr.send();
+    }
 
+    render() {
         return (
             <div className="transaction">
                 <BuySellPanel/>
-                <TransactionHistory transactionArray={[{amount: "$30", date: "yesterday"}]}/>
+                <TransactionHistory transactions={this.state.transactions}/>
             </div>
         )
     }
