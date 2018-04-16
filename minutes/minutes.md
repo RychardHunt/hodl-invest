@@ -120,7 +120,7 @@ Rych: Fix various bugs throughout the frontend. Supervise and faciliate hooking 
 ____________________________________________________________________________    
 
 Meeting date and time: 04/16/2018 4:00pm - 5:00pm
-Summary: Discussed about the overall trajectory of the project and how it is unacceptable that we are not hitting deadlines. We made sure each member knew what needs to be done for their parts. To enable the core functionality of our user stories and in order to make up points for alpha release and present in class we must have the front-end send api requests to the backend to register, login, grab user play money, buy/sell cryptocoins, update transaction history UI and storing users, cryptocoins and transaction histories in database with the ability to update them. 
+Summary: Discussed about the overall trajectory of the project and how it is unacceptable that we are not hitting deadlines. We made sure each member knew what needs to be done for their parts. To enable the core functionality of our user stories and in order to make up points for alpha release and present in class we must have the front-end send api requests to the backend to register, login, grab user play money, buy/sell cryptocoins, update transaction history UI and storing users, cryptocoins and transaction histories in database with the ability to update them. Also discussed about what add ons needed to be completed in order to get bonus points.
 
 Accomplishments from last week: 
 
