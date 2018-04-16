@@ -91,7 +91,6 @@ Alex: Researched Heroku, Postqresql, and JDBC documentations and implementation 
 Rych: Hooked up the Login/Signup page to backend. Decided to not include Forgot Password page. Supervised the creation of buying/selling and history frontend and backend.
 
 Task assigned for next week 04/02/2018: 
-<<<<<<< HEAD
 
 Kenny: Restructure api to only allow api calls to authorized tokens.
 

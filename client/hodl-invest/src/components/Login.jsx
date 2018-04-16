@@ -44,9 +44,6 @@ const LoginPage = (props) => {
     xhr.addEventListener("readystatechange", function () {
       if (this.readyState === 4) {
         console.log(this.responseText);
-        var result=JSON.parse(this.responseText);
-	      document.cookie="token="+result.token;
-	      console.log(document.cookie);
       }
     });
 
