@@ -19,10 +19,10 @@ public class ConnectBaseTests {
     public void contextLoads() {
         try {
             ConnectBase.initDatabase();
-        }catch (SQLException e){
+        }catch (Exception e){
             e.printStackTrace();
         }
-        ConnectBase.runQuery("INSERT INTO Users VALUES('hello', 'im', 13);");
+        ConnectBase.runQuery("INSERT INTO public.Users VALUES('hello', 'im', 13);");
         ConnectBase.runQuery("INSERT INTO Users VALUES('hellohello', 'im', 14);");
         ConnectBase.runQuery("INSERT INTO Users VALUES('hellohellohello', 'im', 15);");
         ConnectBase.runQuery("INSERT INTO Users VALUES('hellohellohellohello', 'im', 16);");
@@ -31,7 +31,7 @@ public class ConnectBaseTests {
         if(rs != null){
             try{
                 while(rs.next()){
-                    String st = rs.getString(1);
+                    String st = rs.getString(3);
                     System.out.println(st);
                 }
             }catch(SQLException e){
