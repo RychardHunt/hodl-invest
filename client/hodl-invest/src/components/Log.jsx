@@ -10,7 +10,6 @@ class Log extends Component{
 
      this.handleChange = this.handleChange.bind(this);
      this.handleSubmit = this.handleSubmit.bind(this);
-
    }
 
    handleChange(event) {
@@ -22,8 +21,16 @@ class Log extends Component{
     var xhr = new XMLHttpRequest();
 
     xhr.addEventListener("readystatechange", function () {
-      if (this.readyState === 4) {
-        console.log("response test\n" + this.responseText);
+      if (this.readyState === 4 && this.status === 200) {
+        console.log("Successfully logged in.")
+        var jsonObj = JSON.parse(this.responseText);
+        console.log("token is: " + jsonObj.token + " username is: " + jsonObj.username);
+
+        document.cookie = "token=" + jsonObj.token;
+        document.cookie ="username=" + jsonObj.username;
+        console.log("The cookies are " + document.cookie);
+      } else{
+        console.log("Invalid username or password. Please try again.")
       }
     });
 
@@ -41,9 +48,6 @@ class Log extends Component{
     // window.location.href = './dashboard';
     event.preventDefault();
    }
-
-
-
 
 
   render(){

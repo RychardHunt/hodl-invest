@@ -36,12 +36,14 @@ class Registration extends Component {
       var xhr = new XMLHttpRequest();
 
       xhr.addEventListener("readystatechange", function () {
-        if (this.readyState === 4) {
-          console.log("response test\n" + this.responseText);
+        if (this.readyState === 4 && this.status === 200) {
+          console.log("User has successfully been registered.");
+        } else{
+          console.log("User was not registered successfully. " + this.responseText);
         }
       });
 
-      xhr.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/users/");
+      xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/");
       xhr.setRequestHeader("content-type", "application/json");
       xhr.setRequestHeader("cache-control", "no-cache");
 
