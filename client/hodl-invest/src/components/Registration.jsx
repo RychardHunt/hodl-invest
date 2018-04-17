@@ -38,8 +38,6 @@ class Registration extends Component {
       xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4 && this.status === 200) {
           console.log("User has successfully been registered.");
-        } else{
-          console.log("User was not registered successfully. " + this.responseText);
         }
       });
 

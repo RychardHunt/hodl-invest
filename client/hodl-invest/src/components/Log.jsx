@@ -45,8 +45,6 @@ class Log extends Component{
           console.log("token is " + token);
     }
     return "";
-      } else{
-        console.log("Invalid username or password. Please try again.")
       }
     });
 
