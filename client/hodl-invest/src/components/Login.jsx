@@ -1,47 +1,59 @@
 import React, {Component} from 'react';
-import ReactSignupLoginComponent from 'react-signup-login-component';
-import {Link} from 'react-router-dom';
-import Registration from './Registration.jsx';
-import Log from './Log.jsx';
-import './Login.css';
+import './Registration.css';
 
-const LoginPage = (props) => {
-  const signupWasClickedCallback = (data) => {
-    console.log(data);
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/");
-    xhr.setRequestHeader("content-type", "application/json");
-    xhr.setRequestHeader("cache-control", "no-cache");
-    if(data.password===data.passwordConfirmation){
-      var sendObject = JSON.stringify({
-        "username": data.username,
-        "password": data.password,
-        "name": "meep",
-        "email": "j@gmail.com",
-      });
-      console.log(sendObject);
-      xhr.send(sendObject);
-      console.log(xhr.status);
-      alert('Signup Successful! Please login with your credentials!');
-    } else{
-        alert('passwords dont match');
+class Login extends Component{
+
+  constructor(props) {
+     super(props);
+     this.state={username: ''}
+     this.state={password: ''}
+     this.handleChange = this.handleChange.bind(this);
+     this.handleSubmit = this.handleSubmit.bind(this);
+   }
+
+   updateToken(_token, _username) {
+      this.props.updateState(_token, _username);
     }
-  };
 
-  const loginWasClickedCallback = (data) => {
-    console.log(data);
-    var sendObject = JSON.stringify({
-      "username": data.username,
-      "password": data.password
-    });
+   handleChange(event) {
+     var name=event.target.name;
+     this.setState({[name]: event.target.value});
+   }
 
-    console.log(sendObject);
+   handleSubmit(event) {
     var xhr = new XMLHttpRequest();
-    xhr.withCredentials = false;
 
     xhr.addEventListener("readystatechange", function () {
-      if (this.readyState === 4) {
+      if (this.readyState === 4 && this.status === 200) {
+        alert("Login Successful!");
+        var jsonObj = JSON.parse(this.responseText);
+        this.updateToken(jsonObj.token, jsonObj.username);
+        console.log("token is: " + jsonObj.token + " username is: " + jsonObj.username);
+
+
+        document.cookie = "token=" + jsonObj.token;
+        document.cookie ="username=" + jsonObj.username;
+        console.log("The cookies are " + document.cookie);
+
+        var token = "";
+        var name = "token" + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) === ' ') {
+              c = c.substring(1);
+          }
+          if (c.indexOf(name) === 0) {
+              token = c.substring(name.length, c.length);
+          }
+          console.log("token is " + token);
+    }
+    return "";
+      }
+      if (this.readyState === 4 && this.status === 400) {
         console.log(this.responseText);
+        alert("Please try again!");
       }
     });
 
@@ -49,23 +61,56 @@ const LoginPage = (props) => {
     xhr.setRequestHeader("content-type", "application/json");
     xhr.setRequestHeader("cache-control", "no-cache");
 
+    var sendObject=JSON.stringify({
+      "username": this.state.username,
+      "password": this.state.password
+    });
+
     xhr.send(sendObject);
-    alert('Login Successful!');
-    window.location.href = './dashboard';
+    console.log(sendObject);
+    event.preventDefault();
+   }
+
+
+   getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+  render(){
+
+    return(
+      <div className="logContainer">
+        <div className="header">
+          <center><h1> Login </h1></center>
+        </div>
+        <div className="RegistrationForm">
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              <input type="text" name="username" value={this.state.username} onChange={this.handleChange} placeholder="Username" />
+            </label>
+            <label>
+              <input type="password" name="password" value={this.state.password}  onChange={this.handleChange} placeholder="Password" />
+            </label>
+            <div className="row">
+              <input name="submit" type="submit" value="Submit" />
+            </div>
+         </form>
+       </div>
+     </div>
+    );
   }
 
-
-    const responseFacebook = (response) => {
-      console.log(response);
-    }
-
-
-  return (
-    <div>
-      <Registration/>
-      <Log/>
-  </div>
-  );
-};
-
-export default LoginPage;
+}
+export default Login;

@@ -49,7 +49,7 @@ class TransactionHistory extends Component {
     render() {
         return (
             <div className="transaction-history" >
-                <h1>Transaction History</h1>
+                <center> <h1>Transaction History</h1> </center>
                 <table>
                     <tr>
                         <th>Date</th>

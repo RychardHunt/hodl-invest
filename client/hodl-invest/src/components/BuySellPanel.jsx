@@ -287,7 +287,7 @@ class BuySellPanel extends Component {
     render() {
         return (
             <div className="buy-sell-panel" >
-                <h1>Buy / Sell</h1>
+                <center> <h1>Buy / Sell</h1> </center>
                 <div className="tab">
                     <button onClick={this.displayBuy.bind(this)}>Buy</button>
                     <button onClick={this.displaySell.bind(this)}>Sell</button>
