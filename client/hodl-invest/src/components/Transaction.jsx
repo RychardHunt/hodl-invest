@@ -31,7 +31,7 @@ class Transaction extends Component {
     render() {
         return (
             <div className="transaction">
-                <BuySellPanel/>
+                <BuySellPanel reloadTransactions={this.getTransactions}/>
                 <TransactionHistory transactions={this.state.transactions}/>
             </div>
         )
