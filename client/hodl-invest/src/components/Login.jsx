@@ -15,11 +15,9 @@ const LoginPage = (props) => {
     if(data.password===data.passwordConfirmation){
       var sendObject = JSON.stringify({
         "username": data.username,
-        "passwordHash": data.password,
+        "password": data.password,
         "name": "meep",
         "email": "j@gmail.com",
-        "playMoney": 100,
-        "transaction":[]
       });
       console.log(sendObject);
       xhr.send(sendObject);
@@ -64,10 +62,8 @@ const LoginPage = (props) => {
 
   return (
     <div>
-  <Registration/>,
-  <Log/>
-
-
+      <Registration/>
+      <Log/>
   </div>
   );
 };
