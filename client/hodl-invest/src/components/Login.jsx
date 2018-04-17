@@ -64,10 +64,8 @@ const LoginPage = (props) => {
 
   return (
     <div>
-  <Registration/>,
-  <Log/>
-
-
+      <Registration/>
+      <Log/>
   </div>
   );
 };
