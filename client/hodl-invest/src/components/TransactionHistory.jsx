@@ -1,54 +1,49 @@
 import React, {Component} from 'react'
 import './TransactionHistory.css'
-import tinyDate from 'tinydate'
+import tinydate from 'tinydate'
 
-/*
-This handles the transaction history chart only.
-The transactionArray is an array of objects with date and amount properties.  They should be strings.
-
-TODO:
-    Refresh
-    Limit number of transactions visible
-    Button to expand transaction list
- */
-export default class TransactionHistory extends Component {
+class TransactionHistory extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            transactions: []//Array of elements
+        };
     }
-
-    static renderSingleTransaction(date,ticker,price,time) {
-        return <tr>
-            <th>{date}</th>
-            <th>{time}</th>
-            <th>{ticker}</th>
-            <th>${price}</th>
-        </tr>
-    }
-
-
 
     renderTransactions() {
-        if(this.props.transactionArray === null || this.props.transactionArray.length === 0) {
-            return <p>Nothing here!</p>
-        } else {
-            let renderedTransactionsArray = [];
-            for(let i = 0;i < this.props.transactionArray.length ; ++i) {
-                let stamp = tinyDate('{MM}/{DD}/{YY}');
-                let currentTransaction = this.props.transactionArray[i];
-                let temp = currentTransaction.timestamp;
-                let date = stamp(new Date(temp));
-                stamp = tinyDate('{HH}:{MM}');
-                let time = stamp(new Date(temp));
-                let ticker;
-                let price;
-                if(typeof currentTransaction.cryptocoin !== 'undefined') {
-                    ticker = currentTransaction.cryptocoin.ticker;
-                    price = currentTransaction.cryptocoin.price;
-                }
-                renderedTransactionsArray.push(TransactionHistory.renderSingleTransaction(date,ticker,price,time));
+        let transactions = this.props.transactions;
+        let transactionArray = [];
+
+        for(let i = 0; i < transactions.length; ++i) {
+            let currentTransaction = transactions[i];
+
+            //Money handling
+            let coin = currentTransaction.cryptocoin.ticker;
+            let coinAmount = currentTransaction.cryptocoin.price;
+            let usdAmount = currentTransaction.amount;
+            let transactionType = currentTransaction.transactionType;
+            if(transactionType === 'BUY') {
+                coinAmount = '+' + coinAmount + ' ' + coin.toUpperCase();
+                usdAmount = '-$' + usdAmount;
+            } else {
+                coinAmount = '-' + coinAmount + ' ' + coin.toUpperCase();
+                usdAmount = '+$' + usdAmount;
             }
-            return renderedTransactionsArray;
+
+            //Time handling
+            let timeStamp = currentTransaction.timestamp;
+            let stamp = tinydate('{MM}/{DD}/{YY}');
+            let dateObject = new Date(timeStamp);
+            let date = stamp(dateObject);
+            stamp = tinydate('{HH}:{mm}');
+            let time = stamp(dateObject);
+            transactionArray.push(TransactionHistory.getTransactionRow(coinAmount,usdAmount,date,time))
         }
+        return transactionArray;
+    }
+
+    static getTransactionRow(coinAmount,usdAmount,date,time) {
+        return <tr><th>{date}</th><th>{time}</th><th>{coinAmount}</th><th>{usdAmount}</th></tr>
     }
 
     render() {
@@ -68,3 +63,5 @@ export default class TransactionHistory extends Component {
         )
     }
 }
+
+export default TransactionHistory;
