@@ -29,6 +29,22 @@ class Log extends Component{
         document.cookie = "token=" + jsonObj.token;
         document.cookie ="username=" + jsonObj.username;
         console.log("The cookies are " + document.cookie);
+
+        var token = "";
+        var name = "token" + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) === ' ') {
+              c = c.substring(1);
+          }
+          if (c.indexOf(name) === 0) {
+              token = c.substring(name.length, c.length);
+          }
+          console.log("token is " + token);
+    }
+    return "";
       } else{
         console.log("Invalid username or password. Please try again.")
       }
@@ -50,6 +66,21 @@ class Log extends Component{
    }
 
 
+   getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
   render(){
 
     return(
