@@ -1,47 +1,41 @@
 import React, {Component} from 'react'
 import './Transaction.css'
 import TransactionHistory from './TransactionHistory'
-import BuySellPanel from "./BuySellPanel"
-import request from 'request'
+import BuySellPanel from "./BuySellPanel";
 
-
-
-export default class Transaction extends Component {
-    constructor (props) {
+class Transaction extends Component {
+    constructor(props) {
         super(props);
-        this.getTransactions();
         this.state = {
-            transactions : [{amount: "$30", date: "yesterday"}]
-        }
+            transactions: []//Array of objects
+        };
+        this.getTransactions();
     }
 
     getTransactions() {
-        let url = this.props.transactionHistoryURL;
-
-        request.get({
-            url: url,
-            json: true,
-            headers: {'User-Agent': 'request'}
-        }, (err, res, data) => {
-            if (err) {
-                console.log('Error:', err);
-            } else if (res.statusCode !== 200) {
-                console.log('Status:', res.statusCode);
-            } else {
-                // data is already parsed as JSON:
-                this.setState ({
-                    transactions : data
-                })
+        let transaction = this;
+        let username = 'zoro';
+        let url = 'https://hodl-invest-server.herokuapp.com/api/v1/users/' + username + '/transactions';
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.addEventListener('readystatechange',function () {
+            if (this.readyState === 4) {
+                transaction.setState ({
+                    transactions: JSON.parse(this.responseText)//An array of objects
+                });
             }
         });
+        xhr.send();
     }
 
     render() {
         return (
             <div className="transaction">
-                <BuySellPanel transactionURL={this.props.transactionHistoryURL}/>
-                <TransactionHistory transactionArray={this.state.transactions}/>
+                <BuySellPanel reloadTransactions={this.getTransactions.bind(this)} token={this.props.token} username={this.props.username}/>
+                <TransactionHistory transactions={this.state.transactions}/>
             </div>
         )
     }
 }
+
+export default Transaction;

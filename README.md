@@ -25,15 +25,16 @@ Users would be able to login to our platform to perform buying and selling virtu
 <ol>2. have play money </ol>
 <ol>3. buy and sell virtual bitcoins</ol>
 <ol>4. check user transactions history</ol>
-<ol>5. authenticate through a social media website </ol>
+<ol>5. authenticate through proprietary login </ol>
 
 
 <h2>Add Ons:</h2>
 <ol>1. There will be a highscores where users can see who the best performing users are.</ol>
 <ol>2. There will be support for more multiple virtual cryptocurrencies.</ol>
 <ol>3. Users will be able to refer friends and get additional virtual play money.</ol>
-<ol>4. Transactions would account for transaction fees based on the respective cryptocoin. </ol>
-
+<ol>4. Transactions would account for transaction fees on the cryptocurrencies. </ol>
+<ol>5. Rewards for daily consecutive logins for an entire week. </ol>
+<ol>6. Tournaments that people could join for a fee and the winner gets some reward. </ol>
 
 <h2>User Stories:</h2>
 <ol>1. As a user, I want to be able to buy and sell virtual bitcoins so that I can learn more about the real cryptocurrency market through a real-life stimulator and have better understanding of my investment strategy.</ol>
@@ -42,7 +43,7 @@ Users would be able to login to our platform to perform buying and selling virtu
 
 <ol>3. As a user, I want to be able to check the current portfolio so that I can see at a glance of the total value of my portfolio.</ol>
 
-<ol>4. As an administrator, I want to store user account information so that I can correctly update the corresponding data and offer a reliable experience for users to trade.</ol>
+<ol>4. As an administrator, I want to access user account information so that I can correctly update the corresponding data and offer a reliable experience for users to trade.</ol>
   
 <ol>5. As an administrator, I want to interface with cryptocurrency exchanges so that I can have the reliable data for my users to understand the current market movements.</ol>
 
