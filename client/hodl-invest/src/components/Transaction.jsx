@@ -6,10 +6,10 @@ import BuySellPanel from "./BuySellPanel";
 class Transaction extends Component {
     constructor(props) {
         super(props);
-        this.getTransactions();
         this.state = {
             transactions: []//Array of objects
-        }
+        };
+        this.getTransactions();
     }
 
     getTransactions() {
@@ -31,7 +31,7 @@ class Transaction extends Component {
     render() {
         return (
             <div className="transaction">
-                <BuySellPanel reloadTransactions={this.getTransactions}/>
+                <BuySellPanel reloadTransactions={this.getTransactions.bind(this)} token={this.props.token} username={this.props.username}/>
                 <TransactionHistory transactions={this.state.transactions}/>
             </div>
         )

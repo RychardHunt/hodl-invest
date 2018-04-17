@@ -204,6 +204,54 @@ class BuySellPanel extends Component {
         })
     }
 
+    handleBuy(event) {
+        let data = JSON.stringify({
+            "token": this.props.token,
+            "username": this.props.username
+        });
+
+        let xhr = new XMLHttpRequest();
+        xhr.withCredentials = false;
+
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                console.log(this.responseText);
+            }
+        });
+
+        xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/buy/" + this.state.buySelect +"/"+ this.state.buyInput);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader("Cache-Control", "no-cache");
+
+        xhr.send(data);
+        event.preventDefault();
+        this.props.reloadTransactions();
+    }
+
+    handleSell(event) {
+        let data = JSON.stringify({
+            "token": this.props.token,
+            "username": this.props.username
+        });
+
+        let xhr = new XMLHttpRequest();
+        xhr.withCredentials = false;
+
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                console.log(this.responseText);
+            }
+        });
+
+        xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/sell/"+ this.state.sellSelect+"/" + this.state.sellInput);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader("Cache-Control", "no-cache");
+
+        xhr.send(data);
+        event.preventDefault();
+        this.props.reloadTransactions();
+    }
+
     displayForm() {
         if (this.state.isBuySelected) {
             return <form>
@@ -217,7 +265,7 @@ class BuySellPanel extends Component {
                 <br/>
                 Total cost: ${this.state.usdAmount}
                 <br/>
-                <button onClick={null}>Buy</button>
+                <button onClick={this.handleBuy.bind(this)}>Buy</button>
             </form>
         } else {
             return <form>
@@ -231,7 +279,7 @@ class BuySellPanel extends Component {
                 <br/>
                 Total value: ${this.state.coinAmount}
                 <br/>
-                <button onClick={null}>Sell</button>
+                <button onClick={this.handleSell.bind(this)}>Sell</button>
             </form>
         }
     }
