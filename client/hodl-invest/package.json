@@ -5,6 +5,7 @@
   "dependencies": {
     "ajv": "^6.4.0",
     "chart.js": "^2.7.2",
+    "npm": "^5.8.0",
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.1",
     "react-chartjs-2": "^2.7.0",
