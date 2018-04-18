@@ -29,6 +29,7 @@ class Login extends Component{
         alert("Login Successful!");
         var jsonObj = JSON.parse(this.responseText);
         login.props.updateState(jsonObj.token, jsonObj.username);
+        window.location.href = './dashboard';
         console.log("token is: " + jsonObj.token + " username is: " + jsonObj.username);
 
 
