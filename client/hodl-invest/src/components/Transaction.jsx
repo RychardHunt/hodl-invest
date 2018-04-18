@@ -14,7 +14,7 @@ class Transaction extends Component {
 
     getTransactions() {
         let transaction = this;
-        let username = 'zoro';
+        let username = this.props.username;
         let url = 'https://hodl-invest-server.herokuapp.com/api/v1/users/' + username + '/transactions';
         let xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);

@@ -3,10 +3,15 @@ import Chart from './Chart';
 import Transaction from './Transaction';
 
 class Dashboard extends Component {
+
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <div>
-        <Transaction/>
+        <Transaction token={this.props.token} username={this.props.username}/>
         <Chart/>
       </div>
     );
