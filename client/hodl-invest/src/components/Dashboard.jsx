@@ -11,8 +11,8 @@ class Dashboard extends Component {
   render() {
     return (
       <div>
-        <Transaction token={this.props.token} username={this.props.username}/>
-        <Chart/>
+        <Transaction token={this.props.token} username={this.props.username} />
+        <Chart token={this.props.token} username={this.props.username} />
       </div>
     );
   }
