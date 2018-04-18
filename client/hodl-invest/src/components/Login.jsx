@@ -57,6 +57,10 @@ class Login extends Component{
         console.log(this.responseText);
         alert("Please try again!");
       }
+      if (this.readyState === 4 && this.status === 404) {
+        console.log(this.responseText);
+        alert("Please try again!");
+      }
     });
 
     xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/login");
