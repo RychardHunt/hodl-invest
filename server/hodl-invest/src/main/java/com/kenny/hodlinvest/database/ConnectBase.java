@@ -68,4 +68,42 @@ public class ConnectBase{
 
         }
     }
+
+    public static void addNewUser(
+            String username,
+            String password,
+            String name,
+            String email,
+            int refer,
+            double playMoney,
+            double btc,
+            double eth,
+            double xrp,
+            double bch,
+            double ltc){
+
+        String newUser = "INSERT INTO users_info VALUES(" +
+                "'" + username + "'" + ", " +
+                "'" + password + "'" + ", " +
+                "'" + name + "'" + ", " +
+                "'" + email + "'" + ", " +
+                refer + ", " +
+                playMoney + ", " +
+                btc + ", " +
+                eth + ", " +
+                xrp + ", " +
+                bch + ", " +
+                ltc + ")";
+
+        System.out.println(newUser);
+        runQuery(newUser);
+    }
+
+    public static void deleteUser(String username){
+        String deleteUser = "DELETE FROM users_info WHERE username = " + "'" + username + "'";
+        runQuery(deleteUser);
+    }
+
+
+
 }
