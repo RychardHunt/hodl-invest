@@ -22,12 +22,13 @@ class Login extends Component{
 
    handleSubmit(event) {
     var xhr = new XMLHttpRequest();
+    let login = this;
 
     xhr.addEventListener("readystatechange", function () {
       if (this.readyState === 4 && this.status === 200) {
         alert("Login Successful!");
         var jsonObj = JSON.parse(this.responseText);
-        this.updateToken(jsonObj.token, jsonObj.username);
+        login.props.updateState(jsonObj.token, jsonObj.username);
         console.log("token is: " + jsonObj.token + " username is: " + jsonObj.username);
 
 
