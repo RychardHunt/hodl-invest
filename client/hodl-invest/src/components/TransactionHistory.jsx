@@ -19,8 +19,8 @@ class TransactionHistory extends Component {
 
             //Money handling
             let coin = currentTransaction.cryptocoin.ticker;
-            let coinAmount = currentTransaction.amount;
             let usdAmount = currentTransaction.cryptocoin.price;
+            let coinAmount = currentTransaction.amount;
             let transactionType = currentTransaction.transactionType;
             if(transactionType === 'BUY') {
                 coinAmount = '+' + coinAmount + ' ' + coin.toUpperCase();

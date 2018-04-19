@@ -63,7 +63,7 @@ class Chart extends Component{
   constructor(props){
     super(props);
     this.state = {
-      chartData:props.chartData
+      chartData:props.chartData,
     }
   }
 
@@ -101,7 +101,7 @@ class Chart extends Component{
         datasets:[
           {
             label:'Price',
-            data:[userPlayMoney/10, 9932, 1353], //sample portfolio numbers
+            data:[this.state.userJSON.playMoney/10, 1, 1], //sample portfolio numbers
             backgroundColor:[
               'rgba(255, 99, 132, 0.6)',
               'rgba(54, 162, 235, 0.6)',
@@ -144,7 +144,7 @@ class Chart extends Component{
           options={{
             title:{
               display:this.props.displayTitle,
-              text:'Portfolio test for ' + userids.username,
+              text:'Portfolio test for ' + this.props.username,
               fontSize:25
             },
             legend:{
