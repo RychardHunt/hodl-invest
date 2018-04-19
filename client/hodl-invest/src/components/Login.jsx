@@ -26,16 +26,12 @@ class Login extends Component{
 
     xhr.addEventListener("readystatechange", function () {
       if (this.readyState === 4 && this.status === 200) {
-        alert("Login Successful!");
+        alert("Login Successful! Please proceed to Dashboard!");
         var jsonObj = JSON.parse(this.responseText);
         login.props.updateState(jsonObj.token, jsonObj.username);
-        window.location.href = './dashboard';
-        console.log("token is: " + jsonObj.token + " username is: " + jsonObj.username);
-
 
         document.cookie = "token=" + jsonObj.token;
         document.cookie ="username=" + jsonObj.username;
-        console.log("The cookies are " + document.cookie);
 
         var token = "";
         var name = "token" + "=";
@@ -50,15 +46,13 @@ class Login extends Component{
               token = c.substring(name.length, c.length);
           }
           console.log("token is " + token);
-    }
-    return "";
+        }
+        return "";
       }
       if (this.readyState === 4 && this.status === 400) {
-        console.log(this.responseText);
         alert("Please try again!");
       }
       if (this.readyState === 4 && this.status === 404) {
-        console.log(this.responseText);
         alert("Please try again!");
       }
     });
@@ -73,7 +67,6 @@ class Login extends Component{
     });
 
     xhr.send(sendObject);
-    console.log(sendObject);
     event.preventDefault();
    }
 
