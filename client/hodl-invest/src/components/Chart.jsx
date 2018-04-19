@@ -101,7 +101,7 @@ class Chart extends Component{
         datasets:[
           {
             label:'Price',
-            data:[this.state.userJSON.playMoney/10, 1, 1], //sample portfolio numbers
+            data:[10000, 0, 0], //sample portfolio numbers
             backgroundColor:[
               'rgba(255, 99, 132, 0.6)',
               'rgba(54, 162, 235, 0.6)',
@@ -131,20 +131,6 @@ class Chart extends Component{
             title:{
               display:this.props.displayTitle,
               text:this.props.coin + '\'s\ ' +  'Historical Prices',
-              fontSize:25
-            },
-            legend:{
-              display:this.props.displayLegend,
-              position:this.props.legendPosition
-            }
-          }}
-        />
-        <Pie
-          data={this.state.userData}
-          options={{
-            title:{
-              display:this.props.displayTitle,
-              text:'Portfolio test for ' + this.props.username,
               fontSize:25
             },
             legend:{
