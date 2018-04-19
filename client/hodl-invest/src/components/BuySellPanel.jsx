@@ -205,6 +205,8 @@ class BuySellPanel extends Component {
     }
 
     handleBuy(event) {
+      console.log("token " + this.props.token);
+      console.log("username " + this.props.username);
         let data = JSON.stringify({
             "token": this.props.token,
             "username": this.props.username
@@ -214,9 +216,12 @@ class BuySellPanel extends Component {
         xhr.withCredentials = false;
 
         xhr.addEventListener("readystatechange", function () {
-            if (this.readyState === 4) {
-                console.log(this.responseText);
-            }
+          if (this.readyState === 4 && this.status === 500) {
+            alert("Please actually click on a ticker from the drop down menu!");
+          }
+          if (this.readyState === 4 && this.status === 400) {
+            alert("Insufficient funds! Please lower order quantity!");
+          }
         });
 
         xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/buy/" + this.state.buySelect +"/"+ this.state.buyInput);
@@ -238,9 +243,12 @@ class BuySellPanel extends Component {
         xhr.withCredentials = false;
 
         xhr.addEventListener("readystatechange", function () {
-            if (this.readyState === 4) {
-                console.log(this.responseText);
-            }
+          if (this.readyState === 4 && this.status === 500) {
+            alert("Please actually click on a ticker from the drop down menu!");
+          }
+          if (this.readyState === 4 && this.status === 400) {
+            alert("Insufficient coins! Please lower order quantity!");
+          }
         });
 
         xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/sell/"+ this.state.sellSelect+"/" + this.state.sellInput);
@@ -271,8 +279,8 @@ class BuySellPanel extends Component {
             return <form>
                 Select coin:
                 <select value={this.state.sellSelect} onChange={this.handleSellSelect.bind(this)}>
-                    <option value="btc">BTC</option>
                     <option value="eth">ETH</option>
+                    <option value="btc">BTC</option>
                 </select>
                 <br/>
                 Enter coin amount: <input value={this.state.sellInput} onChange={this.handleSellInput.bind(this)}/>

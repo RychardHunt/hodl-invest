@@ -61,7 +61,6 @@ class Registration extends Component {
     } else{
       alert("Username and Password do not match! Please try again!");
     }
-    console.log(sendObject);
     event.preventDefault();
   }
 
