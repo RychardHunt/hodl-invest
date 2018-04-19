@@ -19,7 +19,6 @@ var opensArr = [];
 var data = json_obj.Data;
 console.log(data);
 
-
 for(var i = 0; i < data.length; i++) {
     var obj = data[i];
     var date = new Date((obj.time)*1000);
@@ -28,11 +27,43 @@ for(var i = 0; i < data.length; i++) {
     opensArr.push(obj.open);
 }
 
+var userDataURL = "";
+
+// let token = this.props.token;
+// let username = this.props.username;
+
+var userids = "";
+
+try {
+  userids = JSON.stringify({
+              "token": this.props.token,
+              "username": this.props.username
+          });
+  userDataURL = "https://hodl-invest-server.herokuapp.com/api/v1/users/" + userids.username
+}
+catch(err) {
+  //giving default user
+  userDataURL = "https://hodl-invest-server.herokuapp.com/api/v1/users/zoro"
+}
+
+
+function Get(userDataURL){
+    var Httpreq = new XMLHttpRequest(); // a new request
+    Httpreq.open("GET",userDataURL,false);
+    Httpreq.send(null);
+    return Httpreq.responseText;
+}
+
+var json_obj = JSON.parse(Get(userDataURL));
+
+var userPlayMoney = json_obj.playMoney;
+// var userBTC = json_obj.portfolio
+
 class Chart extends Component{
   constructor(props){
     super(props);
     this.state = {
-      chartData:props.chartData
+      chartData:props.chartData,
     }
   }
 
@@ -50,8 +81,27 @@ class Chart extends Component{
         labels: timesArr,
         datasets:[
           {
+            borderWidth:'5',
+            borderColor: 'rgb(40, 146, 215)',
             label:'Price',
             data:opensArr,
+            backgroundColor:'rgba(255, 255, 255, .01)'
+          }
+        ]
+      }
+    });
+  }
+
+  getUserData(){
+    //ajax calls here
+
+    this.setState({
+      userData:{
+        labels: ['USD', 'BTC', 'ETH'],
+        datasets:[
+          {
+            label:'Price',
+            data:[10000, 0, 0], //sample portfolio numbers
             backgroundColor:[
               'rgba(255, 99, 132, 0.6)',
               'rgba(54, 162, 235, 0.6)',
@@ -69,6 +119,7 @@ class Chart extends Component{
 
   componentWillMount(){
     this.getChartData();
+    this.getUserData();
   }
 
   render(){
@@ -80,34 +131,6 @@ class Chart extends Component{
             title:{
               display:this.props.displayTitle,
               text:this.props.coin + '\'s\ ' +  'Historical Prices',
-              fontSize:25
-            },
-            legend:{
-              display:this.props.displayLegend,
-              position:this.props.legendPosition
-            }
-          }}
-        />
-        <Pie
-          data={this.state.chartData}
-          options={{
-            title:{
-              display:this.props.displayTitle,
-              text:'Portfolio test for User',
-              fontSize:25
-            },
-            legend:{
-              display:this.props.displayLegend,
-              position:this.props.legendPosition
-            }
-          }}
-        />
-        <Bar
-          data={this.state.chartData}
-          options={{
-            title:{
-              display:this.props.displayTitle,
-              text:'Bar implementation for '+this.props.coin,
               fontSize:25
             },
             legend:{

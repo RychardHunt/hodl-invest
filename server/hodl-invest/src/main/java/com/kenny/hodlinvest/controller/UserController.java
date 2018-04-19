@@ -19,7 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/users")
-@CrossOrigin(origins = "https://hodl-invest.herokuapp.com/")
+@CrossOrigin(origins = {"https://hodl-invest.herokuapp.com/", "http://localhost:3000"})
 public class UserController {
 
     private final UserService userService;
@@ -37,7 +37,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(
             method = RequestMethod.GET
-    )
+   )
     public String message(){
         return "API documentation can be found here: https://github.com/RychardHunt/hodl-invest/wiki/Project-Documentation";
     }
