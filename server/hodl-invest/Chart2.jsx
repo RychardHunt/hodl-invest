@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Bar, Line, Pie} from 'react-chartjs-2';
 
-var url = 'https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=3'
+var url = 'https://min-api.cryptocompare.com/data/histoday?fsym=ETH&tsym=USD&limit=3'
 
 function Get(url){
     var Httpreq = new XMLHttpRequest(); // a new request
@@ -9,8 +9,6 @@ function Get(url){
     Httpreq.send(null);
     return Httpreq.responseText;
 }
-
-
 
 var json_obj = JSON.parse(Get(url)); //This object holds the result of the get request
 
@@ -34,26 +32,16 @@ class Chart extends Component{
   constructor(props){
     super(props);
     this.state = {
-
-        isHidden: true,
-        chartData:props.chartData,
-
-
+      chartData:props.chartData
     }
-
-      this.handleToggleClick = this.handleToggleClick.bind(this);
-
   }
-
 
   static defaultProps = {
     displayTitle:true,
     displayLegend: true,
     legendPosition:'right',
-    coin:'BTC'
+    coin:'ETH'
   }
-
-
 
   getChartData(){
     // Ajax calls here
@@ -79,21 +67,13 @@ class Chart extends Component{
     });
   }
 
-
   componentWillMount(){
     this.getChartData();
   }
 
   render(){
     return (
-      <div className="Chart">
-
-        <div className = "tab">
-
-
-
-        </div>
-
+      <div className="chart">
         <Line
           data={this.state.chartData}
           options={{
@@ -108,8 +88,6 @@ class Chart extends Component{
             }
           }}
         />
-
-
       </div>
     )
   }
