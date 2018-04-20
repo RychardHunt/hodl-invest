@@ -10,9 +10,12 @@ function Get(url){
     return Httpreq.responseText;
 }
 
+
+
 var json_obj = JSON.parse(Get(url)); //This object holds the result of the get request
 
 var timesArr = [];
+var unixArr = [];
 var opensArr = [];
 
 var data = json_obj.Data;
@@ -21,7 +24,9 @@ console.log(data);
 
 for(var i = 0; i < data.length; i++) {
     var obj = data[i];
-    timesArr.push(obj.time);
+    var date = new Date((obj.time)*1000);
+    var formattedDate = (date.getUTCMonth() + 1)+'-'+date.getUTCDate()+'-'+date.getUTCFullYear();
+    timesArr.push(formattedDate);
     opensArr.push(obj.open);
 }
 
@@ -29,16 +34,26 @@ class Chart extends Component{
   constructor(props){
     super(props);
     this.state = {
-      chartData:props.chartData
+
+        isHidden: true,
+        chartData:props.chartData,
+
+
     }
+
+      this.handleToggleClick = this.handleToggleClick.bind(this);
+
   }
+
 
   static defaultProps = {
     displayTitle:true,
     displayLegend: true,
     legendPosition:'right',
-    location:'City'
+    coin:'BTC'
   }
+
+
 
   getChartData(){
     // Ajax calls here
@@ -64,19 +79,27 @@ class Chart extends Component{
     });
   }
 
+
   componentWillMount(){
     this.getChartData();
   }
 
   render(){
     return (
-      <div className="chart">
+      <div className="Chart">
+
+        <div className = "tab">
+
+
+
+        </div>
+
         <Line
           data={this.state.chartData}
           options={{
             title:{
               display:this.props.displayTitle,
-              text:this.props.location + '\'s \ ' +  'BTC Historical Prices',
+              text:this.props.coin + '\'s\ ' +  'Historical Prices',
               fontSize:25
             },
             legend:{
@@ -85,34 +108,8 @@ class Chart extends Component{
             }
           }}
         />
-        <Pie
-          data={this.state.chartData}
-          options={{
-            title:{
-              display:this.props.displayTitle,
-              text:'Pie graph Implementation for '+this.props.location,
-              fontSize:25
-            },
-            legend:{
-              display:this.props.displayLegend,
-              position:this.props.legendPosition
-            }
-          }}
-        />
-        <Bar
-          data={this.state.chartData}
-          options={{
-            title:{
-              display:this.props.displayTitle,
-              text:'Bar implementation for '+this.props.location,
-              fontSize:25
-            },
-            legend:{
-              display:this.props.displayLegend,
-              position:this.props.legendPosition
-            }
-          }}
-        />
+
+
       </div>
     )
   }
