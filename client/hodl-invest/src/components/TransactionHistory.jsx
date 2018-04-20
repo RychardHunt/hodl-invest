@@ -22,12 +22,13 @@ class TransactionHistory extends Component {
             let usdAmount = currentTransaction.cryptocoin.price;
             let coinAmount = currentTransaction.amount;
             let transactionType = currentTransaction.transactionType;
+            let totalAmount = usdAmount * coinAmount;
             if(transactionType === 'BUY') {
                 coinAmount = '+' + coinAmount + ' ' + coin.toUpperCase();
-                usdAmount = '-$' + usdAmount;
+                usdAmount = '-$' + totalAmount;
             } else {
                 coinAmount = '-' + coinAmount + ' ' + coin.toUpperCase();
-                usdAmount = '+$' + usdAmount;
+                usdAmount = '+$' + totalAmount;
             }
 
             //Time handling
