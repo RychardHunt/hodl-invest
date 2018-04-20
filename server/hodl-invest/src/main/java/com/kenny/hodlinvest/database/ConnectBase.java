@@ -98,6 +98,18 @@ public class ConnectBase{
         System.out.println(newUser);
         runQuery(newUser);
     }
+    
+     public static void updateMoney(String username, String refer, String rewardPlayMoneyAmount){
+  
+        String updatedUser = "UPDATE users_info SET refer = " + 
+        "'" + refer + "'" +
+         "playMoney = " + 
+         "'" + rewardPlayMoneyAmount + "'" + 
+        "WHERE username = " +
+         "'" + username + "'";
+ 
+         runQuery(updatedUser);
+         }
 
     public static void deleteUser(String username){
         String deleteUser = "DELETE FROM users_info WHERE username = " + "'" + username + "'";
