@@ -15,6 +15,7 @@ class About extends Component {
             about the viability of digital assets on the blockchain as a form of liquid security.</p>
 
             <p>
+            <strong>Daniel Connolly*</strong>: Frontend Software Engineer <br/>
             <strong>Richard Guo</strong>: Product Manager & Frontend Software Engineer <br/>
             <strong>Aaron Lin*</strong>: Frontend Software Engineer <br/>
             <strong>Luis Lopez-Cardona*</strong>: Frontend Software Engineer & UI Designer <br/>

@@ -91,7 +91,6 @@ Alex: Researched Heroku, Postqresql, and JDBC documentations and implementation 
 Rych: Hooked up the Login/Signup page to backend. Decided to not include Forgot Password page. Supervised the creation of buying/selling and history frontend and backend.
 
 Task assigned for next week 04/02/2018: 
-<<<<<<< HEAD
 
 Kenny: Restructure api to only allow api calls to authorized tokens.
 
@@ -117,10 +116,20 @@ Kenny: Add list of cryptocoins owned by user and amount owned and create endpoin
 Alex: Responsible for the provision of our database to our server and to ensure funcitionality of our backend to interact with Heroku Postgresql.
 Rych: Fix various bugs throughout the frontend. Supervise and faciliate hooking up other components of the frontend to the database.
 
+____________________________________________________________________________    
+
+Meeting date and time: 04/16/2018 4:00pm - 5:00pm
+Summary: Discussed about the overall trajectory of the project and how it is unacceptable that we are not hitting deadlines. We made sure each member knew what needs to be done for their parts. To enable the core functionality of our user stories and in order to make up points for alpha release and present in class we must have the front-end send api requests to the backend to register, login, grab user play money, buy/sell cryptocoins, update transaction history UI and storing users, cryptocoins and transaction histories in database with the ability to update them. Also discussed about what add ons needed to be completed in order to get bonus points.
+
+Accomplishments from last week: 
+
+Kenny: Added list of cryptocoins owned by user and amount owned and create endpoints to update them. Removed sensitive information return by the api. 
+Alex: Connected to database from our server and to implement methods for database so backend doesn't break.
+Rych: Fixed various bugs throughout the frontend. Integrated the transaction and charts component into the dashboard component.
 
 
-=======
-Kenny: Restructure api to only allow api calls to authorized tokens.
-Alex: Responsible for the connect to database from our server and to implement methods for database so backend doesn't break.
-Rych: Fix various bugs throughout the frontend. Integrate the transaction and charts component into the dashboard component.
+Task assigned for next week 04/23/2018: 
+Kenny: Work on add on feature of keeping track of the users with highest play money and setup endpoint to grab list of top performing users.
+Alex: Storing users, cryptocoins and transaction histories in database with the ability to update them. 
+Rych: Have the front-end send api requests to the backend to register, login, grab user play money, buy/sell cryptocoins, and display the updated changes dynamically.
 

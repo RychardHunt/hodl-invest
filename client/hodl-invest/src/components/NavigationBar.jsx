@@ -21,7 +21,10 @@ class NavigationBar extends Component {
 							<NavItem eventKey={2} componentClass={Link} href="/dashboard" to="/dashboard">
 								Dashboard
 							</NavItem>
-							<NavItem eventKey={3} componentClass={Link} href="/login" to="/login">
+							<NavItem eventKey={3} componentClass={Link} href="/register" to="/register">
+								Register
+							</NavItem>
+							<NavItem eventKey={4} componentClass={Link} href="/login" to="/login">
 								Login
 							</NavItem>
 						</Nav>
