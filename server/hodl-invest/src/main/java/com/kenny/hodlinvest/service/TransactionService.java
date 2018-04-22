@@ -33,8 +33,6 @@ public class TransactionService {
         }
 
         user.setPlayMoney(user.getPlayMoney() - totalPrice);
-        System.out.println("User now has " + user.getPlayMoney());
-
         String capsTicker = ticker.toUpperCase();
 
         updatePortfolio(user, capsTicker, amount, "BUY");

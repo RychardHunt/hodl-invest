@@ -75,10 +75,7 @@ public class CryptocoinService {
             if(!response.isSuccessful()){
                 throw new CryptocoinUpdateException("Api call response failed. Ticker is most likely not supported.");
             }
-            System.out.println(response.toString());
             String jsonResponse = response.body().string();
-            System.out.println(jsonResponse);
-            System.out.println(response.message());
 
             JsonParser jsonParser = new JsonParser();
             JsonObject obj = jsonParser.parse(jsonResponse).getAsJsonObject();
@@ -88,7 +85,6 @@ public class CryptocoinService {
                 throw new CryptocoinUpdateException("Unable to retrieve cryptocoin rate. Rate is null");
             }
 
-            System.out.println(rate);
             return rate;
         } catch(IOException e){
             throw new UserException("Failed to get price from coin api");

@@ -198,7 +198,6 @@ public class UserController {
             throw new UserException("Invalid token to logout.");
         else{
             tokenMap.remove(username);
-            System.out.println("Successfully logged out user " + curToken.getUsername());
         }
     }
 
@@ -208,7 +207,6 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public void buyCryptocoin(@RequestBody Map<String, String> bodyMap, @PathVariable("ticker") String ticker, @PathVariable("amount") double amount){
-        System.out.println("Buy endpoint reached");
         String username = bodyMap.get("username");
 
         if(username == null || !userService.userExists(username))
@@ -225,7 +223,6 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public void sellCryptocoin(@RequestBody Map<String, String> bodyMap, @PathVariable String ticker, @PathVariable double amount){
-        System.out.println("Sell endpoint reached");
         String username = bodyMap.get("username");
 
         if(username == null || !userService.userExists(username))

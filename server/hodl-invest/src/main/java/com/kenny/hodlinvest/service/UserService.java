@@ -2,6 +2,7 @@ package com.kenny.hodlinvest.service;
 
 import com.kenny.hodlinvest.database.TestUserDatabase;
 import com.kenny.hodlinvest.exception.TransactionException;
+import com.kenny.hodlinvest.exception.UserException;
 import com.kenny.hodlinvest.exception.UserNotFoundException;
 import com.kenny.hodlinvest.model.Cryptocoin;
 import com.kenny.hodlinvest.model.Transaction;
@@ -78,7 +79,10 @@ public class UserService {
             return false;
 
         User user = getUserByName(username);
-        System.out.println(user.getPasswordHash() + " " + Secure.generateHash(password) + " " + Secure.generateHash(password));
+
+        if(user == null)
+            throw new UserException("User does not exists.");
+
         return user.getPasswordHash().equals(Secure.generateHash(password));
     }
 
