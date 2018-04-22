@@ -14,9 +14,6 @@ public class TestCryptocoinDatabase implements CryptocoinDatabase {
 
     public TestCryptocoinDatabase(){
         database = new HashMap<>();
-        insertCryptocoin("BTC", new Cryptocoin("BTC", 9250.00));
-        insertCryptocoin("ETH", new Cryptocoin("ETH", 712.65));
-        insertCryptocoin("XRP", new Cryptocoin("XRP", .0818816));
     }
 
     @Override

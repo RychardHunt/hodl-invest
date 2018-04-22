@@ -61,8 +61,8 @@ public class UserService {
         return 1;
     }
 
-    public int addTransaction(String username, String ticker, double amount, double price, String transactionType){
-        return database.updateTransactions(username, ticker, amount, price, transactionType);
+    public int addTransaction(String username, String name, String ticker, double amount, double price, String transactionType){
+        return database.updateTransactions(username, name, ticker, amount, price, transactionType);
     }
 
     public Map<String, Double> getPortfolio(String username) {
