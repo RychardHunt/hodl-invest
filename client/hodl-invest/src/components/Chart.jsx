@@ -10,8 +10,6 @@ function Get(url){
     return Httpreq.responseText;
 }
 
-
-
 var json_obj = JSON.parse(Get(url)); //This object holds the result of the get request
 
 var timesArr = [];
@@ -21,7 +19,6 @@ var opensArr = [];
 var data = json_obj.Data;
 console.log(data);
 
-
 for(var i = 0; i < data.length; i++) {
     var obj = data[i];
     var date = new Date((obj.time)*1000);
@@ -30,21 +27,49 @@ for(var i = 0; i < data.length; i++) {
     opensArr.push(obj.open);
 }
 
+var userDataURL = "";
+var userids = "";
+
+try {
+  userids = JSON.stringify({
+              "token": this.props.token,
+              "username": this.props.username
+          });
+  userDataURL = "https://hodl-invest-server.herokuapp.com/api/v1/users/" + userids.username
+}
+catch(err) {
+  //giving default user
+  userDataURL = "https://hodl-invest-server.herokuapp.com/api/v1/users/zoro"
+}
+
+
+function Get(userDataURL){
+    var Httpreq = new XMLHttpRequest(); // a new request
+    Httpreq.open("GET",userDataURL,false);
+    Httpreq.send(null);
+    return Httpreq.responseText;
+}
+
+var json_obj = JSON.parse(Get(userDataURL));
+
+var userPlayMoney = json_obj.playMoney;
+// var userBTC = json_obj.portfolio
+
 class Chart extends Component{
   constructor(props){
-    super(props);
+    super( props );
     this.state = {
-
-        isHidden: true,
-        chartData:props.chartData,
-
-
-    }
-
-      this.handleToggleClick = this.handleToggleClick.bind(this);
-
+      chartData:props.chartData,
+    };
+    this.toggleChart = this.toggleChart.bind(this)
   }
 
+  toggleChart = () => {
+    const { show } = this.state;
+    this.setState(prevState => ({
+      show: !prevState.show
+    }));
+  }
 
   static defaultProps = {
     displayTitle:true,
@@ -53,26 +78,19 @@ class Chart extends Component{
     coin:'BTC'
   }
 
-
-
   getChartData(){
     // Ajax calls here
     this.setState({
+      // show : true,
       chartData:{
         labels: timesArr,
         datasets:[
           {
+            borderWidth:'5',
+            borderColor: 'rgb(40, 146, 215)',
             label:'Price',
             data:opensArr,
-            backgroundColor:[
-              'rgba(255, 99, 132, 0.6)',
-              'rgba(54, 162, 235, 0.6)',
-              'rgba(255, 206, 86, 0.6)',
-              'rgba(75, 192, 192, 0.6)',
-              'rgba(153, 102, 255, 0.6)',
-              'rgba(255, 159, 64, 0.6)',
-              'rgba(255, 99, 132, 0.6)'
-            ]
+            backgroundColor:'rgba(255, 255, 255, .01)'
           }
         ]
       }
@@ -82,34 +100,29 @@ class Chart extends Component{
 
   componentWillMount(){
     this.getChartData();
+    // this.getUserData();
   }
 
   render(){
+    const { showing } = this.state;
     return (
-      <div className="Chart">
-
-        <div className = "tab">
-
-
-
-        </div>
-
-        <Line
-          data={this.state.chartData}
-          options={{
-            title:{
-              display:this.props.displayTitle,
-              text:this.props.coin + '\'s\ ' +  'Historical Prices',
-              fontSize:25
-            },
-            legend:{
-              display:this.props.displayLegend,
-              position:this.props.legendPosition
-            }
-          }}
-        />
-
-
+      <div className="BTCchart">
+      <button onClick={() => this.setState({ showing: !showing })}>BTC</button>
+      <div style={{ display: (showing ? 'block' : 'none') }}><Line
+        data={this.state.chartData}
+        options={{
+          title:{
+            display:this.props.displayTitle,
+            text:this.props.coin + '\'s\ ' +  'Historical Prices',
+            fontSize:25
+          },
+          legend:{
+            display:this.props.displayLegend,
+            position:this.props.legendPosition
+          }
+        }}
+      />
+      </div>
       </div>
     )
   }
