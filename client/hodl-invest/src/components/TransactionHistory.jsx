@@ -25,10 +25,10 @@ class TransactionHistory extends Component {
             let totalAmount = usdAmount * coinAmount;
             if(transactionType === 'BUY') {
                 coinAmount = '+' + coinAmount + ' ' + coin.toUpperCase();
-                usdAmount = '-$' + totalAmount;
+                usdAmount = '-$' + totalAmount.toFixed(2);
             } else {
                 coinAmount = '-' + coinAmount + ' ' + coin.toUpperCase();
-                usdAmount = '+$' + totalAmount;
+                usdAmount = '+$' + totalAmount.toFixed(2);
             }
 
             //Time handling
