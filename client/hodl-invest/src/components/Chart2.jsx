@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Bar, Line, Pie} from 'react-chartjs-2';
 
-var url = 'https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=3'
+var url = 'https://min-api.cryptocompare.com/data/histoday?fsym=ETH&tsym=USD&limit=3'
 
 function Get(url){
     var Httpreq = new XMLHttpRequest(); // a new request
@@ -75,7 +75,7 @@ class Chart extends Component{
     displayTitle:true,
     displayLegend: true,
     legendPosition:'right',
-    coin:'BTC'
+    coin:'ETH'
   }
 
   getChartData(){
@@ -106,8 +106,8 @@ class Chart extends Component{
   render(){
     const { showing } = this.state;
     return (
-      <div className="BTCchart">
-      <button onClick={() => this.setState({ showing: !showing })}>BTC</button>
+      <div className="ETHchart">
+      <button onClick={() => this.setState({ showing: !showing })}>ETH</button>
       <div style={{ display: (showing ? 'block' : 'none') }}><Line
         data={this.state.chartData}
         options={{
