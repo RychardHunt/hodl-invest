@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Map;
 
+import com.kenny.hodlinvest.exception.InvalidBodyFormatException;
 import com.kenny.hodlinvest.exception.InvalidTokenException;
 import com.kenny.hodlinvest.exception.UserException;
 import com.kenny.hodlinvest.model.Token;
@@ -34,12 +35,17 @@ public class Secure {
                 .generate(length);
     }
 
-    public static void checkToken(String username, Map<String, String> token, Map<String, Token> tokenMap){
-        Token tok = tokenMap.get(token.get("token"));
-        if(tok == null)
-            throw new InvalidTokenException("Token is missing or is invalid. Request body is: " + token.toString());
+    public static void checkToken(String username, Map<String, String> bodyMap, Map<String, Token> tokenMap){
+        String token = bodyMap.get("token");
 
-        if(!tok.getUsername().equals(username))
-            throw new UserException("Unauthorized requests to user.");
+        if(token == null)
+            throw new InvalidBodyFormatException("Token field is missing in message body. Message body is: " + bodyMap.toString());
+
+        Token tok = tokenMap.get(username);
+        if(tok == null)
+            throw new InvalidTokenException("User is not logged in. Message body is: " + bodyMap.toString());
+
+        if(!tok.getUsername().equals(username) || !tok.getToken().equals(token))
+            throw new InvalidTokenException("Invalid username and/or token pair.");
     }
 }

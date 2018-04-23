@@ -8,13 +8,16 @@ import javax.persistence.Id;
 @Entity
 public class Cryptocoin {
     @Id
+    private String name;
     private String ticker;
     private double price;
 
     public Cryptocoin(
+            @JsonProperty("name") String name,
             @JsonProperty("ticker") String ticker,
             @JsonProperty("price") double price) {
-        this.ticker = ticker;
+        this.name = name;
+        this.ticker = ticker.toUpperCase();
         this.price = price;
     }
 
@@ -23,7 +26,7 @@ public class Cryptocoin {
     }
 
     public void setTicker(String ticker) {
-        this.ticker = ticker;
+        this.ticker = ticker.toUpperCase();
     }
 
     public double getPrice() {
@@ -32,6 +35,14 @@ public class Cryptocoin {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
