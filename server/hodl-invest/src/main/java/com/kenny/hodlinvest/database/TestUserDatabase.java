@@ -19,9 +19,9 @@ public class TestUserDatabase implements UserDatabase {
 
     public TestUserDatabase() {
         this.database = new HashMap<>();
-        insertUser("zoro", new User("zoro", "fakepassword","kenny", "email@email.com", 1000, new ArrayList<>(), null));
-        insertUser("ninja", new User("ninja", "testpassword", "tyler", "lol@email.com", 2000, new ArrayList<>(), null));
-        insertUser("summit1g", new User("summit1g","lol123", "josh", "summit@email.com", 1000, new ArrayList<>(), null));
+        insertUser("zoro", new User("zoro", "fakepassword","kenny", "email@email.com", 0, new ArrayList<>(), null));
+        insertUser("ninja", new User("ninja", "testpassword", "tyler", "lol@email.com", 0, new ArrayList<>(), null));
+        insertUser("summit1g", new User("summit1g","lol123", "josh", "summit@email.com", 0, new ArrayList<>(), null));
     }
 
     @Override
@@ -54,8 +54,8 @@ public class TestUserDatabase implements UserDatabase {
     }
 
     @Override
-    public int updateTransactions(String username, String ticker, double amount, double price, String transactionType) {
-        database.get(username).addTransaction(new Transaction(new Cryptocoin(ticker, price), amount, transactionType, LocalDateTime.now()));
+    public int updateTransactions(String username, String name, String ticker, double amount, double price, String transactionType) {
+        database.get(username).addTransaction(new Transaction(new Cryptocoin(name, ticker, price), amount, transactionType, LocalDateTime.now()));
         return 1;
     }
 
