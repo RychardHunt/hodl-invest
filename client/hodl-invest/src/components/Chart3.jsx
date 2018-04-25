@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Bar, Line, Pie} from 'react-chartjs-2';
 
-var url = 'https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=3'
+var url = 'https://min-api.cryptocompare.com/data/histoday?fsym=LTC&tsym=USD&limit=3'
 
 function Get(url){
     var Httpreq = new XMLHttpRequest(); // a new request
@@ -43,16 +43,16 @@ catch(err) {
 }
 
 
-// function Get(userDataURL){
-//     var Httpreq = new XMLHttpRequest(); // a new request
-//     Httpreq.open("GET",userDataURL,false);
-//     Httpreq.send(null);
-//     return Httpreq.responseText;
-// }
+function Get(userDataURL){
+    var Httpreq = new XMLHttpRequest(); // a new request
+    Httpreq.open("GET",userDataURL,false);
+    Httpreq.send(null);
+    return Httpreq.responseText;
+}
 
-// var json_obj = JSON.parse(Get(userDataURL));
+var json_obj = JSON.parse(Get(userDataURL));
 
-// var userPlayMoney = json_obj.playMoney;
+var userPlayMoney = json_obj.playMoney;
 // var userBTC = json_obj.portfolio
 
 class Chart extends Component{
@@ -60,6 +60,7 @@ class Chart extends Component{
     super( props );
     this.state = {
       chartData:props.chartData,
+
     };
     this.toggleChart = this.toggleChart.bind(this)
   }
@@ -75,7 +76,7 @@ class Chart extends Component{
     displayTitle:true,
     displayLegend: true,
     legendPosition:'right',
-    coin:'BTC'
+    coin:'LTC'
   }
 
   getChartData(){
@@ -106,8 +107,8 @@ class Chart extends Component{
   render(){
     const { showing } = this.state;
     return (
-      <div className="BTCchart">
-      <button onClick={() => this.setState({ showing: !showing })}>BTC</button>
+      <div className="LTCchart">
+      <button onClick={() => this.setState({ showing: !showing })}>LTC</button>
       <div style={{ display: (showing ? 'block' : 'none') }}><Line
         data={this.state.chartData}
         options={{
