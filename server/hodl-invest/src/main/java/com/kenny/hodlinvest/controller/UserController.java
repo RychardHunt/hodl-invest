@@ -1,5 +1,6 @@
 package com.kenny.hodlinvest.controller;
 
+import com.kenny.hodlinvest.exception.InvalidBodyFormatException;
 import com.kenny.hodlinvest.exception.UserException;
 import com.kenny.hodlinvest.exception.UserNotFoundException;
 import com.kenny.hodlinvest.model.Token;
@@ -19,7 +20,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/users")
-@CrossOrigin(origins = "https://hodl-invest.herokuapp.com/")
+@CrossOrigin(origins = {"https://hodl-invest.herokuapp.com", "http://localhost:3000"})
 public class UserController {
 
     private final UserService userService;
@@ -37,7 +38,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping(
             method = RequestMethod.GET
-    )
+   )
     public String message(){
         return "API documentation can be found here: https://github.com/RychardHunt/hodl-invest/wiki/Project-Documentation";
     }
@@ -155,9 +156,9 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             path = "login"
     )
-    public Token userLogin(@RequestBody Map<String, String> userInfo){
-        String username = userInfo.get("username");
-        String password = userInfo.get("password");
+    public Token userLogin(@RequestBody Map<String, String> bodyMap){
+        String username = bodyMap.get("username");
+        String password = bodyMap.get("password");
 
         if(username == null || password == null)
             throw new UserException("Username or password is null.");
@@ -166,11 +167,11 @@ public class UserController {
             throw new UserNotFoundException("User does not exist");
 
         if(tokenMap.get(username) != null)
-            throw new UserException("User already logged in.");
+            return tokenMap.get(username);
 
         if(userService.authenticateUser(username, password)){
             Token token = new Token(null, username);
-            tokenMap.put(token.getToken(), token);
+            tokenMap.put(token.getUsername(), token);
             return token;
         } else{
             throw new UserException("Failed to authenticate user.");
@@ -181,15 +182,22 @@ public class UserController {
             method = RequestMethod.POST,
             path = "logout"
     )
-    public void userLogout(@RequestBody Map<String, String> tokenJson){
-        String token = tokenJson.get("token");
-        System.out.println("token is " + token);
-        Token curToken = tokenMap.get(token);
+    public void userLogout(@RequestBody Map<String, String> bodyMap){
+        String username = bodyMap.get("username");
+        String token = bodyMap.get("token");
+
+        if(username == null)
+            throw new InvalidBodyFormatException("Username field is missing in message body. Message body is: " + bodyMap.toString());
+        if(token == null)
+            throw new InvalidBodyFormatException("Token field is missing in message body. Message body is: " + bodyMap.toString());
+
+        Secure.checkToken(username, bodyMap, tokenMap);
+        Token curToken = tokenMap.get(username);
+
         if(curToken == null)
             throw new UserException("Invalid token to logout.");
         else{
-            tokenMap.remove(token);
-            System.out.println("Successfully logged out user " + curToken.getUsername());
+            tokenMap.remove(username);
         }
     }
 
@@ -199,14 +207,14 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public void buyCryptocoin(@RequestBody Map<String, String> bodyMap, @PathVariable("ticker") String ticker, @PathVariable("amount") double amount){
-        System.out.println("Buy endpoint reached");
         String username = bodyMap.get("username");
+
         if(username == null || !userService.userExists(username))
-            throw new UserNotFoundException("User does not exist");
+            throw new UserNotFoundException("User does not exist: " + username);
 
         Secure.checkToken(username, bodyMap, tokenMap);
 
-        transactionService.processBuyRequest(userService.getUserByName(username), ticker.toUpperCase(), amount, cryptocoinService.getPriceFromCoinApi(ticker.toUpperCase()));
+        transactionService.processBuyRequest(userService.getUserByName(username), cryptocoinService.getInfo().get(ticker.toUpperCase()).getName(), ticker.toUpperCase(), amount,  cryptocoinService.getInfo().get(ticker.toUpperCase()).getPrice());
     }
 
     @RequestMapping(
@@ -215,7 +223,6 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public void sellCryptocoin(@RequestBody Map<String, String> bodyMap, @PathVariable String ticker, @PathVariable double amount){
-        System.out.println("Sell endpoint reached");
         String username = bodyMap.get("username");
 
         if(username == null || !userService.userExists(username))
@@ -223,6 +230,6 @@ public class UserController {
 
         Secure.checkToken(username, bodyMap, tokenMap);
 
-        transactionService.processSellRequest(userService.getUserByName(username), ticker.toUpperCase(), amount, cryptocoinService.getPriceFromCoinApi(ticker.toUpperCase()));
+        transactionService.processSellRequest(userService.getUserByName(username),  cryptocoinService.getInfo().get(ticker.toUpperCase()).getName(), ticker.toUpperCase(), amount, cryptocoinService.getInfo().get(ticker.toUpperCase()).getPrice());
     }
 }

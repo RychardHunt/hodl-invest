@@ -3,9 +3,9 @@ package com.kenny.hodlinvest.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
-public class InvalidInputException extends RuntimeException {
-    public InvalidInputException(String message) {
+@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+public class UnknownServerException extends RuntimeException {
+    public UnknownServerException(String message) {
         super(message);
     }
 }
