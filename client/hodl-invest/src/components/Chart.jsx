@@ -47,16 +47,16 @@ catch(err) {
 }
 
 
-function Get(userDataURL){
-    var Httpreq = new XMLHttpRequest(); // a new request
-    Httpreq.open("GET",userDataURL,false);
-    Httpreq.send(null);
-    return Httpreq.responseText;
-}
+// function Get(userDataURL){
+//     var Httpreq = new XMLHttpRequest(); // a new request
+//     Httpreq.open("GET",userDataURL,false);
+//     Httpreq.send(null);
+//     return Httpreq.responseText;
+// }
 
-var json_obj = JSON.parse(Get(userDataURL));
+// var json_obj = JSON.parse(Get(userDataURL));
 
-var userPlayMoney = json_obj.playMoney;
+// var userPlayMoney = json_obj.playMoney;
 // var userBTC = json_obj.portfolio
 
 class Chart extends Component{

@@ -4,6 +4,7 @@ import TransactionHistory from './TransactionHistory'
 import BuySellPanel from "./BuySellPanel";
 
 class Transaction extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
