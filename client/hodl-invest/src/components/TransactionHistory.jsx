@@ -3,6 +3,7 @@ import './TransactionHistory.css'
 import tinydate from 'tinydate'
 
 class TransactionHistory extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
