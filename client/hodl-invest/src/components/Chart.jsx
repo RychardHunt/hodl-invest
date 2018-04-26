@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Bar, Line, Pie} from 'react-chartjs-2';
 
-var url = 'https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=3'
+var url = 'https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=3';
+var userUrl='https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=3';
 
 function Get(url){
     var Httpreq = new XMLHttpRequest(); // a new request
@@ -10,8 +11,11 @@ function Get(url){
     return Httpreq.responseText;
 }
 
-var json_obj = JSON.parse(Get(url)); //This object holds the result of the get request
+function getUserMoney(url){
 
+}
+
+var json_obj = JSON.parse(Get(url)); //This object holds the result of the get request
 var timesArr = [];
 var unixArr = [];
 var opensArr = [];
