@@ -30,7 +30,6 @@ class Chart extends Component{
   getCoinData(){
     var url = 'https://min-api.cryptocompare.com/data/histoday?fsym='+this.props.coin+'&tsym=USD&limit=3';
     var userUrl='https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=3';
-    console.log("Ms nigga");
 
 
     function Get(url){
@@ -101,11 +100,6 @@ class Chart extends Component{
     legendPosition:'right',
   }
 
-  getChartData(){
-    // Ajax calls here
-    console.log("Coins are valuable");
-
-  }
 
 
   componentWillMount(){
