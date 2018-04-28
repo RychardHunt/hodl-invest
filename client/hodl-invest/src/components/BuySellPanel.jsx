@@ -18,15 +18,14 @@ class BuySellPanel extends Component {
             isBuySelected : true,
             usdAmount: '0',
             coinAmount: '0',
-            buyInput: '',
-            sellInput: '',
-            buySelect: 'btc',
+            input:'',
+            coinSelected: 'btc',
             sellSelect: 'btc',
             btcPrice: 0,
             ethPrice: 0
         };
-        this.getBtcValue();
-        this.getEthValue();
+         this.getBtcValue();
+         this.getEthValue();
     }
 
     static validateInput(input) {
@@ -37,7 +36,6 @@ class BuySellPanel extends Component {
                 return false;
             }
         }
-
         //Only one period
         let hasPeriod = false;
         for(let i = 0; i < input.length; ++i) {
@@ -55,11 +53,12 @@ class BuySellPanel extends Component {
 
     coinToUsd(input,ticker) {
         //Buying ONLY
+
         if(input === '' || input === '.') {
             return '0';
         }
         let parsedInput = parseFloat(input);
-        if(ticker === "btc") {
+        if(ticker == "btc") {
             return '' + ((parsedInput * this.state.btcPrice).toFixed(2));
         } else {
             return '' + ((parsedInput * this.state.ethPrice).toFixed(2));
@@ -74,15 +73,7 @@ class BuySellPanel extends Component {
         xhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
                 buySellPanel.setState({
-                    BuySelected : buySellPanel.state.isBuySelected,
-                    usdAmount: buySellPanel.state.usdAmount,
-                    coinAmount: buySellPanel.state.coinAmount,
-                    buyInput: buySellPanel.state.buyInput,
-                    sellInput: buySellPanel.state.sellInput,
-                    buySelect: buySellPanel.state.buySelect,
-                    sellSelect: buySellPanel.sellSelect,
-                    btcPrice: parseFloat(this.responseText),
-                    ethPrice: buySellPanel.state.ethPrice
+                    btcPrice: parseFloat(this.responseText)
                 })
             }
         });
@@ -101,14 +92,6 @@ class BuySellPanel extends Component {
         xhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
                 buySellPanel.setState({
-                    BuySelected : buySellPanel.state.isBuySelected,
-                    usdAmount: buySellPanel.state.usdAmount,
-                    coinAmount: buySellPanel.state.coinAmount,
-                    buyInput: buySellPanel.state.buyInput,
-                    sellInput: buySellPanel.state.sellInput,
-                    buySelect: buySellPanel.state.buySelect,
-                    sellSelect: buySellPanel.sellSelect,
-                    btcPrice: buySellPanel.state.btcPrice,
                     ethPrice: parseFloat(this.responseText)
                 })
             }
@@ -123,96 +106,49 @@ class BuySellPanel extends Component {
     displayBuy(){
         this.setState({
             isBuySelected : true,
-            usdAmount: '0',
-            coinAmount: this.state.coinAmount,
-            buyInput: this.state.buyInput,
-            sellInput: '',
-            buySelect: this.state.buySelect,
-            sellSelect: 'btc',
-            btcPrice: this.state.btcPrice,
-            ethPrice: this.state.ethPrice
+
         });
     }
 
     displaySell(){
         this.setState({
             isBuySelected : false,
-            usdAmount: this.state.usdAmount,
-            coinAmount: '0',
-            buyInput: '',
-            sellInput: this.state.sellInput,
-            buySelect: 'btc',
-            sellSelect: this.state.sellSelect,
-            btcPrice: this.state.btcPrice,
-            ethPrice: this.state.ethPrice
+            usdAmount: '0',
+            input: '',
+            coinSelected: 'btc',
         })
     }
 
-    handleBuySelect(event) {
+    handleCoinSelect(event) {
         this.setState({
-            isBuySelected : this.state.isBuySelected,
-            usdAmount: this.coinToUsd(this.state.buyInput,event.target.value),
-            coinAmount: this.state.coinAmount,
-            buyInput: this.state.buyInput,
-            sellInput: this.state.sellInput,
-            buySelect: event.target.value,
-            sellSelect: this.state.sellSelect,
-            btcPrice: this.state.btcPrice,
-            ethPrice: this.state.ethPrice
+            usdAmount: this.coinToUsd(this.state.input ,event.target.value),
+            coinSelected: event.target.value
+
         });
     }
 
-    handleSellSelect(event) {
-        this.setState({
-            isBuySelected : this.state.isBuySelected,
-            usdAmount: this.state.usdAmount,
-            coinAmount: this.coinToUsd(this.state.sellInput,event.target.value),
-            buyInput: this.state.buyInput,
-            sellInput: this.state.sellInput,
-            buySelect: this.state.buySelect,
-            sellSelect: event.target.value,
-            btcPrice: this.state.btcPrice,
-            ethPrice: this.state.ethPrice
-        });
-    }
+    // handleSellSelect(event) {
+    //     this.setState({
+    //         // usdAmount: this.state.usdAmount,
+    //         coinAmount: this.coinToUsd(this.state.sellInput,event.target.value),
+    //         sellSelect: event.target.value
+    //     });
+    // }
 
-    handleBuyInput(event) {
+    handleInput(event) {
         let input = event.target.value;
+
         if(!BuySellPanel.validateInput(input)) {
             return
         }
         //Update state
+        console.log("our amount is " +this.coinToUsd(input ,this.state.coinSelected));
         this.setState({
-            isBuySelected : this.state.isBuySelected,
-            usdAmount: this.coinToUsd(input,this.state.buySelect),
-            coinAmount: this.state.coinAmount,
-            buyInput: input,
-            sellInput: this.state.sellInput,
-            buySelect: this.state.buySelect,
-            sellSelect: this.state.sellSelect,
-            btcPrice: this.state.btcPrice,
-            ethPrice: this.state.ethPrice
+            usdAmount: this.coinToUsd(input,this.state.coinSelected) ,
+            input: input
         });
     }
 
-    handleSellInput(event) {
-        let input = event.target.value;
-        if(!BuySellPanel.validateInput(input)) {
-            return
-        }
-
-        this.setState({
-            isBuySelected : this.state.isBuySelected,
-            usdAmount: this.state.usdAmount,
-            coinAmount: this.coinToUsd(input,this.state.sellSelect),
-            buyInput: this.state.buyInput,
-            sellInput: input,
-            buySelect: this.state.buySelect,
-            sellSelect: this.state.sellSelect,
-            btcPrice: this.state.btcPrice,
-            ethPrice: this.state.ethPrice
-        })
-    }
 
     handleBuy(event) {
       console.log("token " + this.props.token);
@@ -234,7 +170,7 @@ class BuySellPanel extends Component {
           }
         });
 
-        xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/buy/" + this.state.buySelect +"/"+ this.state.buyInput);
+        xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/buy/" + this.state.coinSelected +"/"+ this.state.input);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.setRequestHeader("Cache-Control", "no-cache");
 
@@ -245,6 +181,7 @@ class BuySellPanel extends Component {
     }
 
     handleSell(event) {
+      console.log("The event is "+ event);
         let data = JSON.stringify({
             "token": this.props.token,
             "username": this.props.username
@@ -262,7 +199,7 @@ class BuySellPanel extends Component {
           }
         });
 
-        xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/sell/"+ this.state.sellSelect+"/" + this.state.sellInput);
+        xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/sell/"+ this.state.sellSelect+"/" + this.state.input);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.setRequestHeader("Cache-Control", "no-cache");
 
@@ -276,12 +213,12 @@ class BuySellPanel extends Component {
         if (this.state.isBuySelected) {
             return <form>
                 Select coin:
-                <select value={this.state.buySelect} onChange={this.handleBuySelect.bind(this)}>
+                <select value={this.state.coinSelected} onChange={this.handleCoinSelect.bind(this)}>
                     <option value="btc">BTC</option>
                     <option value="eth">ETH</option>
                 </select>
                 <br/>
-                Enter coin amount: <input value={this.state.buyInput} onChange={this.handleBuyInput.bind(this)}/>
+                Enter coin amount: <input value={this.state.Input} onChange={this.handleInput.bind(this)}/>
                 <br/>
                 Total cost: ${this.state.usdAmount}
                 <br/>
@@ -290,14 +227,14 @@ class BuySellPanel extends Component {
         } else {
             return <form>
                 Select coin:
-                <select value={this.state.sellSelect} onChange={this.handleSellSelect.bind(this)}>
+                <select value={this.state.coinSelected} onChange={this.handleCoinSelect.bind(this)}>
                     <option value="eth">ETH</option>
                     <option value="btc">BTC</option>
                 </select>
                 <br/>
-                Enter coin amount: <input value={this.state.sellInput} onChange={this.handleSellInput.bind(this)}/>
+                Enter coin amount: <input value={this.state.input} onChange={this.handleInput.bind(this)}/>
                 <br/>
-                Total value: ${this.state.coinAmount}
+                Total value: ${this.state.usdAmount}
                 <br/>
                 <button onClick={this.handleSell.bind(this)}>Sell</button>
             </form>
