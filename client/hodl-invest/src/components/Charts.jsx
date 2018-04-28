@@ -28,7 +28,7 @@ render(){
         <button onClick={this.displayChart.bind(this, "ETH")}> ETH</button>
         <button  onClick={this.displayChart.bind(this, "BTC")}> BTC </button>
         <button onClick={this.displayChart.bind(this, "LTC")}> LTC </button>
-        <button onClick={this.displayChart.bind(this, "BHC")}> BHC </button>
+        <button onClick={this.displayChart.bind(this, "BCH")}> BCH </button>
 
       </div>
       <Chart coin={this.state.chartType}/>

@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import Chart from './Chart';
-import Chart2 from './Chart2';
-import Chart3 from './Chart3';
-import Chart4 from './Chart4';
 import Charts from './Charts'
 import Transaction from './Transaction';
 
@@ -35,7 +32,7 @@ xhr.addEventListener("readystatechange", function () {
     return (
       <div>
         <Transaction token={this.props.token} username={this.props.username} />
-        
+
         <Charts/>
       </div>
     );
