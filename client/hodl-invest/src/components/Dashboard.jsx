@@ -35,6 +35,7 @@ xhr.addEventListener("readystatechange", function () {
     return (
       <div>
         <Transaction token={this.props.token} username={this.props.username} />
+        
         <Charts/>
       </div>
     );
