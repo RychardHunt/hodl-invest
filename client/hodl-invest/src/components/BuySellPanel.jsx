@@ -20,7 +20,6 @@ class BuySellPanel extends Component {
             coinAmount: '0',
             input:'',
             coinSelected: 'btc',
-            sellSelect: 'btc',
             btcPrice: 0,
             ethPrice: 0
         };
@@ -127,13 +126,6 @@ class BuySellPanel extends Component {
         });
     }
 
-    // handleSellSelect(event) {
-    //     this.setState({
-    //         // usdAmount: this.state.usdAmount,
-    //         coinAmount: this.coinToUsd(this.state.sellInput,event.target.value),
-    //         sellSelect: event.target.value
-    //     });
-    // }
 
     handleInput(event) {
         let input = event.target.value;
@@ -149,39 +141,16 @@ class BuySellPanel extends Component {
         });
     }
 
-
-    handleBuy(event) {
-      console.log("token " + this.props.token);
-      console.log("username " + this.props.username);
-        let data = JSON.stringify({
-            "token": this.props.token,
-            "username": this.props.username
-        });
-
-        let xhr = new XMLHttpRequest();
-        xhr.withCredentials = false;
-
-        xhr.addEventListener("readystatechange", function () {
-          if (this.readyState === 4 && this.status === 500) {
-            alert("Please actually click on a ticker from the drop down menu!");
-          }
-          if (this.readyState === 4 && this.status === 400) {
-            alert("Insufficient funds! Please lower order quantity!");
-          }
-        });
-
-        xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/buy/" + this.state.coinSelected +"/"+ this.state.input);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.setRequestHeader("Cache-Control", "no-cache");
-
-        xhr.send(data);
-        event.preventDefault();
-        sleep(500);
-        this.props.reloadTransactions();
+    sendToServer(event) {
+      var buyOrSell;
+    if(this.state.isBuySelected){
+      console.log("The event is buy");
+      buyOrSell="buy";
     }
-
-    handleSell(event) {
-      console.log("The event is "+ event);
+    else{
+      console.log("the event is sell")
+      buyOrSell="sell";
+    }
         let data = JSON.stringify({
             "token": this.props.token,
             "username": this.props.username
@@ -199,7 +168,7 @@ class BuySellPanel extends Component {
           }
         });
 
-        xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/sell/"+ this.state.sellSelect+"/" + this.state.input);
+        xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/"+buyOrSell+"/"+ this.state.coinSelected+"/" + this.state.input);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.setRequestHeader("Cache-Control", "no-cache");
 
@@ -222,7 +191,7 @@ class BuySellPanel extends Component {
                 <br/>
                 Total cost: ${this.state.usdAmount}
                 <br/>
-                <button onClick={this.handleBuy.bind(this)}>Buy</button>
+                <button onClick={this.sendToServer.bind(this)}>Buy</button>
             </form>
         } else {
             return <form>
@@ -236,7 +205,7 @@ class BuySellPanel extends Component {
                 <br/>
                 Total value: ${this.state.usdAmount}
                 <br/>
-                <button onClick={this.handleSell.bind(this)}>Sell</button>
+                <button onClick={this.sendToServer.bind(this)}>Sell</button>
             </form>
         }
     }
