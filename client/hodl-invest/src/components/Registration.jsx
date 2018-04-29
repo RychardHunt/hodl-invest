@@ -31,12 +31,39 @@ class Registration extends Component {
   }
 
   handleSubmit(event) {
-
+    var valid=true;
+    var pass=this.state.password;
+    var user=this.state.username;
+    var em=this.state.email;
     if (this.state.password === this.state.confirmPassword) {
       var xhr = new XMLHttpRequest();
 
       xhr.addEventListener("readystatechange", function () {
-        if (this.readyState === 4 && this.status === 200) {
+        if((pass===''||user==='')||em===''){
+          valid=false;
+          alert("Invalid registration! Please fill all areas!")
+        }
+        else{
+        if (pass.length<8){
+          valid=false;
+          console.log("password error");
+        }
+	if (user.length<8){
+          valid=false;
+          console.log("password error");
+        }
+	   var re = /^(?:[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
+  
+	    console.log(em);
+         if(!re.test(em))
+         {
+           valid=false;
+           console.log("email error")
+         }}
+	  console.log(valid);
+
+
+        if (this.readyState === 4 && this.status === 200&&valid) {
           alert("Registration Successful! Please login!");
           window.location.href = './login';
         }
@@ -56,10 +83,10 @@ class Registration extends Component {
         "name": this.state.name,
         "email": this.state.email
       });
-
-      xhr.send(sendObject);
+      if(valid){
+      xhr.send(sendObject);}
     } else{
-      alert("Username and Password do not match! Please try again!");
+      alert("Password and Confirm Password do not match! Please try again!");
     }
     event.preventDefault();
   }
@@ -97,3 +124,4 @@ class Registration extends Component {
 
 }
 export default Registration;
+
