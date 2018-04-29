@@ -142,18 +142,17 @@ class BuySellPanel extends Component {
     }
 
     sendToServer(event) {
-      var buyOrSell;
-    if(this.state.isBuySelected){
-      console.log("The event is buy");
-      buyOrSell="buy";
-    }
-    else{
-      console.log("the event is sell")
-      buyOrSell="sell";
-    }
+        var buyOrSell;
+        if(this.state.isBuySelected){
+          console.log("The event is buy");
+          buyOrSell="buy";
+        } else{
+          console.log("the event is sell")
+          buyOrSell="sell";
+        }
         let data = JSON.stringify({
-            "token": this.props.token,
-            "username": this.props.username
+          "token": this.props.token,
+          "username": this.props.username
         });
 
         let xhr = new XMLHttpRequest();
@@ -213,7 +212,6 @@ class BuySellPanel extends Component {
     render() {
         return (
             <div className="buy-sell-panel" >
-                <center> <h1>Buy / Sell</h1> </center>
                 <div className="tab">
                     <button onClick={this.displayBuy.bind(this)}>Buy</button>
                     <button onClick={this.displaySell.bind(this)}>Sell</button>
