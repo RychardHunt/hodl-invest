@@ -1,5 +1,6 @@
 package com.kenny.hodlinvest.controller;
 
+import com.kenny.hodlinvest.database.UserDynamoDatabase;
 import com.kenny.hodlinvest.exception.InvalidBodyFormatException;
 import com.kenny.hodlinvest.exception.UserException;
 import com.kenny.hodlinvest.exception.UserNotFoundException;
@@ -27,6 +28,9 @@ public class UserController {
     private final CryptocoinService cryptocoinService;
     private final TransactionService transactionService;
     private final Map<String, Token> tokenMap = new HashMap<>();
+
+    @Autowired
+    private UserDynamoDatabase userDynamoDatabase;
 
     @Autowired
     public UserController(UserService userService, CryptocoinService cryptocoinService, TransactionService transactionService) {
@@ -172,6 +176,7 @@ public class UserController {
         if(userService.authenticateUser(username, password)){
             Token token = new Token(null, username);
             tokenMap.put(token.getUsername(), token);
+            userDynamoDatabase.insertToken(token);
             return token;
         } else{
             throw new UserException("Failed to authenticate user.");
@@ -213,6 +218,7 @@ public class UserController {
             throw new UserNotFoundException("User does not exist: " + username);
 
         Secure.checkToken(username, bodyMap, tokenMap);
+        Secure.validateToken(bodyMap, userDynamoDatabase);
 
         transactionService.processBuyRequest(userService.getUserByName(username), cryptocoinService.getInfo().get(ticker.toUpperCase()).getName(), ticker.toUpperCase(), amount,  cryptocoinService.getInfo().get(ticker.toUpperCase()).getPrice());
     }

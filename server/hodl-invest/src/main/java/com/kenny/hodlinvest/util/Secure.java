@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Map;
 
+import com.kenny.hodlinvest.database.UserDynamoDatabase;
 import com.kenny.hodlinvest.exception.InvalidBodyFormatException;
 import com.kenny.hodlinvest.exception.InvalidTokenException;
 import com.kenny.hodlinvest.exception.UserException;
@@ -47,5 +48,25 @@ public class Secure {
 
         if(!tok.getUsername().equals(username) || !tok.getToken().equals(token))
             throw new InvalidTokenException("Invalid username and/or token pair.");
+    }
+
+    public static void validateToken(Map<String, String> bodyMap, UserDynamoDatabase dynamoDatabase){
+        String username = bodyMap.get("username");
+
+        if(username == null)
+            throw new InvalidBodyFormatException("USername field is missing in message body. Message body is: " + bodyMap.toString());
+
+        String token = bodyMap.get("token");
+        if(token == null)
+            throw new InvalidBodyFormatException("Token field is missing in message body. Message body is: " + bodyMap.toString());
+
+        Token tok = dynamoDatabase.selectToken(username);
+        if(tok == null)
+            throw new InvalidTokenException("User is not logged in. Message body is: " + bodyMap.toString());
+
+        if(!tok.getUsername().equals(username) || !tok.getToken().equals(token))
+            throw new InvalidTokenException("Invalid username and/or token pair.");
+
+        System.out.println("User " + username + " is logged in with token " + tok.getToken());
     }
 }
