@@ -7,7 +7,7 @@ class Charts extends Component{
   constructor(props){
     super(props);
     this.state={
-      chartType: 'ETH'
+      chartType: 'BTC'
     }
   }
 
@@ -21,22 +21,16 @@ class Charts extends Component{
 
 
 render(){
-
   return(
     <div >
       <div class="tab">
-        <button onClick={this.displayChart.bind(this, "ETH")}> ETH</button>
-        <button  onClick={this.displayChart.bind(this, "BTC")}> BTC </button>
+        <button onClick={this.displayChart.bind(this, "BTC")}> BTC </button>
+        <button  onClick={this.displayChart.bind(this, "ETH")}> ETH </button>
         <button onClick={this.displayChart.bind(this, "LTC")}> LTC </button>
         <button onClick={this.displayChart.bind(this, "BCH")}> BCH </button>
-
       </div>
       <Chart coin={this.state.chartType}/>
-
-
     </div>
-
-
   );
 }
 

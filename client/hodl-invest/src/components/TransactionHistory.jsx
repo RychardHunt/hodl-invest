@@ -51,7 +51,6 @@ class TransactionHistory extends Component {
     render() {
         return (
             <div className="transaction-history" >
-                <center> <h1>Transaction History</h1> </center>
                 <div className="maxwindow">
                     <table>
                         <tr>
