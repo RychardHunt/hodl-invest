@@ -27,7 +27,7 @@ public class UserController {
     private final UserService userService;
     private final CryptocoinService cryptocoinService;
     private final TransactionService transactionService;
-    private final Map<String, Token> tokenMap = new HashMap<>();
+//    private final Map<String, Token> tokenMap = new HashMap<>();
 
     @Autowired
     private UserDynamoDatabase userDynamoDatabase;
@@ -43,8 +43,8 @@ public class UserController {
     @RequestMapping(
             method = RequestMethod.GET
    )
-    public String message(){
-        return "API documentation can be found here: https://github.com/RychardHunt/hodl-invest/wiki/Project-Documentation";
+    public List<User> getAllUsers(){
+        return userService.getAllUsers();
     }
 
     @RequestMapping(
@@ -79,13 +79,8 @@ public class UserController {
             method = RequestMethod.DELETE,
             path = "{username}"
     )
-    public void deleteUserByName(@PathVariable String username,@RequestBody Map<String, String> token){
-        if(!userService.userExists(username))
-            throw new UserNotFoundException("User does not exist");
-
-        Secure.checkToken(username, token, tokenMap);
-
-        tokenMap.remove(token);
+    public void deleteUserByName(@PathVariable String username,@RequestBody Map<String, String> bodyMap){
+        Secure.validateToken(bodyMap, userDynamoDatabase);
         userService.deleteUserByName(username);
     }
 
@@ -93,42 +88,10 @@ public class UserController {
             method = RequestMethod.POST,
             path = "{username}/transactions/{amount}"
     )
-    public void updateUserPlayMoney(@PathVariable String username, @PathVariable double amount, @RequestBody Map<String, String> token){
-        if(!userService.userExists(username))
-            throw new UserNotFoundException("User does not exist");
-
-        Secure.checkToken(username, token, tokenMap);
-
+    public void updateUserPlayMoney(@PathVariable String username, @PathVariable double amount, @RequestBody Map<String, String> bodyMap){
+        Secure.validateToken(bodyMap, userDynamoDatabase);
         userService.updateUserPlayMoney(username, amount);
     }
-
-//    @RequestMapping(
-//            method = RequestMethod.POST,
-//            path = "{username}/transactions",
-//            produces = MediaType.APPLICATION_JSON_VALUE
-//    )
-//    public void addTransaction(@RequestBody Map<String, String> body, @PathVariable("username") String username){
-//        Secure.checkToken(username, body, tokenMap);
-//
-//        if(!userService.userExists(username))
-//            throw new UserNotFoundException("User does not exist");
-//
-//        try{
-//            String ticker = body.get("ticker");
-//            double price = Double.parseDouble(body.get("price"));
-//            if(body.get("ticker") == null || body.get("price") == null){
-//                throw new InvalidInputException("Please enter the ticker and price in JSON format. Request body is: + token.toString()");
-//            }
-//
-//            Cryptocoin cryptocoin = new Cryptocoin(ticker, price);
-//
-//            System.out.println("Added transaction: " + cryptocoin.getTicker() + " with price: " + cryptocoin.getPrice() + " to user: " + username);
-//            userService.addTransaction(username, cryptocoin.getTicker(), cryptocoin.getPrice());
-//
-//        } catch (NumberFormatException e){
-//            throw new InvalidInputException("Price is not a number. Price: " + body.get("price"));
-//        }
-//    }
 
     @RequestMapping(
             method = RequestMethod.GET,
@@ -170,12 +133,8 @@ public class UserController {
         if(!userService.userExists(username))
             throw new UserNotFoundException("User does not exist");
 
-        if(tokenMap.get(username) != null)
-            return tokenMap.get(username);
-
         if(userService.authenticateUser(username, password)){
             Token token = new Token(null, username);
-            tokenMap.put(token.getUsername(), token);
             userDynamoDatabase.insertToken(token);
             return token;
         } else{
@@ -188,22 +147,8 @@ public class UserController {
             path = "logout"
     )
     public void userLogout(@RequestBody Map<String, String> bodyMap){
-        String username = bodyMap.get("username");
-        String token = bodyMap.get("token");
-
-        if(username == null)
-            throw new InvalidBodyFormatException("Username field is missing in message body. Message body is: " + bodyMap.toString());
-        if(token == null)
-            throw new InvalidBodyFormatException("Token field is missing in message body. Message body is: " + bodyMap.toString());
-
-        Secure.checkToken(username, bodyMap, tokenMap);
-        Token curToken = tokenMap.get(username);
-
-        if(curToken == null)
-            throw new UserException("Invalid token to logout.");
-        else{
-            tokenMap.remove(username);
-        }
+        Secure.validateToken(bodyMap, userDynamoDatabase);
+        userDynamoDatabase.deleteToken(bodyMap.get("token"), bodyMap.get("username"));
     }
 
     @RequestMapping(
@@ -212,15 +157,8 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public void buyCryptocoin(@RequestBody Map<String, String> bodyMap, @PathVariable("ticker") String ticker, @PathVariable("amount") double amount){
-        String username = bodyMap.get("username");
-
-        if(username == null || !userService.userExists(username))
-            throw new UserNotFoundException("User does not exist: " + username);
-
-        Secure.checkToken(username, bodyMap, tokenMap);
         Secure.validateToken(bodyMap, userDynamoDatabase);
-
-        transactionService.processBuyRequest(userService.getUserByName(username), cryptocoinService.getInfo().get(ticker.toUpperCase()).getName(), ticker.toUpperCase(), amount,  cryptocoinService.getInfo().get(ticker.toUpperCase()).getPrice());
+        transactionService.processBuyRequest(userService.getUserByName(bodyMap.get("username")), cryptocoinService.getInfo().get(ticker.toUpperCase()).getName(), ticker.toUpperCase(), amount,  cryptocoinService.getInfo().get(ticker.toUpperCase()).getPrice());
     }
 
     @RequestMapping(
@@ -229,13 +167,7 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public void sellCryptocoin(@RequestBody Map<String, String> bodyMap, @PathVariable String ticker, @PathVariable double amount){
-        String username = bodyMap.get("username");
-
-        if(username == null || !userService.userExists(username))
-            throw new UserNotFoundException("User does not exist");
-
-        Secure.checkToken(username, bodyMap, tokenMap);
-
-        transactionService.processSellRequest(userService.getUserByName(username),  cryptocoinService.getInfo().get(ticker.toUpperCase()).getName(), ticker.toUpperCase(), amount, cryptocoinService.getInfo().get(ticker.toUpperCase()).getPrice());
+        Secure.validateToken(bodyMap, userDynamoDatabase);
+        transactionService.processSellRequest(userService.getUserByName(bodyMap.get("username")),  cryptocoinService.getInfo().get(ticker.toUpperCase()).getName(), ticker.toUpperCase(), amount, cryptocoinService.getInfo().get(ticker.toUpperCase()).getPrice());
     }
 }

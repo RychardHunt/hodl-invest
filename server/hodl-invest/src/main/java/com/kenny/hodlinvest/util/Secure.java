@@ -52,21 +52,18 @@ public class Secure {
 
     public static void validateToken(Map<String, String> bodyMap, UserDynamoDatabase dynamoDatabase){
         String username = bodyMap.get("username");
+        String token = bodyMap.get("token");
 
         if(username == null)
             throw new InvalidBodyFormatException("USername field is missing in message body. Message body is: " + bodyMap.toString());
-
-        String token = bodyMap.get("token");
         if(token == null)
             throw new InvalidBodyFormatException("Token field is missing in message body. Message body is: " + bodyMap.toString());
 
-        Token tok = dynamoDatabase.selectToken(username);
+        Token tok = dynamoDatabase.selectToken(token);
         if(tok == null)
-            throw new InvalidTokenException("User is not logged in. Message body is: " + bodyMap.toString());
+            throw new InvalidTokenException("Invalid token. Message body is: " + bodyMap.toString());
 
         if(!tok.getUsername().equals(username) || !tok.getToken().equals(token))
             throw new InvalidTokenException("Invalid username and/or token pair.");
-
-        System.out.println("User " + username + " is logged in with token " + tok.getToken());
     }
 }
