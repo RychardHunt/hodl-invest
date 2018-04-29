@@ -59,7 +59,7 @@ class Registration extends Component {
 
       xhr.send(sendObject);
     } else{
-      alert("Username and Password do not match! Please try again!");
+      alert("Password and Confirm Password do not match! Please try again!");
     }
     event.preventDefault();
   }
