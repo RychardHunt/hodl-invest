@@ -43,10 +43,6 @@ Users would be able to login to our platform to perform buying and selling virtu
 
 <ol>3. As a user, I want to be able to check the current portfolio so that I can see at a glance of the total value of my portfolio.</ol>
 
-<ol>4. As an administrator, I want to access user account information so that I can correctly update the corresponding data and offer a reliable experience for users to trade.</ol>
-  
-<ol>5. As an administrator, I want to interface with cryptocurrency exchanges so that I can have the reliable data for my users to understand the current market movements.</ol>
-
 ***
 
 **hodl-invest server API documentation**
