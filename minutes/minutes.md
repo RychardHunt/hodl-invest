@@ -155,3 +155,20 @@ Task assigned for next week 04/30/2018:
 Kenny: Continue working on adding the add on feature of keeping track of the users with highest play money and setup endpoint to grab list of top performing users and look into dynamoDB/postgres.
 Alex: Implement and integrate our current storing to our Heroku database.
 Rych: Fix various bugs on the frontend. Display available assets on the dashboard.
+
+____________________________________________________________________________    
+
+Meeting date and time: 04/30/2018 5:00pm - 6:00pm
+
+Summary: 
+We catched up on the in class presentation jury duty and also find bugs and implementaions that we can polish and work on. There are some back end and front end issues that we aim to fix before the final release which is due this week. Decided to postpone add ons until after the final release.
+
+Accomplishments from last week: 
+Kenny: Successfully connected to dynamodb and created tokens table that can store/retreive tokens from dynamoDB
+Alex: Polished codes and fixed bugs on connecting the databse with Heroku database.
+Rych: Fixed various bugs on the frontend. Implemented registration restrictions. Refactored the frontend codebase.
+
+Task assigned for next week 04/30/2018: 
+Kenny: Look into storing user data in dynamoDB and creating a emails table
+Alex: Continue to polish various bugs on the server and backend side.
+Rych: Display available assets on the dashboard.
