@@ -26,10 +26,9 @@ class Login extends Component{
 
     xhr.addEventListener("readystatechange", function () {
       if (this.readyState === 4 && this.status === 200) {
-        alert("Login Successful! Please proceed to Dashboard!");
         var jsonObj = JSON.parse(this.responseText);
         login.props.updateState(jsonObj.token, jsonObj.username);
-
+        alert("Welcome " + jsonObj.username + "! Please proceed to Dashboard!");
         document.cookie = "token=" + jsonObj.token;
         document.cookie ="username=" + jsonObj.username;
 
@@ -77,10 +76,10 @@ class Login extends Component{
     var ca = decodedCookie.split(';');
     for(var i = 0; i <ca.length; i++) {
         var c = ca[i];
-        while (c.charAt(0) == ' ') {
+        while (c.charAt(0) === ' ') {
             c = c.substring(1);
         }
-        if (c.indexOf(name) == 0) {
+        if (c.indexOf(name) === 0) {
             return c.substring(name.length, c.length);
         }
     }
