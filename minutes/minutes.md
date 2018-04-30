@@ -168,7 +168,7 @@ Kenny: Successfully connected to dynamodb and created tokens table that can stor
 Alex: Polished codes and fixed bugs on connecting the databse with Heroku database.
 Rych: Fixed various bugs on the frontend. Implemented registration restrictions. Refactored the frontend codebase.
 
-Task assigned for next week 04/30/2018: 
+Task assigned for next week 05/07/2018: 
 Kenny: Look into storing user data in dynamoDB and creating a emails table
 Alex: Continue to polish various bugs on the server and backend side.
 Rych: Display available assets on the dashboard.
