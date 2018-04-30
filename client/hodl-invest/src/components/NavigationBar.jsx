@@ -5,6 +5,21 @@ import './NavigationBar.css'
 
 class NavigationBar extends Component {
 	render(){
+		function deleteAllCookies() {
+    			var cookies = document.cookie.split(";");
+
+    			for (var i = 0; i < cookies.length; i++) {
+        		var cookie = cookies[i];
+        		var eqPos = cookie.indexOf("=");
+       			var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+       			document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+   				 }
+			}
+		var option="Login";
+		if(document.cookie.length>0)
+			option="Logout";
+			hreflocation=".";
+			deleteAllCookies();
 		return(
 				<Navbar default collapseOnSelect>
 					<Navbar.Header>
@@ -24,8 +39,8 @@ class NavigationBar extends Component {
 							<NavItem eventKey={3} componentClass={Link} href="/register" to="/register">
 								Register
 							</NavItem>
-							<NavItem eventKey={4} componentClass={Link} href="/login" to="/login">
-								Login
+							<NavItem eventKey={4} componentClass={Link} href={hreflocation} to={hreflocation}>
+								{option}
 							</NavItem>
 						</Nav>
 					</Navbar.Collapse>
