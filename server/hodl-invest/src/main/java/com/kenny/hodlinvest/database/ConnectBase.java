@@ -31,6 +31,8 @@ public class ConnectBase{
         return DriverManager.getConnection(dbUrl, username, password);
     }
 
+
+
     private static ResultSet queryQuery(String query, boolean who) throws URISyntaxException, SQLException{
         Connection con = getConnection();
         Statement stmt = con.createStatement();
@@ -57,6 +59,8 @@ public class ConnectBase{
             return rs;
         }
     }
+
+
     public static void runQuery(String query){
         try{
             queryQuery(query, false);
@@ -99,17 +103,34 @@ public class ConnectBase{
         runQuery(newUser);
     }
     
-     public static void updateMoney(String username, String refer, String rewardPlayMoneyAmount){
-  
-        String updatedUser = "UPDATE users_info SET refer = " + 
-        "'" + refer + "'" +
-         "playMoney = " + 
-         "'" + rewardPlayMoneyAmount + "'" + 
-        "WHERE username = " +
-         "'" + username + "'";
- 
-         runQuery(updatedUser);
-         }
+
+
+
+    public static void createTable(String table){
+        String table = "CREATE TABLE table_name(    column1 datatype,    column2 datatype,    column3 datatype,   columnN datatype );"
+
+        runQuery(table);
+    }
+
+
+//    CREATE TYPE employee_type AS (name text, salary numeric);
+//
+//    CREATE TABLE employees OF employee_type (
+//            PRIMARY KEY (name),
+//    salary WITH OPTIONS DEFAULT 1000
+//            );
+    
+    public static void updateMoney(String username, String refer, String rewardPlayMoneyAmount){
+
+        String updatedUser = "UPDATE users_info SET refer = " +
+                "'" + refer + "'" +
+                "playMoney = " +
+                "'" + rewardPlayMoneyAmount + "'" +
+                "WHERE username = " +
+                "'" + username + "'";
+
+        runQuery(updatedUser);
+    }
 
     public static void deleteUser(String username){
         String deleteUser = "DELETE FROM users_info WHERE username = " + "'" + username + "'";
