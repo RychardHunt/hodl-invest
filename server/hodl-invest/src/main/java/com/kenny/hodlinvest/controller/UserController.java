@@ -1,7 +1,7 @@
 package com.kenny.hodlinvest.controller;
 
+import com.kenny.hodlinvest.database.TokenDynamoDatabase;
 import com.kenny.hodlinvest.database.UserDynamoDatabase;
-import com.kenny.hodlinvest.exception.InvalidBodyFormatException;
 import com.kenny.hodlinvest.exception.UserException;
 import com.kenny.hodlinvest.exception.UserNotFoundException;
 import com.kenny.hodlinvest.model.Token;
@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +28,8 @@ public class UserController {
     private final TransactionService transactionService;
 //    private final Map<String, Token> tokenMap = new HashMap<>();
 
+    @Autowired
+    private TokenDynamoDatabase tokenDynamoDatabase;
     @Autowired
     private UserDynamoDatabase userDynamoDatabase;
 
@@ -53,10 +54,8 @@ public class UserController {
             path = "{username}"
     )
     public User getUserByName(@PathVariable String username){
-        if(!userService.userExists(username))
-            throw new UserNotFoundException("User does not exist");
-
-            return userService.getUserByName(username);
+            return userDynamoDatabase.selectUser(username);
+//            return userService.getUserByName(username);
     }
 
     @RequestMapping(
@@ -73,6 +72,7 @@ public class UserController {
         }
 
         userService.addUser(user.getUsername(), user);
+        userDynamoDatabase.insertUser(user);
     }
 
     @RequestMapping(
@@ -80,7 +80,7 @@ public class UserController {
             path = "{username}"
     )
     public void deleteUserByName(@PathVariable String username,@RequestBody Map<String, String> bodyMap){
-        Secure.validateToken(bodyMap, userDynamoDatabase);
+        Secure.validateToken(bodyMap, tokenDynamoDatabase);
         userService.deleteUserByName(username);
     }
 
@@ -89,8 +89,10 @@ public class UserController {
             path = "{username}/transactions/{amount}"
     )
     public void updateUserPlayMoney(@PathVariable String username, @PathVariable double amount, @RequestBody Map<String, String> bodyMap){
-        Secure.validateToken(bodyMap, userDynamoDatabase);
-        userService.updateUserPlayMoney(username, amount);
+        Secure.validateToken(bodyMap, tokenDynamoDatabase);
+//        userService.updateUserPlayMoney(username, amount);
+        User user = userDynamoDatabase.selectUser(username);
+        userDynamoDatabase.updateUserMoney(username, amount);
     }
 
     @RequestMapping(
@@ -135,7 +137,7 @@ public class UserController {
 
         if(userService.authenticateUser(username, password)){
             Token token = new Token(null, username);
-            userDynamoDatabase.insertToken(token);
+            tokenDynamoDatabase.insertToken(token);
             return token;
         } else{
             throw new UserException("Failed to authenticate user.");
@@ -147,8 +149,8 @@ public class UserController {
             path = "logout"
     )
     public void userLogout(@RequestBody Map<String, String> bodyMap){
-        Secure.validateToken(bodyMap, userDynamoDatabase);
-        userDynamoDatabase.deleteToken(bodyMap.get("token"), bodyMap.get("username"));
+        Secure.validateToken(bodyMap, tokenDynamoDatabase);
+        tokenDynamoDatabase.deleteToken(bodyMap.get("token"), bodyMap.get("username"));
     }
 
     @RequestMapping(
@@ -157,7 +159,7 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public void buyCryptocoin(@RequestBody Map<String, String> bodyMap, @PathVariable("ticker") String ticker, @PathVariable("amount") double amount){
-        Secure.validateToken(bodyMap, userDynamoDatabase);
+        Secure.validateToken(bodyMap, tokenDynamoDatabase);
         transactionService.processBuyRequest(userService.getUserByName(bodyMap.get("username")), cryptocoinService.getInfo().get(ticker.toUpperCase()).getName(), ticker.toUpperCase(), amount,  cryptocoinService.getInfo().get(ticker.toUpperCase()).getPrice());
     }
 
@@ -167,7 +169,7 @@ public class UserController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public void sellCryptocoin(@RequestBody Map<String, String> bodyMap, @PathVariable String ticker, @PathVariable double amount){
-        Secure.validateToken(bodyMap, userDynamoDatabase);
+        Secure.validateToken(bodyMap, tokenDynamoDatabase);
         transactionService.processSellRequest(userService.getUserByName(bodyMap.get("username")),  cryptocoinService.getInfo().get(ticker.toUpperCase()).getName(), ticker.toUpperCase(), amount, cryptocoinService.getInfo().get(ticker.toUpperCase()).getPrice());
     }
 }

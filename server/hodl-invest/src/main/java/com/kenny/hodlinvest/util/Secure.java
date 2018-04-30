@@ -6,10 +6,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Map;
 
-import com.kenny.hodlinvest.database.UserDynamoDatabase;
+import com.kenny.hodlinvest.database.TokenDynamoDatabase;
 import com.kenny.hodlinvest.exception.InvalidBodyFormatException;
 import com.kenny.hodlinvest.exception.InvalidTokenException;
-import com.kenny.hodlinvest.exception.UserException;
 import com.kenny.hodlinvest.model.Token;
 import org.apache.commons.text.CharacterPredicates;
 import org.apache.commons.text.RandomStringGenerator;
@@ -50,7 +49,7 @@ public class Secure {
             throw new InvalidTokenException("Invalid username and/or token pair.");
     }
 
-    public static void validateToken(Map<String, String> bodyMap, UserDynamoDatabase dynamoDatabase){
+    public static void validateToken(Map<String, String> bodyMap, TokenDynamoDatabase dynamoDatabase){
         String username = bodyMap.get("username");
         String token = bodyMap.get("token");
 
