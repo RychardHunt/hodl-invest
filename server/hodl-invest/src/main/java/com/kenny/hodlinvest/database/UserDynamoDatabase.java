@@ -1,5 +1,6 @@
 package com.kenny.hodlinvest.database;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.document.*;
 import com.google.gson.Gson;
 import com.kenny.hodlinvest.exception.UserException;
@@ -10,6 +11,7 @@ import com.kenny.hodlinvest.util.StringValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,26 +37,53 @@ public class UserDynamoDatabase {
             throw new UserException("Invalid email format");
         }
 
+        DynamoDBMapper mapper = new DynamoDBMapper(dynamoClient.getAmazonDynamoDB());
+        mapper.save(user);
+/*
         DynamoDB dynamoDB = dynamoClient.getDynamoDB();
         Table table = dynamoDB.getTable(dynamoClient.getUsersTableName());
-
         table.putItem(Item.fromJSON(gson.toJson(user, User.class)));
+*/
+
     }
 
     public User selectUser(String username){
+        if(username == null){
+            throw new UserException("Querying a null username");
+        }
+/*
+
         DynamoDB dynamoDB = dynamoClient.getDynamoDB();
         Table table = dynamoDB.getTable(dynamoClient.getUsersTableName());
 
         Item item = table.getItem(new PrimaryKey(USER_KEY, username));
 
         if(item == null){
-            throw new UserNotFoundException("User " + username + " does not exists");
+            throw new UserNotFoundException("User " + username + " does not exist in database");
         }
 
         return gson.fromJson(item.toJSON(), User.class);
+*/
+
+        DynamoDBMapper mapper = new DynamoDBMapper(dynamoClient.getAmazonDynamoDB());
+        User user =  mapper.load(User.class, username);
+
+        return user;
+    }
+
+    public void deleteUser(String username){
+
+    }
+
+    public List<User> selectAllUsers(){
+        return new ArrayList<>();
     }
 
     public void updateUserMoney(String username, double playMoney){
+        if(selectUser(username) == null)
+            throw new UserNotFoundException("User " + username + " does not exist in database");
+
+
         DynamoDB dynamoDB = dynamoClient.getDynamoDB();
         Table table = dynamoDB.getTable(dynamoClient.getUsersTableName());
 
@@ -69,21 +98,27 @@ public class UserDynamoDatabase {
         System.out.println(outcome.getUpdateItemResult().toString());
     }
 
-    public void updateUserPortfolio(String username, Map<String, Double> portfolio){
+    public void updateUserPortfolio(String username, String cryptocoin, Double amount){
+        if(selectUser(username) == null)
+            throw new UserNotFoundException("User " + username + " does not exist in database");
+
         DynamoDB dynamoDB = dynamoClient.getDynamoDB();
         Table table = dynamoDB.getTable(dynamoClient.getUsersTableName());
 
         Map<String, String> expressionAttributeNames = new HashMap<>();
-        expressionAttributeNames.put("#P", "portfolio");
+        expressionAttributeNames.put("#C", cryptocoin);
 
         Map<String, Object> expressionAttributeValues = new HashMap<>();
-        expressionAttributeValues.put(":val1", portfolio);
+        expressionAttributeValues.put(":val1", amount);
 
-        UpdateItemOutcome outcome = table.updateItem("username", username, "set #P = :val1", expressionAttributeNames, expressionAttributeValues);
+        UpdateItemOutcome outcome = table.updateItem("username", username, "set portfolio.#C = :val1", expressionAttributeNames, expressionAttributeValues);
         System.out.println(outcome.toString());
     }
 
-    public void updateUserTransactions(String username, List<Transaction> transactions){
+    public void updateUserTransactions(String username, Transaction transactions){
+        if(selectUser(username) == null)
+            throw new UserNotFoundException("User " + username + " does not exist in database");
+
         DynamoDB dynamoDB = dynamoClient.getDynamoDB();
         Table table = dynamoDB.getTable(dynamoClient.getUsersTableName());
 

@@ -29,9 +29,9 @@ public class UserController {
 //    private final Map<String, Token> tokenMap = new HashMap<>();
 
     @Autowired
-    private TokenDynamoDatabase tokenDynamoDatabase;
-    @Autowired
     private UserDynamoDatabase userDynamoDatabase;
+    @Autowired
+    private TokenDynamoDatabase tokenDynamoDatabase;
 
     @Autowired
     public UserController(UserService userService, CryptocoinService cryptocoinService, TransactionService transactionService) {
@@ -54,8 +54,10 @@ public class UserController {
             path = "{username}"
     )
     public User getUserByName(@PathVariable String username){
-            return userDynamoDatabase.selectUser(username);
-//            return userService.getUserByName(username);
+        if(userService.userExists(username))
+            throw new UserException("Username already exists.");
+
+        return userService.getUserByName(username);
     }
 
     @RequestMapping(
@@ -72,7 +74,6 @@ public class UserController {
         }
 
         userService.addUser(user.getUsername(), user);
-        userDynamoDatabase.insertUser(user);
     }
 
     @RequestMapping(
@@ -90,9 +91,7 @@ public class UserController {
     )
     public void updateUserPlayMoney(@PathVariable String username, @PathVariable double amount, @RequestBody Map<String, String> bodyMap){
         Secure.validateToken(bodyMap, tokenDynamoDatabase);
-//        userService.updateUserPlayMoney(username, amount);
-        User user = userDynamoDatabase.selectUser(username);
-        userDynamoDatabase.updateUserMoney(username, amount);
+        userService.updateUserPlayMoney(username, amount);
     }
 
     @RequestMapping(
@@ -130,7 +129,7 @@ public class UserController {
         String password = bodyMap.get("password");
 
         if(username == null || password == null)
-            throw new UserException("Username or password is null.");
+            throw new UserException("Username or password is null. Message body is " + bodyMap);
 
         if(!userService.userExists(username))
             throw new UserNotFoundException("User does not exist");
@@ -160,7 +159,12 @@ public class UserController {
     )
     public void buyCryptocoin(@RequestBody Map<String, String> bodyMap, @PathVariable("ticker") String ticker, @PathVariable("amount") double amount){
         Secure.validateToken(bodyMap, tokenDynamoDatabase);
-        transactionService.processBuyRequest(userService.getUserByName(bodyMap.get("username")), cryptocoinService.getInfo().get(ticker.toUpperCase()).getName(), ticker.toUpperCase(), amount,  cryptocoinService.getInfo().get(ticker.toUpperCase()).getPrice());
+        User user = userDynamoDatabase.selectUser(bodyMap.get("username"));
+
+        transactionService.processBuyRequest(user, cryptocoinService.getInfo().get(ticker.toUpperCase()).getName(), ticker.toUpperCase(), amount,  cryptocoinService.getInfo().get(ticker.toUpperCase()).getPrice());
+
+        userDynamoDatabase.updateUserPortfolio(user.getUsername(), ticker.toUpperCase(), amount);
+        userDynamoDatabase.updateUserMoney(user.getUsername(), user.getPlayMoney());
     }
 
     @RequestMapping(
@@ -170,6 +174,12 @@ public class UserController {
     )
     public void sellCryptocoin(@RequestBody Map<String, String> bodyMap, @PathVariable String ticker, @PathVariable double amount){
         Secure.validateToken(bodyMap, tokenDynamoDatabase);
-        transactionService.processSellRequest(userService.getUserByName(bodyMap.get("username")),  cryptocoinService.getInfo().get(ticker.toUpperCase()).getName(), ticker.toUpperCase(), amount, cryptocoinService.getInfo().get(ticker.toUpperCase()).getPrice());
+        User user = userDynamoDatabase.selectUser(bodyMap.get("username"));
+        System.out.println(user.toString());
+        transactionService.processSellRequest(user,  cryptocoinService.getInfo().get(ticker.toUpperCase()).getName(), ticker.toUpperCase(), amount, cryptocoinService.getInfo().get(ticker.toUpperCase()).getPrice());
+        System.out.println(user.toString());
+
+        userDynamoDatabase.updateUserPortfolio(user.getUsername(), ticker.toUpperCase(), user.getPortfolio().get(ticker.toUpperCase()));
+        userDynamoDatabase.updateUserMoney(user.getUsername(), user.getPlayMoney());
     }
 }

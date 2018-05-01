@@ -1,5 +1,8 @@
 package com.kenny.hodlinvest.model;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kenny.hodlinvest.util.Secure;
@@ -7,8 +10,9 @@ import com.kenny.hodlinvest.util.Secure;
 import java.util.*;
 
 @JsonIgnoreProperties(value = {"passwordHash", "email"}, allowSetters = true)
+@DynamoDBTable(tableName="usersTable")
 public class User {
-    private final String username;
+    private String username;
     private String passwordHash;
     private String name;
     private String email;
@@ -16,6 +20,8 @@ public class User {
 
     private List<Transaction> transactions;
     private Map<String, Double> portfolio;
+
+    public User(){}
 
     public User(
             @JsonProperty("username") String username,
@@ -47,22 +53,37 @@ public class User {
         this.playMoney = 100000;
     }
 
+    @DynamoDBHashKey(attributeName = "username")
     public String getUsername() {
         return username;
     }
 
+    @DynamoDBAttribute(attributeName = "passwordHash")
     public String getPasswordHash() {return passwordHash; }
 
+    @DynamoDBAttribute(attributeName = "name")
     public String getName() {
         return name;
     }
 
+    @DynamoDBAttribute(attributeName = "email")
     public String getEmail() {
         return email;
     }
 
+    @DynamoDBAttribute(attributeName = "playMoney")
     public double getPlayMoney() {
         return playMoney;
+    }
+
+    @DynamoDBAttribute(attributeName = "transactions")
+    public List<Transaction> getTransactions(){
+        return this.transactions;
+    }
+
+    @DynamoDBAttribute(attributeName = "portfolio")
+    public Map<String, Double> getPortfolio() {
+        return portfolio;
     }
 
     public void setPlayMoney(double playMoney) {
@@ -81,19 +102,23 @@ public class User {
         this.email = email;
     }
 
-    public List<Transaction> getTransactions(){
-        return this.transactions;
-    }
-
-    public Map<String, Double> getPortfolio() {
-        return portfolio;
-    }
-
     public void setPortfolio(Map<String, Double> portfolio) {
         this.portfolio = portfolio;
     }
 
     public void addToPortfolio(String ticker, double amout){getPortfolio().put(ticker, amout);}
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -108,7 +133,19 @@ public class User {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(username, name, email, playMoney);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", passwordHash='" + passwordHash + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", playMoney=" + playMoney +
+                ", transactions=" + transactions +
+                ", portfolio=" + portfolio +
+                '}';
     }
 }

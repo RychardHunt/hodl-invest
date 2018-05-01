@@ -37,7 +37,6 @@ public class TransactionService {
 
         updatePortfolio(user, capsTicker, amount, "BUY");
         addToTransaction(user, name, capsTicker, amount, price, "BUY");
-
     }
 
     public void processSellRequest(User user, String name, String ticker, double amount, double price){

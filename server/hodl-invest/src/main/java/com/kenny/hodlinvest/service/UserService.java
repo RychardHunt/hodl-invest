@@ -1,6 +1,7 @@
 package com.kenny.hodlinvest.service;
 
 import com.kenny.hodlinvest.database.TestUserDatabase;
+import com.kenny.hodlinvest.database.UserDynamoDatabase;
 import com.kenny.hodlinvest.exception.TransactionException;
 import com.kenny.hodlinvest.exception.UserException;
 import com.kenny.hodlinvest.exception.UserNotFoundException;
@@ -19,59 +20,57 @@ import java.util.Map;
 
 @Service
 public class UserService {
-    private final TestUserDatabase database;
 
     @Autowired
-    public UserService(@Qualifier("testDatabase") TestUserDatabase database) {
-        this.database = database;
-    }
+    private UserDynamoDatabase userDynamoDatabase;
 
-    public int addUser(String username, User user){
+    public void addUser(String username, User user){
         if(userExists(username)){
             throw new IllegalStateException("Username already exists");
         }
         else{
-            return database.insertUser(username, user);
+            userDynamoDatabase.insertUser(user);
         }
     }
 
     public User getUserByName(String username){
-        return database.selectUserByName(username);
+        return userDynamoDatabase.selectUser(username);
     }
 
     public List<User> getAllUsers(){
-        return database.selectAllUsers();
+        return userDynamoDatabase.selectAllUsers();
     }
 
-    public int updateUserByName(String username, User user){
-        return database.updateUserByName(username, user);
+    public void updateUserByName(String username, User user){
+        userDynamoDatabase.insertUser(user);
     }
 
-    public int deleteUserByName(String username){
-        return database.deleteUserByName(username);
+    public void deleteUserByName(String username){
+         userDynamoDatabase.deleteUser(username);
     }
 
     public boolean userExists(String username){
         return (getUserByName(username) != null);
     }
 
-    public int updateUserPlayMoney(String username, double amount){
+    public void updateUserPlayMoney(String username, double amount) {
         User user = getUserByName(username);
-        user.setPlayMoney(amount);
-        updateUserByName(username, user);
-        return 1;
+        userDynamoDatabase.updateUserMoney(username, amount);
     }
 
-    public int addTransaction(String username, String name, String ticker, double amount, double price, String transactionType){
-        return database.updateTransactions(username, name, ticker, amount, price, transactionType);
+    public void addTransaction(String username, String name, String ticker, double amount, double price, String transactionType){
+        userDynamoDatabase.updateUserTransactions(username, new Transaction(new Cryptocoin(name, ticker, price), amount, transactionType, null));
     }
 
-    public Map<String, Double> getPortfolio(String username) {
-        return database.selectPortfolio(username);
+    public Map<String, Double> getPortfolio(String username){
+        User user = userDynamoDatabase.selectUser(username);
+
+        return user.getPortfolio();
     }
 
     public List<Transaction> getUserTransactions(String username){
-        return database.selectAllTransactions(username);
+        User user = userDynamoDatabase.selectUser(username);
+        return user.getTransactions();
     }
 
     public boolean authenticateUser(String username, String password){
