@@ -22,7 +22,7 @@ class Transaction extends Component {
         xhr.addEventListener('readystatechange',function () {
             if (this.readyState === 4) {
                 transaction.setState ({
-                    transactions: JSON.parse(this.responseText)//An array of objects
+                //    transactions: JSON.parse(this.responseText)//An array of objects
                 });
             }
         });
