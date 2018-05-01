@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Chart from './Chart';
-import Charts from './Charts'
+import AllCharts from './AllCharts'
 import Transaction from './Transaction';
 
 class Dashboard extends Component {
@@ -32,9 +32,9 @@ class Dashboard extends Component {
   render() {
     return (
       <div>
-        <center> <h1>{this.props.username} Dashboard </h1> </center> 
+        <center> <h1>{this.props.username} Dashboard </h1> </center>
         <Transaction token={this.props.token} username={this.props.username} />
-        <Charts />
+        <AllCharts />
       </div>
     );
   }

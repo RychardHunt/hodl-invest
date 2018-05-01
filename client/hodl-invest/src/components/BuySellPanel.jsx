@@ -23,7 +23,9 @@ class BuySellPanel extends Component {
       btcPrice: 0,
       ethPrice: 0,
       ltcPrice: 0,
-      bchPrice: 0
+      bchPrice: 0,
+      xrpPrice: 0,
+      xlmPrice: 0
     };
     this.getBtcValue();
   }
@@ -67,9 +69,15 @@ class BuySellPanel extends Component {
      return '' + (
      (parsedInput * this.state.ltcPrice).toFixed(2));
    }
-   else{
+   else if(ticker==="bch"){
+    return '' + (
+    (parsedInput * this.state.bchPrice).toFixed(2));
+  }  else if(ticker==="xrp"){
+   return '' + (
+   (parsedInput * this.state.xrpPrice).toFixed(2));
+ }else{
      return '' + (
-     (parsedInput * this.state.bchPrice).toFixed(2));
+     (parsedInput * this.state.xlmPrice).toFixed(2));
    }
    }
 
@@ -117,6 +125,28 @@ class BuySellPanel extends Component {
       });
     }
     bchRequest.send();
+
+    //XRPRequest
+    var xrpRequest=new XMLHttpRequest();
+    xrpRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/xrp" );
+    xrpRequest.onload=function(){
+      BuySellPanel.setState({
+        xrpPrice: xrpRequest.responseText
+      });
+    }
+    xrpRequest.send();
+
+    //XLM Request
+    var xlmRequest=new XMLHttpRequest();
+    xlmRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/xlm" );
+    xlmRequest.onload=function(){
+      BuySellPanel.setState({
+        xlmPrice: xlmRequest.responseText
+      });
+      console.log("XLM is :" +xlmRequest.responseText);
+    }
+    xlmRequest.send();
+
 
 
 
@@ -194,6 +224,8 @@ class BuySellPanel extends Component {
           <option value="eth">ETH</option>
             <option value="ltc">LTC</option>
             <option value="bch">BCH</option>
+            <option value="xrp">XRP</option>
+            <option value="xlm">XLM</option>
         </select>
         <br/>
         Enter coin amount:
@@ -211,6 +243,8 @@ class BuySellPanel extends Component {
           <option value="btc">BTC</option>
             <option value="ltc">LTC</option>
             <option value="bch">BCH</option>
+            <option value="xrp">XRP</option>
+            <option value="xlm">XLM</option>
         </select>
         <br/>
         Enter coin amount:
@@ -225,9 +259,6 @@ class BuySellPanel extends Component {
 
   render() {
     return (<div className="buy-sell-panel">
-      <center>
-        <h1>Buy / Sell</h1>
-      </center>
       <div className="tab">
         <button onClick={this.displayBuy.bind(this)}>Buy</button>
         <button onClick={this.displaySell.bind(this)}>Sell</button>
