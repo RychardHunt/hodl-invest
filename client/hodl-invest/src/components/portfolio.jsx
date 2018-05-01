@@ -19,7 +19,7 @@ class Chart extends Component{
     // Ajax calls here
     this.setState({
       userData:{
-        labels: ['USD', 'BTC', 'ETH', 'XLM', 'XRP'],
+        labels: ['USD', 'BTC', 'ETH', 'LTC', 'BCH'],
         datasets:[
           {
             label:'Price',
