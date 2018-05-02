@@ -3,6 +3,7 @@ import {Navbar, Nav, NavItem} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import './NavigationBar.css'
 window.logswitch="false";
+window.logtext="Login";
 class NavigationBar extends Component {
 	render(){
 		
@@ -10,7 +11,7 @@ class NavigationBar extends Component {
 		var text="Login";
 		if(window.logswitch=="true"){
 			hreflocation=".";
-			text="Logout";
+			window.logtext="Logout";
 
 		}
 
@@ -39,7 +40,7 @@ class NavigationBar extends Component {
 								Register
 							</NavItem>
 							<NavItem eventKey={4} componentClass={Link} onClick={testlogin} href={hreflocation} to={hreflocation}>
-								{text}
+								{window.logtext}
 							</NavItem>
 						</Nav>
 					</Navbar.Collapse>
