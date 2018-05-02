@@ -6,6 +6,7 @@ import Portfolio from './Portfolio'
 
 class Dashboard extends Component {
 
+
   constructor(props) {
       super(props);
       this.state={
@@ -17,7 +18,8 @@ class Dashboard extends Component {
           btcCount: 0,
           ethCount:0,
           ltcCount:0,
-          bchCount: 0
+          bchCount: 0,
+          portfolio: 0
       }
 
 
@@ -36,14 +38,15 @@ class Dashboard extends Component {
     var userRequest=new XMLHttpRequest();
     userRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/users/"+this.props.username);
     userRequest.onload=function(){
-      var userData=JSON.parse(userRequest.responseText);
+     var userData=JSON.parse(userRequest.responseText);
       console.log(userData);
       this.setState({
         playMoney: userData.playMoney,
         btcCount: userData.portfolio.BTC,
         ethCount: userData.portfolio.ETH,
         ltcCount: userData.portfolio.LTC,
-        bchCount: userData.portfolio.BCH
+        bchCount: userData.portfolio.BCH,
+        portfolio: userData.portfolio
       });
     }
     userRequest.send();
@@ -120,8 +123,8 @@ bchRequest.send();
     return (
       <div>
         <center> <h1>{this.props.username} Dashboard </h1> </center>
-        <Transaction token={this.props.token} username={this.props.username} />
-        <Charts />
+        <Transaction token={this.props.token} username={this.props.username} portfolioData={this.state.portfolio} />
+        <Chart />
 
       </div>
     );
