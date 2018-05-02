@@ -10,7 +10,7 @@ class Login extends Component{
      this.handleChange = this.handleChange.bind(this);
      this.handleSubmit = this.handleSubmit.bind(this);
    }
-   var valid="false";
+
    updateToken(_token, _username) {
       this.props.updateState(_token, _username);
     }
@@ -31,7 +31,7 @@ class Login extends Component{
         alert("Welcome " + jsonObj.username + "! Please proceed to Dashboard!");
         document.cookie = "token=" + jsonObj.token;
         document.cookie ="username=" + jsonObj.username;
-        valid="true";
+        window.logswitch="true";
         window.logtext="Logout";
         var token = "";
         var name = "token" + "=";
@@ -88,8 +88,7 @@ class Login extends Component{
 }
 
   render(){
-    if(valid=="true"){
-    window.logswitch="true";
+    if(window.logswitch=="true"){
     window.logtext="Logout";
     }
     return(
