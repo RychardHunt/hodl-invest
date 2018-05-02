@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './Registration.css';
-
+window.logswitch="false";
 class Login extends Component{
 
   constructor(props) {
@@ -31,7 +31,7 @@ class Login extends Component{
         alert("Welcome " + jsonObj.username + "! Please proceed to Dashboard!");
         document.cookie = "token=" + jsonObj.token;
         document.cookie ="username=" + jsonObj.username;
-
+        window.logswitch="true";
         var token = "";
         var name = "token" + "=";
         var decodedCookie = decodeURIComponent(document.cookie);
