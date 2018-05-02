@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom';
 import './NavigationBar.css'
 window.logswitch="false";
 window.logtext="Login";
-window.regtext="Register";
 class NavigationBar extends Component {
 	render(){
 		
@@ -20,6 +19,11 @@ class NavigationBar extends Component {
 		if (window.logswitch=="true")
 			{window.location.reload();
 		}}
+
+		function registerlink(){if(window.logswitch!="true"){
+		return(<NavItem eventKey={3} componentClass={Link} href="/register" to="/register">Register</NavItem>);}
+		else{return;}
+		}
 
 		return(
 				<Navbar default collapseOnSelect>
@@ -37,9 +41,7 @@ class NavigationBar extends Component {
 							<NavItem eventKey={2} componentClass={Link} href="/dashboard" to="/dashboard">
 								Dashboard
 							</NavItem>
-							<NavItem eventKey={3} componentClass={Link} href="/register" to="/register">
-								{window.regtext}
-							</NavItem>
+							{registerlink()}
 							<NavItem eventKey={4} componentClass={Link} onClick={testlogin} href={hreflocation} to={hreflocation}>
 								{window.logtext}
 							</NavItem>
