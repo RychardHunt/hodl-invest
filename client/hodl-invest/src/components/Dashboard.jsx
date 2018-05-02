@@ -21,7 +21,9 @@ class Dashboard extends Component {
           bchCount: 0,
           portfolio: 0
       }
+      if(this.props.username!=""){
       this.getUserData();
+    }
 
   }
 
@@ -40,12 +42,15 @@ class Dashboard extends Component {
     userRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/users/"+this.props.username);
     userRequest.onload=function(){
      var userData=JSON.parse(userRequest.responseText);
-      console.log(userData);
+     console.log("UserData type "+typeof(userData) );
+     console.log("Porfolio type contents "+userData.portfolio.XRP);
+
+
       Dashboard.setState({
         playMoney: userData.playMoney,
-      //  portfolio: userData.portfolio
+        portfolio: userData.portfolio
       });
-    ///  console.log("Dashboard Portfolio "+this.state.portfolio);
+    //  console.log("Dashboard Portfolio "+ userData.portfolio);
     }
     userRequest.send();
 
