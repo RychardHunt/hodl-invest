@@ -33,6 +33,7 @@ class Login extends Component{
         document.cookie ="username=" + jsonObj.username;
         window.logswitch="true";
         window.logtext="Logout";
+        window.regtext="";
         var token = "";
         var name = "token" + "=";
         var decodedCookie = decodeURIComponent(document.cookie);
@@ -88,8 +89,9 @@ class Login extends Component{
 }
 
   render(){
-   window.logtext="Logout";
-        window.logswitch="true";
+    window.logtext="Logout";
+    window.regtext="";
+    window.logswitch="true";
 
     return(
       <div className="logContainer">
