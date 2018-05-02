@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './Registration.css';
-window.logswitch="false";
+
 class Login extends Component{
 
   constructor(props) {
@@ -32,6 +32,7 @@ class Login extends Component{
         document.cookie = "token=" + jsonObj.token;
         document.cookie ="username=" + jsonObj.username;
         valid="true";
+        window.logtext="Logout";
         var token = "";
         var name = "token" + "=";
         var decodedCookie = decodeURIComponent(document.cookie);
@@ -89,6 +90,7 @@ class Login extends Component{
   render(){
     if(valid=="true"){
     window.logswitch="true";
+    window.logtext="Logout";
     }
     return(
       <div className="logContainer">
