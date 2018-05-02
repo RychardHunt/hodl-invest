@@ -2,9 +2,25 @@ import React, {Component} from 'react';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import './NavigationBar.css'
-
+window.logswitch="false";
+window.logtext="Login";
+window.regtext="Register";
 class NavigationBar extends Component {
 	render(){
+		
+		var hreflocation="/login";
+		var text="Login";
+		if(window.logswitch=="true"){
+			hreflocation=".";
+			window.logtext="Logout";
+
+		}
+
+		function testlogin(){
+		if (window.logswitch=="true")
+			{window.location.reload();
+		}}
+
 		return(
 				<Navbar default collapseOnSelect>
 					<Navbar.Header>
@@ -22,10 +38,10 @@ class NavigationBar extends Component {
 								Dashboard
 							</NavItem>
 							<NavItem eventKey={3} componentClass={Link} href="/register" to="/register">
-								Register
+								{window.regtext}
 							</NavItem>
-							<NavItem eventKey={4} componentClass={Link} href="/login" to="/login">
-								Login
+							<NavItem eventKey={4} componentClass={Link} onClick={testlogin} href={hreflocation} to={hreflocation}>
+								{window.logtext}
 							</NavItem>
 						</Nav>
 					</Navbar.Collapse>
