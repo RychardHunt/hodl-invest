@@ -10,6 +10,8 @@ class Transaction extends Component {
         this.state = {
             transactions: []//Array of objects
         };
+        console.log("Bitcoin value"+ this.props.portfolio);
+
         this.getTransactions();
     }
 
@@ -32,7 +34,7 @@ class Transaction extends Component {
     render() {
         return (
             <div className="transaction">
-                <BuySellPanel reloadTransactions={this.getTransactions.bind(this)} token={this.props.token} username={this.props.username}/>
+                <BuySellPanel portfolio={this.props.portfolio} reloadTransactions={this.getTransactions.bind(this)} token={this.props.token} username={this.props.username}/>
                 <TransactionHistory transactions={this.state.transactions}/>
             </div>
         )
