@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import './NavigationBar.css'
 window.logswitch="false";
 window.logtext="Login";
+window.regtext="Register";
 class NavigationBar extends Component {
 	render(){
 		
@@ -37,7 +38,7 @@ class NavigationBar extends Component {
 								Dashboard
 							</NavItem>
 							<NavItem eventKey={3} componentClass={Link} href="/register" to="/register">
-								Register
+								{window.regtext}
 							</NavItem>
 							<NavItem eventKey={4} componentClass={Link} onClick={testlogin} href={hreflocation} to={hreflocation}>
 								{window.logtext}
