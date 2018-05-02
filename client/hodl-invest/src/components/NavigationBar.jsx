@@ -2,20 +2,20 @@ import React, {Component} from 'react';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import './NavigationBar.css'
-
+window.logswitch="false";
 class NavigationBar extends Component {
 	render(){
 		
 		var hreflocation="/login";
 		var text="Login";
-		if(window.logswitch=="Logout"){
+		if(window.logswitch=="true"){
 			hreflocation=".";
 			text="Logout";
 
 		}
 
 		function testlogin(){
-		if (window.logswitch=="Logout")
+		if (window.logswitch=="true")
 			{window.location.reload();
 		}}
 
