@@ -88,9 +88,9 @@ class Login extends Component{
 }
 
   render(){
-    if(window.logswitch=="true"){
-    window.logtext="Logout";
-    }
+   window.logtext="Logout";
+        window.logswitch="true";
+
     return(
       <div className="logContainer">
         <div className="header">
