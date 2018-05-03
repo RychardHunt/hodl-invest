@@ -15,6 +15,15 @@ class Transaction extends Component {
     this.getTransactions();
   }
 
+  // updateDashboard(_isBuy, _coin) {
+  //   this.props.updateState(_isBuy, _coin);
+  // }
+
+  // updateToken(_token, _coin) {
+  //   let transact = this;
+  //   transact.props.updateState(true, "btc");
+  //  }
+
   getTransactions() {
     let transaction = this;
     let username = this.props.username;
@@ -33,7 +42,7 @@ class Transaction extends Component {
 
   render() {
     return (<div className="transaction">
-      <BuySellPanel portfolio={this.props.portfolio} reloadTransactions={this.getTransactions.bind(this)} token={this.props.token} username={this.props.username} updateDashboard={this.props.updateDashboard}/>
+      <BuySellPanel portfolio={this.props.portfolio} reloadTransactions={this.getTransactions.bind(this)} token={this.props.token} username={this.props.username} updateState={this.props.updateState} />
       <TransactionHistory transactions={this.state.transactions}/>
     </div>)
   }

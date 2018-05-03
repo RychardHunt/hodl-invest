@@ -11,10 +11,6 @@ class Login extends Component{
      this.handleSubmit = this.handleSubmit.bind(this);
    }
 
-   updateToken(_token, _username) {
-      this.props.updateState(_token, _username);
-    }
-
    handleChange(event) {
      var name=event.target.name;
      this.setState({[name]: event.target.value});

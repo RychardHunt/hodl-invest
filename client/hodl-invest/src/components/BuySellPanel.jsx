@@ -13,7 +13,6 @@ function sleep(milliseconds) {
 class BuySellPanel extends Component {
 
   constructor(props) {
-
     super(props);
     this.state = {
       isBuySelected: true,
@@ -29,7 +28,6 @@ class BuySellPanel extends Component {
       xlmPrice: 0
     };
     this.getBtcValue();
-
   }
 
   static validateInput(input) {
@@ -180,7 +178,7 @@ class BuySellPanel extends Component {
               }
 
               sendToServer(event) {
-                let BuySellPanel=this;
+                let BuySellPanel = this;
                 var buyOrSell;
                 if (this.state.isBuySelected) {
                   console.log("The event is buy");
@@ -193,7 +191,7 @@ class BuySellPanel extends Component {
 
                 let xhr = new XMLHttpRequest();
                 xhr.withCredentials = false;
-                var update=this.props.updateDashboard();
+                // var update=this.props.updateDashboard(BuySellPanel.state.isBuySelected, BuySellPanel.state.coinSelected);
                 xhr.addEventListener("readystatechange", function() {
                   if (this.readyState === 4 && this.status === 500) {
                     alert("Please actually click on a ticker from the drop down menu!");
@@ -201,7 +199,7 @@ class BuySellPanel extends Component {
                   else if (this.readyState === 4 && this.status === 400) {
                     alert("Insufficient coins! Please lower order quantity!");
                   }else{
-                    update(BuySellPanel.state.isBuySelected, BuySellPanel.state.coinSelected);
+                    BuySellPanel.props.updateState(BuySellPanel.state.isBuySelected, BuySellPanel.state.coinSelected);
                   }
                 });
 
