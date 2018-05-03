@@ -193,7 +193,7 @@ class BuySellPanel extends Component {
 
                 let xhr = new XMLHttpRequest();
                 xhr.withCredentials = false;
-
+                var update=this.props.updateDashboard();
                 xhr.addEventListener("readystatechange", function() {
                   if (this.readyState === 4 && this.status === 500) {
                     alert("Please actually click on a ticker from the drop down menu!");
@@ -201,7 +201,7 @@ class BuySellPanel extends Component {
                   else if (this.readyState === 4 && this.status === 400) {
                     alert("Insufficient coins! Please lower order quantity!");
                   }else{
-                    this.props.updateDashboard(BuySellPanel.state.isBuySelected, BuySellPanel.state.coinSelected);
+                    update(BuySellPanel.state.isBuySelected, BuySellPanel.state.coinSelected);
                   }
                 });
 
