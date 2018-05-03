@@ -22,7 +22,7 @@ class Transaction extends Component {
         xhr.addEventListener('readystatechange',function () {
             if (this.readyState === 4) {
                 transaction.setState ({
-                    transactions: JSON.parse(this.responseText)//An array of objects
+                //    transactions: JSON.parse(this.responseText)//An array of objects
                 });
             }
         });
@@ -32,7 +32,7 @@ class Transaction extends Component {
     render() {
         return (
             <div className="transaction">
-                <BuySellPanel reloadTransactions={this.getTransactions.bind(this)} token={this.props.token} username={this.props.username}/>
+                <BuySellPanel reloadTransactions={this.getTransactions.bind(this)} token={this.props.token} username={this.props.username} portfolio={this.props.portfolio}/>
                 <TransactionHistory transactions={this.state.transactions}/>
             </div>
         )
