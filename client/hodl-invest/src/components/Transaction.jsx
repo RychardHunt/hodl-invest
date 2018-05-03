@@ -33,7 +33,7 @@ class Transaction extends Component {
 
   render() {
     return (<div className="transaction">
-      <BuySellPanel portfolio={this.props.portfolio} reloadTransactions={this.getTransactions.bind(this)} token={this.props.token} username={this.props.username} updateDashboard={this.props.updateDashboard()}/>
+      <BuySellPanel portfolio={this.props.portfolio} reloadTransactions={this.getTransactions.bind(this)} token={this.props.token} username={this.props.username} updateDashboard={this.props.updateDashboard}/>
       <TransactionHistory transactions={this.state.transactions}/>
     </div>)
   }
