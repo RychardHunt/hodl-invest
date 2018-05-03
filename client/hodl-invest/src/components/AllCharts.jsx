@@ -17,7 +17,7 @@ class AllCharts extends Component {
 
   render() {
     return (<div >
-      <div class="tab">
+      <div className="tab">
         <button onClick={this.displayChart.bind(this, "BTC")}>
           BTC
         </button>

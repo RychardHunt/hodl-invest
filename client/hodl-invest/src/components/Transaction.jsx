@@ -10,7 +10,7 @@ class Transaction extends Component {
         this.state = {
             transactions: []//Array of objects
         };
-        console.log("Bitcoin value"+ this.props.portfolio);
+        console.log("Bitcoin value"+ this.props.portfolioData);
 
         this.getTransactions();
     }
