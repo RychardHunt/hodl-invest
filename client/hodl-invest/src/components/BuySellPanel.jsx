@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import './BuySellPanel.css'
+import React, {Component} from 'react';
+import './BuySellPanel.css';
 
 function sleep(milliseconds) {
   var start = new Date().getTime();

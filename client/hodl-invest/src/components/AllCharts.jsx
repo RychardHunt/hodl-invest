@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import './BuySellPanel.css'
-import Chart from './Chart.jsx'
+import './BuySellPanel.css';
+import Chart from './Chart.jsx';
 
 class AllCharts extends Component {
 

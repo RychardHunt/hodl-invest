@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
-import './Transaction.css'
-import TransactionHistory from './TransactionHistory'
+import React, {Component} from 'react';
+import './Transaction.css';
+import TransactionHistory from './TransactionHistory';
 import BuySellPanel from "./BuySellPanel";
 
 class Transaction extends Component {

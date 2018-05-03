@@ -4,9 +4,12 @@ import {Link} from 'react-router-dom';
 import './NavigationBar.css'
 window.logswitch="false";
 window.logtext="Login";
+
+
 class NavigationBar extends Component {
+	
 	render(){
-		
+
 		var hreflocation="/login";
 		var text="Login";
 		if(window.logswitch=="true"){

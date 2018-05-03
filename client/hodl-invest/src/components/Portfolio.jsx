@@ -25,47 +25,47 @@ class Chart extends Component{
     console.log("We are in coin prices");
 
     //btc request
-  var btcRequest=new XMLHttpRequest();
+    var btcRequest=new XMLHttpRequest();
 
-  btcRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/btc");
-  btcRequest.onload=function(){
-    this.setState({
-    btcPrice: btcRequest.responseText
-  });
-  }
-  btcRequest.send();
+    btcRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/btc");
+    btcRequest.onload=function(){
+      this.setState({
+        btcPrice: btcRequest.responseText
+      });
+    }
+    btcRequest.send();
 
-  //eth request
-var ethRequest=new XMLHttpRequest();
-ethRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/eth");
-ethRequest.onload=function(){
-  this.setState({
-  ethPrice:ethRequest.responseText
-});
+    //eth request
+    var ethRequest=new XMLHttpRequest();
+    ethRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/eth");
+    ethRequest.onload=function(){
+      this.setState({
+        ethPrice:ethRequest.responseText
+      });
 
-}
-ethRequest.send();
+    }
+    ethRequest.send();
 
-//ltc request
-var ltcRequest=new XMLHttpRequest();
-ltcRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/ltc");
-ltcRequest.onload=function(){
-  this.setState({
-  ltcPrice: ltcRequest.responseText
-});
+    //ltc request
+    var ltcRequest=new XMLHttpRequest();
+    ltcRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/ltc");
+    ltcRequest.onload=function(){
+      this.setState({
+        ltcPrice: ltcRequest.responseText
+      });
 
-}
-ltcRequest.send();
+    }
+    ltcRequest.send();
 
-//bch request
-var bchRequest=new XMLHttpRequest();
-bchRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/bch");
-bchRequest.onload=function(){
-  this.setState({
-  bchPrice: bchRequest.responseText
-});
-}
-bchRequest.send();
+    //bch request
+    var bchRequest=new XMLHttpRequest();
+    bchRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/bch");
+    bchRequest.onload=function(){
+      this.setState({
+        bchPrice: bchRequest.responseText
+      });
+    }
+    bchRequest.send();
 
   }
 
@@ -100,20 +100,20 @@ bchRequest.send();
   render(){
     return (
       <div className="chart">
-        <Pie
-          data={this.state.userData}
-          options={{
-            title:{
-              display:this.props.displayTitle,
-              text:'Portfolio test for User',
-              fontSize:25
-            },
-            legend:{
-              display:this.props.displayLegend,
-              position:this.props.legendPosition
-            }
-          }}
-        />
+      <Pie
+      data={this.state.userData}
+      options={{
+        title:{
+          display:this.props.displayTitle,
+          text:'Portfolio test for User',
+          fontSize:25
+        },
+        legend:{
+          display:this.props.displayLegend,
+          position:this.props.legendPosition
+        }
+      }}
+      />
       </div>
     )
   }

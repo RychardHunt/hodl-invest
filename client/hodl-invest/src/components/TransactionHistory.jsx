@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
-import './TransactionHistory.css'
-import tinydate from 'tinydate'
+import React, {Component} from 'react';
+import './TransactionHistory.css';
+import tinydate from 'tinydate';
 
 class TransactionHistory extends Component {
 

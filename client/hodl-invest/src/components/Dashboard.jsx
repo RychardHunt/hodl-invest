@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Chart from './Chart';
-import AllCharts from './AllCharts'
+import AllCharts from './AllCharts';
 import Transaction from './Transaction';
-import Portfolio from './Portfolio'
+import Portfolio from './Portfolio';
 
 class Dashboard extends Component {
 
@@ -24,7 +24,6 @@ class Dashboard extends Component {
       if(this.props.username!=""){
       this.getUserData();
     }
-
   }
 
   updateState(_playMoney, _btcCount, _ethCount, _ltcCount, _bchCount) {
@@ -36,6 +35,7 @@ class Dashboard extends Component {
        bchCount: _bchCount
      });
    }
+
   getUserData(){
     let Dashboard=this;
     var userRequest=new XMLHttpRequest();
