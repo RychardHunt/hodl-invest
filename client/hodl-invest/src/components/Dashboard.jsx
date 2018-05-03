@@ -29,14 +29,55 @@ class Dashboard extends Component {
 
   }
 
-  updateState(_playMoney, _btcCount, _ethCount, _ltcCount, _bchCount) {
-     this.setState({
-       playMoney: _playMoney,
-       btcCount: _btcCount,
-       ethCount: _ethCount,
-       ltcCount: _ltcCount,
-       bchCount: _bchCount
-     });
+  updateState(_isBuy, _coin) {
+    if(_coin==="BTC"){
+        if(_isBuy){
+      this.setState({
+        btcCount: this.state.btcCount+1
+      });
+    }
+    else{
+      this.setState({
+        btcCount: this.state.btcCount-1
+      });
+    }
+    }
+    if(_coin==="ETH"){
+        if(_isBuy){
+      this.setState({
+        ethCount: this.state.ethCount+1
+      });
+    }
+    else{
+      this.setState({
+        ethCount: this.state.ethCount-1
+      });
+    }
+    }
+    if(_coin==="LTC"){
+        if(_isBuy){
+      this.setState({
+        ltcCount: this.state.ltcCount+1
+      });
+    }
+    else{
+      this.setState({
+        ltcCount: this.state.ltcCount-1
+      });
+    }
+    }
+    if(_coin==="BCH"){
+        if(_isBuy){
+      this.setState({
+        ltcCount: this.state.bchCount+1
+      });
+    }
+    else{
+      this.setState({
+        ltcCount: this.state.bchCount-1
+      });
+    }
+    }
    }
   getUserData(){
     let Dashboard=this;
@@ -148,7 +189,7 @@ bchRequest.send();
   return(
     <div>
       <center> <h1>{this.props.username} Dashboard </h1> </center>
-        <Transaction token={this.props.token} username={this.props.username} portfolioData={this.state.portfolio.BTC} />
+        <Transaction token={this.props.token} username={this.props.username}  updateState={this.updateState.bind(this)} />
         <AllCharts />
         </div>
 

@@ -28,54 +28,7 @@ class Chart extends Component{
     displayLegend: true,
     legendPosition:'right',
   }
-//   getCoinPrices(){
-//     let Portfolio=this;
-//     console.log("We are in coin prices");
-//
-//     //btc request
-//   var btcRequest=new XMLHttpRequest();
-//
-//   btcRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/btc");
-//   btcRequest.onload=function(){
-//     Portfolio.setState({
-//     btcPrice: btcRequest.responseText
-//   });
-//   }
-//   btcRequest.send();
-//
-//   //eth request
-// var ethRequest=new XMLHttpRequest();
-// ethRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/eth");
-// ethRequest.onload=function(){
-//   Portfolio.setState({
-//   ethPrice:ethRequest.responseText
-// });
-//
-// }
-// ethRequest.send();
-//
-// //ltc request
-// var ltcRequest=new XMLHttpRequest();
-// ltcRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/ltc");
-// ltcRequest.onload=function(){
-//   Portfolio.setState({
-//   ltcPrice: ltcRequest.responseText
-// });
-//
-// }
-// ltcRequest.send();
-//
-// //bch request
-// var bchRequest=new XMLHttpRequest();
-// bchRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/bch");
-// bchRequest.onload=function(){
-//   Portfolio.setState({
-//   bchPrice: bchRequest.responseText
-// });
-// }
-// bchRequest.send();
-//
-//   }
+
   getDerivedStateFromProps(nextProps, prevState){
     this.setState({
       btcPrice: this.nextProps.btcPrice,
@@ -92,17 +45,37 @@ class Chart extends Component{
   }
 
   getUserData(){
+    var labels=[];
+    var amounts=[]
+    if(this.state.playMoney!==0){
+      labels.push('USD');
+      amounts.push( this.state.playMoney);
+    }
+  if(this.state.btcCount!==0){
+    labels.push('BTC');
+    amounts.push( this.state.btcCount*this.state.btcPrice);
+  }
+  if(this.state.ethCount!==0){
+    labels.push('ETH');
+    amounts.push( this.state.ethCount*this.state.ethPrice);
+  }
+  if(this.state.ltcCount!==0){
+    labels.push('LTC');
+    amounts.push( this.state.ltcCount*this.state.ltcPrice);
+  }
+  if(this.state.bchCount!==0){
+    labels.push('BCH');
+    amounts.push( this.state.bchCount*this.state.bchPrice);
+  }
 
 
     this.setState({
       userData:{
-        labels: ['USD', 'BTC', 'ETH', 'LTC', 'BCH'],
+        labels: labels,
         datasets:[
           {
             label:'Price',
-            data:[this.props.playMoney, this.state.btcCount*this.state.btcPrice,
-               this.state.ethCount*this.state.ethPrice,this.state.ltcCount*this.state.ltcPrice,
-                this.state.bchCount*this.state.bchPrice], //sample numbers waiting to connect to database
+            data:amounts, //sample numbers waiting to connect to database
             backgroundColor:[
               'rgba(255, 99, 132, 0.6)',
               'rgba(54, 162, 235, 0.6)',
@@ -124,7 +97,6 @@ class Chart extends Component{
   }
 
   render(){
-    console.log("LTC value Portfolio" +this.state.ltcPrice);
     return (
       <div className="chart">
         <Pie
