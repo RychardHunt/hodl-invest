@@ -26,15 +26,15 @@ class Login extends Component{
 
     xhr.addEventListener("readystatechange", function () {
       if (this.readyState === 4 && this.status === 200) {
+        alert("Login Successful! Please proceed to Dashboard!");
         var jsonObj = JSON.parse(this.responseText);
         login.props.updateState(jsonObj.token, jsonObj.username);
-        alert("Welcome " + jsonObj.username + "! Please proceed to Dashboard!");
+
         document.cookie = "token=" + jsonObj.token;
         document.cookie ="username=" + jsonObj.username;
-        window.logswitch="true";
-        window.logtext="Logout";
+
         var token = "";
-        var name = "token" + "=";
+        var name = "token=";
         var decodedCookie = decodeURIComponent(document.cookie);
         var ca = decodedCookie.split(';');
         for(var i = 0; i <ca.length; i++) {
@@ -88,8 +88,6 @@ class Login extends Component{
 }
 
   render(){
-    window.logtext="Logout";
-    window.logswitch="true";
 
     return(
       <div className="logContainer">
