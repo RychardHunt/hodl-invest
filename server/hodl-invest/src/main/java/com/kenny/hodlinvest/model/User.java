@@ -43,8 +43,17 @@ public class User {
             this.email = email;
 
         this.transactions = new ArrayList<>();
-        this.portfolio = new HashMap<>();
         this.playMoney = 100000;
+
+        this.portfolio = new HashMap<>();
+        this.portfolio.put("BTC", 0.0);
+        this.portfolio.put("ETH", 0.0);
+        this.portfolio.put("LTC", 0.0);
+        this.portfolio.put("BCH", 0.0);
+        this.portfolio.put("XRP", 0.0);
+        this.portfolio.put("XLM", 0.0);
+
+
     }
 
     public String getUsername() {

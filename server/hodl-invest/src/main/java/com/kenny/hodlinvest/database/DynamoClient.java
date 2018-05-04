@@ -25,8 +25,6 @@ public class DynamoClient {
     private String awsSecretKey;
     @Value("${cloud.dynamoDB_table_name_tokens}")
     private String tokensTableName;
-    @Value("${cloud.dynamoDB_table_name_users}")
-    private String usersTableName;
 
     public DynamoClient(){
         credentialsProvider = new AWSStaticCredentialsProvider(new AWSCredentials() {
@@ -70,9 +68,5 @@ public class DynamoClient {
 
     public String getTokenTableName(){
         return tokensTableName;
-    }
-
-    public String getUsersTableName(){
-        return usersTableName;
     }
 }

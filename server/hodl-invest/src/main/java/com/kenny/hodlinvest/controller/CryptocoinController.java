@@ -1,8 +1,12 @@
 package com.kenny.hodlinvest.controller;
 
 import com.kenny.hodlinvest.exception.CryptocoinException;
+import com.kenny.hodlinvest.exception.UnknownServerException;
 import com.kenny.hodlinvest.model.Cryptocoin;
 import com.kenny.hodlinvest.service.CryptocoinService;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +31,32 @@ public class CryptocoinController {
     )
     public Map<String, Cryptocoin> getAllCryptocoins(){
         return cryptocoinService.getInfo();
+    }
+
+    @RequestMapping(
+            method = RequestMethod.GET,
+            path = "/verbose",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String getVerboseCryptcoins() {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url("https://api.coinmarketcap.com/v1/ticker/")
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+
+            okhttp3.ResponseBody responseBody = response.body();
+            if (responseBody != null) {
+                String cryptoInfo = responseBody.string();
+                return cryptoInfo;
+            } else{
+                throw new UnknownServerException("API call to coin market cap failed.");
+            }
+        } catch (Exception e) {
+            throw new UnknownServerException(e.getMessage());
+        }
     }
 
     @RequestMapping(
