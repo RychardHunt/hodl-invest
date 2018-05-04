@@ -4,9 +4,7 @@ https://hodl-invest.herokuapp.com/
 
 https://hodl-invest-server.herokuapp.com/
 
-Beta video: https://www.youtube.com/watch?v=PzSBN1chqCE&feature=youtu.be
-
-Landing page: https://hodl-invest.herokuapp.com/landingpage
+Official release video: https://www.youtube.com/watch?v=WTd5bk7xgIg&feature=youtu.be
 
 [![Gitter chat](https://badges.gitter.im/MutualFund/Lobby.png)](https://gitter.im/MutualFund/Lobby)
 
