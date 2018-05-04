@@ -17,29 +17,44 @@ public class TransactionService {
     public TransactionService() {
     }
 
-    public void processBuyRequest(User user, String ticker, double amount, double price){
+    public void processBuyRequest(User user, String name, String ticker, double amount, double price){
+        if(name == null)
+            throw new TransactionException("Invalid cryptocoin name: " + name);
+        if(ticker == null)
+            throw new TransactionException("Invalid ticker name: " + ticker);
+        if(amount <= 0)
+            throw new TransactionException("Invalid amount: " + amount);
+        if(price <= 0)
+            throw new TransactionException("Invalid price: " + price);
+
         double totalPrice = amount * price;
-        System.out.println("Total price is " + totalPrice);
         if(user.getPlayMoney() < totalPrice){
             throw new TransactionException("User " + user.getName() + " does not have enough money to process this transaction. Needs " + totalPrice + "but only has " + user.getPlayMoney());
         }
 
         user.setPlayMoney(user.getPlayMoney() - totalPrice);
-        System.out.println("User now has " + user.getPlayMoney());
-
         String capsTicker = ticker.toUpperCase();
 
         updatePortfolio(user, capsTicker, amount, "BUY");
-        addToTransaction(user, capsTicker, amount, price, "BUY");
+        addToTransaction(user, name, capsTicker, amount, price, "BUY");
 
     }
 
-    public void processSellRequest(User user, String ticker, double amount, double price){
+    public void processSellRequest(User user, String name, String ticker, double amount, double price){
+        if(name == null)
+            throw new TransactionException("Invalid cryptocoin name: " + name);
+        if(ticker == null)
+            throw new TransactionException("Invalid ticker name: " + ticker);
+        if(amount <= 0)
+            throw new TransactionException("Invalid amount: " + amount);
+        if(price <= 0)
+            throw new TransactionException("Invalid price: " + price);
+
         Map<String, Double> portfolio = user.getPortfolio();
         String capsTicker = ticker.toUpperCase();
 
         updatePortfolio(user, capsTicker, amount, "SELL");
-        addToTransaction(user, capsTicker, amount, price, "SELL");
+        addToTransaction(user, name, capsTicker, amount, price, "SELL");
         user.setPlayMoney(user.getPlayMoney() + (amount * price));
 
     }
@@ -69,8 +84,8 @@ public class TransactionService {
 
     }
 
-    private void addToTransaction(User user, String ticker, double amount, double price, String transactionType){
-        user.addTransaction(new Transaction(new Cryptocoin(ticker, price), amount, transactionType, LocalDateTime.now()));
+    private void addToTransaction(User user, String name, String ticker, double amount, double price, String transactionType){
+        user.addTransaction(new Transaction(new Cryptocoin(name, ticker, price), amount, transactionType, LocalDateTime.now()));
 
     }
 }

@@ -13,7 +13,7 @@ public interface UserDatabase {
     List<User> selectAllUsers();
     int updateUserByName(String username, User user);
     int deleteUserByName(String username);
-    int updateTransactions(String username, String ticker, double amount, double price, String transactionType);
+    int updateTransactions(String username, String name, String ticker, double amount, double price, String transactionType);
     List<Transaction> selectAllTransactions(String username);
     Map<String, Double> selectPortfolio(String username);
 }

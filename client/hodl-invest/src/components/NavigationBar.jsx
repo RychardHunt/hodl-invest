@@ -2,9 +2,33 @@ import React, {Component} from 'react';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import './NavigationBar.css'
+window.logswitch="false";
+window.logtext="Login";
+
 
 class NavigationBar extends Component {
+
 	render(){
+
+		var hreflocation="/login";
+		var text="Login";
+		if(window.logswitch=="true"){
+			hreflocation=".";
+			window.logtext="Logout";
+
+		}
+
+		function testlogin(){
+			if (window.logswitch=="true") {
+				window.location.href = './';
+			}
+		}
+
+		function registerlink(){if(window.logswitch!="true"){
+		return(<NavItem eventKey={3} componentClass={Link} href="/register" to="/register">Register</NavItem>);}
+		else{return;}
+		}
+
 		return(
 				<Navbar default collapseOnSelect>
 					<Navbar.Header>
@@ -21,11 +45,9 @@ class NavigationBar extends Component {
 							<NavItem eventKey={2} componentClass={Link} href="/dashboard" to="/dashboard">
 								Dashboard
 							</NavItem>
-							<NavItem eventKey={3} componentClass={Link} href="/register" to="/register">
-								Register
-							</NavItem>
-							<NavItem eventKey={4} componentClass={Link} href="/login" to="/login">
-								Login
+							{registerlink()}
+							<NavItem eventKey={4} componentClass={Link} onClick={testlogin} href={hreflocation} to={hreflocation}>
+								{window.logtext}
 							</NavItem>
 						</Nav>
 					</Navbar.Collapse>

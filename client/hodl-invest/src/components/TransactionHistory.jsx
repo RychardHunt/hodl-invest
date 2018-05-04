@@ -1,8 +1,9 @@
-import React, {Component} from 'react'
-import './TransactionHistory.css'
-import tinydate from 'tinydate'
+import React, {Component} from 'react';
+import './TransactionHistory.css';
+import tinydate from 'tinydate';
 
 class TransactionHistory extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -14,7 +15,7 @@ class TransactionHistory extends Component {
         let transactions = this.props.transactions;
         let transactionArray = [];
 
-        for(let i = 0; i < transactions.length; ++i) {
+        for(let i = transactions.length-1; i >=0; --i) {
             let currentTransaction = transactions[i];
 
             //Money handling
@@ -22,12 +23,13 @@ class TransactionHistory extends Component {
             let usdAmount = currentTransaction.cryptocoin.price;
             let coinAmount = currentTransaction.amount;
             let transactionType = currentTransaction.transactionType;
+            let totalAmount = usdAmount * coinAmount;
             if(transactionType === 'BUY') {
                 coinAmount = '+' + coinAmount + ' ' + coin.toUpperCase();
-                usdAmount = '-$' + usdAmount;
+                usdAmount = '-$' + totalAmount.toFixed(2);
             } else {
                 coinAmount = '-' + coinAmount + ' ' + coin.toUpperCase();
-                usdAmount = '+$' + usdAmount;
+                usdAmount = '+$' + totalAmount.toFixed(2);
             }
 
             //Time handling
@@ -49,16 +51,17 @@ class TransactionHistory extends Component {
     render() {
         return (
             <div className="transaction-history" >
-                <center> <h1>Transaction History</h1> </center>
-                <table>
-                    <tr>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Crypto</th>
-                        <th>USD</th>
-                    </tr>
-                    {this.renderTransactions()}
-                </table>
+                <div className="maxwindow">
+                    <table>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Crypto</th>
+                            <th>USD</th>
+                        </tr>
+                        {this.renderTransactions()}
+                    </table>
+                </div>
             </div>
         )
     }

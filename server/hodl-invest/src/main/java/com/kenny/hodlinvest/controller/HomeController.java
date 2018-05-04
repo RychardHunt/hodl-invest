@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@CrossOrigin(origins = "https://hodl-invest.herokuapp.com/")
+@CrossOrigin(origins = {"https://hodl-invest.herokuapp.com", "http://localhost:3000"})
 public class HomeController {
 
     @RequestMapping("/")

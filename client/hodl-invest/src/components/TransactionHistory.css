@@ -4,6 +4,11 @@
     overflow: hidden;
 }
 
+div.maxwindow{
+overflow-y: scroll;
+max-height:250px;
+}
+
 /*
 Source for table CSS:
 https://www.w3schools.com/html/tryit.asp?filename=tryhtml_table_intro

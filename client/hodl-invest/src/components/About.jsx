@@ -16,9 +16,9 @@ class About extends Component {
 
             <p>
             <strong>Daniel Connolly*</strong>: Frontend Software Engineer <br/>
-            <strong>Richard Guo</strong>: Product Manager & Frontend Software Engineer <br/>
+            <strong>Richard Guo</strong>: Technical Product Manager & Lead Frontend Software Engineer <br/>
             <strong>Aaron Lin*</strong>: Frontend Software Engineer <br/>
-            <strong>Luis Lopez-Cardona*</strong>: Frontend Software Engineer & UI Designer <br/>
+            <strong>Luis Lopez-Cardona*</strong>: Frontend Software Engineer <br/>
             <strong>Thomas Ly*</strong>: Frontend Software Engineer <br/>
             <strong>Alex Wu</strong>: Backend Software Engineer <br/>
             <strong>Kenny Zhao</strong>: Backend Software Engineer
