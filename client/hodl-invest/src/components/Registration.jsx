@@ -54,7 +54,7 @@ class Registration extends Component {
 
               xhr.addEventListener("readystatechange", function () {
                 if (this.readyState === 4 && this.status === 200) {
-                  alert("Welcome to Hodl Invest, " + name + "! Please login!");
+                  // alert("Welcome to Hodl Invest, " + name + "! Please login!");
                   window.location.href = './login';
                 }
 

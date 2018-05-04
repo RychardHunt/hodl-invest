@@ -1,14 +1,6 @@
 import React, {Component} from 'react';
 import './BuySellPanel.css';
 
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds) {
-      break;
-    }
-  }
-}
 
 class BuySellPanel extends Component {
 
@@ -178,6 +170,7 @@ class BuySellPanel extends Component {
               }
 
               sendToServer(event) {
+
                 let BuySellPanel = this;
                 var buyOrSell;
                 if (this.state.isBuySelected) {
@@ -197,10 +190,12 @@ class BuySellPanel extends Component {
                     alert("Please actually click on a ticker from the drop down menu!");
                   }
                   else if (this.readyState === 4 && this.status === 400) {
-                    alert("Insufficient coins! Please lower order quantity!");
-                  }else{
-                    BuySellPanel.props.updateState(BuySellPanel.state.isBuySelected, BuySellPanel.state.coinSelected);
+                    alert("Insufficient quantity available! Please lower order quantity!");
+                  } else{
+                    // BuySellPanel.props.updateState(BuySellPanel.state.isBuySelected, BuySellPanel.state.coinSelected);
                   }
+                  BuySellPanel.props.updateState(BuySellPanel.state.isBuySelected, BuySellPanel.state.coinSelected);
+                  BuySellPanel.props.reloadTransactions();
                 });
 
                 xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/" + buyOrSell + "/" + this.state.coinSelected + "/" + this.state.input);
@@ -209,11 +204,10 @@ class BuySellPanel extends Component {
 
                 xhr.send(data);
                 event.preventDefault();
-                sleep(500);
-                this.props.reloadTransactions();
               }
 
               displayForm() {
+                var ticker = this.state.coinSelected;
                 if (this.state.isBuySelected) {
                   return <form>
                   Select coin:
@@ -225,6 +219,8 @@ class BuySellPanel extends Component {
                   <option value="xrp">XRP</option>
                   <option value="xlm">XLM</option>
                   </select>
+                  <br/>
+                  Coin Available:
                   <br/>
                   Enter coin amount:
                   <input value={this.state.Input} onChange={this.handleInput.bind(this)}/>
@@ -244,6 +240,8 @@ class BuySellPanel extends Component {
                   <option value="xrp">XRP</option>
                   <option value="xlm">XLM</option>
                   </select>
+                  <br/>
+                  USD Available: {this.props.playMoney}
                   <br/>
                   Enter coin amount:
                   <input value={this.state.input} onChange={this.handleInput.bind(this)}/>

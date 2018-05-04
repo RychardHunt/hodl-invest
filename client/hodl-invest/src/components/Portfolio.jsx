@@ -93,7 +93,6 @@ class Chart extends Component{
 
   componentWillMount(){
     this.getUserData();
-
   }
 
   render(){

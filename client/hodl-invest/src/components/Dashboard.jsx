@@ -173,15 +173,13 @@ bchRequest.send();
     return (
       <div>
         <center> <h1>{this.props.username} Dashboard </h1> </center>
+        <Transaction token={this.props.token} username={this.props.username} portfolioData={this.state.portfolio.BTC} updateState={this.updateState.bind(this)} />
+        <AllCharts />
         <Portfolio ltcCount={this.state.ltcCount} ethCount={this.state.ethCount}
           btcCount={this.state.btcCount} bchCount={this.state.bchCount}
           btcPrice={this.state.btcPrice}   ethPrice={this.state.ethPrice}
           ltcPrice={this.state.ltcPrice} bchPrice={this.state.bchPrice}
-
           />
-        <Transaction token={this.props.token} username={this.props.username} portfolioData={this.state.portfolio.BTC} updateState={this.updateState.bind(this)} />
-        <AllCharts />
-
       </div>
     );
   }

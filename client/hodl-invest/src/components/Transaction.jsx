@@ -15,15 +15,6 @@ class Transaction extends Component {
     this.getTransactions();
   }
 
-  // updateDashboard(_isBuy, _coin) {
-  //   this.props.updateState(_isBuy, _coin);
-  // }
-
-  // updateToken(_token, _coin) {
-  //   let transact = this;
-  //   transact.props.updateState(true, "btc");
-  //  }
-
   getTransactions() {
     let transaction = this;
     let username = this.props.username;
