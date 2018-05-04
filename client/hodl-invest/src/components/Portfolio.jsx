@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Pie} from 'react-chartjs-2';
 
-class Portfolio extends Component{
+class Chart extends Component{
   constructor(props){
     super(props);
     this.state = {
@@ -16,11 +16,8 @@ class Portfolio extends Component{
       bchCount:this.props.bchCount
 
     }
-    console.log("USD AMOUNT: "+this.props.playMoney);
-    console.log("BTC AMOUNT: "+this.props.btCount);
-    console.log("ET AMOUNT: "+this.props.ethCount);
-    console.log("LTC AMOUNT: "+this.props.ltcCount);
-    console.log("BCH AMOUNT: "+this.props.bchCount);
+    console.log("BTC Price: "+this.props.btcPrice);
+    console.log("Eth Count "+this.props.ethCount);
 
 
   }
@@ -49,26 +46,26 @@ class Portfolio extends Component{
 
   getUserData(){
     var labels=[];
-    var amounts=[1,1,1,1,1]
-    if(this.state.playMoney!==undefined){
+    var amounts=[]
+    if(this.state.playMoney!==0){
       labels.push('USD');
-      amounts[0] = ( this.state.playMoney);
+      amounts.push( this.state.playMoney);
     }
-  if(this.state.btcCount!==undefined){
+  if(this.state.btcCount!==0){
     labels.push('BTC');
-    amounts[1] = ( this.state.btcCount*this.state.btcPrice);
+    amounts.push( this.state.btcCount*this.state.btcPrice);
   }
-  if(this.state.ethCount!==undefined){
+  if(this.state.ethCount!==0){
     labels.push('ETH');
-    amounts[2]=( this.state.ethCount*this.state.ethPrice);
+    amounts.push( this.state.ethCount*this.state.ethPrice);
   }
-  if(this.state.ltcCount!==undefined){
+  if(this.state.ltcCount!==0){
     labels.push('LTC');
-    amounts[3]=( this.state.ltcCount*this.state.ltcPrice);
+    amounts.push( this.state.ltcCount*this.state.ltcPrice);
   }
-  if(this.state.bchCount!==undefined){
+  if(this.state.bchCount!==0){
     labels.push('BCH');
-    amounts[4]=( this.state.bchCount*this.state.bchPrice);
+    amounts.push( this.state.bchCount*this.state.bchPrice);
   }
 
 
@@ -120,4 +117,4 @@ class Portfolio extends Component{
   }
 }
 
-export default Portfolio;
+export default Chart;
