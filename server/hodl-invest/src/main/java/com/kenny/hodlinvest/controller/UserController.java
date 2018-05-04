@@ -1,5 +1,6 @@
 package com.kenny.hodlinvest.controller;
 
+import com.kenny.hodlinvest.database.TokenDynamoDatabase;
 import com.kenny.hodlinvest.exception.InvalidBodyFormatException;
 import com.kenny.hodlinvest.exception.UserException;
 import com.kenny.hodlinvest.exception.UserNotFoundException;
@@ -26,7 +27,9 @@ public class UserController {
     private final UserService userService;
     private final CryptocoinService cryptocoinService;
     private final TransactionService transactionService;
-    private final Map<String, Token> tokenMap = new HashMap<>();
+
+    @Autowired
+    private TokenDynamoDatabase tokenDynamoDatabase;
 
     @Autowired
     public UserController(UserService userService, CryptocoinService cryptocoinService, TransactionService transactionService) {
@@ -39,8 +42,8 @@ public class UserController {
     @RequestMapping(
             method = RequestMethod.GET
    )
-    public String message(){
-        return "API documentation can be found here: https://github.com/RychardHunt/hodl-invest/wiki/Project-Documentation";
+    public List<User> getAllUsers(){
+        return userService.getAllUsers();
     }
 
     @RequestMapping(
@@ -75,13 +78,13 @@ public class UserController {
             method = RequestMethod.DELETE,
             path = "{username}"
     )
-    public void deleteUserByName(@PathVariable String username,@RequestBody Map<String, String> token){
+    public void deleteUserByName(@PathVariable String username,@RequestBody Map<String, String> bodyMap){
         if(!userService.userExists(username))
             throw new UserNotFoundException("User does not exist");
 
-        Secure.checkToken(username, token, tokenMap);
+        Secure.validateToken(bodyMap, tokenDynamoDatabase);
 
-        tokenMap.remove(token);
+        tokenDynamoDatabase.deleteToken(username, bodyMap.get("token"));
         userService.deleteUserByName(username);
     }
 
@@ -89,11 +92,11 @@ public class UserController {
             method = RequestMethod.POST,
             path = "{username}/transactions/{amount}"
     )
-    public void updateUserPlayMoney(@PathVariable String username, @PathVariable double amount, @RequestBody Map<String, String> token){
+    public void updateUserPlayMoney(@PathVariable String username, @PathVariable double amount, @RequestBody Map<String, String> bodyMap){
         if(!userService.userExists(username))
             throw new UserNotFoundException("User does not exist");
 
-        Secure.checkToken(username, token, tokenMap);
+        Secure.validateToken(bodyMap, tokenDynamoDatabase);
 
         userService.updateUserPlayMoney(username, amount);
     }
@@ -165,13 +168,14 @@ public class UserController {
 
         if(!userService.userExists(username))
             throw new UserNotFoundException("User does not exist");
-
+        /*
         if(tokenMap.get(username) != null)
             return tokenMap.get(username);
+        */
 
         if(userService.authenticateUser(username, password)){
             Token token = new Token(null, username);
-            tokenMap.put(token.getUsername(), token);
+            tokenDynamoDatabase.insertToken(token);
             return token;
         } else{
             throw new UserException("Failed to authenticate user.");
@@ -191,13 +195,13 @@ public class UserController {
         if(token == null)
             throw new InvalidBodyFormatException("Token field is missing in message body. Message body is: " + bodyMap.toString());
 
-        Secure.checkToken(username, bodyMap, tokenMap);
-        Token curToken = tokenMap.get(username);
+        Secure.validateToken(bodyMap, tokenDynamoDatabase);
+        Token curToken = tokenDynamoDatabase.selectToken(token);
 
         if(curToken == null)
             throw new UserException("Invalid token to logout.");
         else{
-            tokenMap.remove(username);
+            tokenDynamoDatabase.deleteToken(token, username);
         }
     }
 
@@ -212,7 +216,7 @@ public class UserController {
         if(username == null || !userService.userExists(username))
             throw new UserNotFoundException("User does not exist: " + username);
 
-        Secure.checkToken(username, bodyMap, tokenMap);
+        Secure.validateToken(bodyMap, tokenDynamoDatabase);
 
         transactionService.processBuyRequest(userService.getUserByName(username), cryptocoinService.getInfo().get(ticker.toUpperCase()).getName(), ticker.toUpperCase(), amount,  cryptocoinService.getInfo().get(ticker.toUpperCase()).getPrice());
     }
@@ -228,7 +232,7 @@ public class UserController {
         if(username == null || !userService.userExists(username))
             throw new UserNotFoundException("User does not exist");
 
-        Secure.checkToken(username, bodyMap, tokenMap);
+        Secure.validateToken(bodyMap, tokenDynamoDatabase);
 
         transactionService.processSellRequest(userService.getUserByName(username),  cryptocoinService.getInfo().get(ticker.toUpperCase()).getName(), ticker.toUpperCase(), amount, cryptocoinService.getInfo().get(ticker.toUpperCase()).getPrice());
     }
