@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Pie} from 'react-chartjs-2';
 
-class Chart extends Component{
+class Portfolio extends Component{
   constructor(props){
     super(props);
     this.state = {
@@ -16,8 +16,11 @@ class Chart extends Component{
       bchCount:this.props.bchCount
 
     }
-    console.log("BTC Price: "+this.props.btcPrice);
-    console.log("Eth Count "+this.props.ethCount);
+    console.log("USD AMOUNT: "+this.props.playMoney);
+    console.log("BTC AMOUNT: "+this.props.btCount);
+    console.log("ET AMOUNT: "+this.props.ethCount);
+    console.log("LTC AMOUNT: "+this.props.ltcCount);
+    console.log("BCH AMOUNT: "+this.props.bchCount);
 
 
   }
@@ -46,26 +49,26 @@ class Chart extends Component{
 
   getUserData(){
     var labels=[];
-    var amounts=[]
-    if(this.state.playMoney!==0){
+    var amounts=[1,1,1,1,1]
+    if(this.state.playMoney!==undefined){
       labels.push('USD');
-      amounts.push( this.state.playMoney);
+      amounts[0] = ( this.state.playMoney);
     }
-  if(this.state.btcCount!==0){
+  if(this.state.btcCount!==undefined){
     labels.push('BTC');
-    amounts.push( this.state.btcCount*this.state.btcPrice);
+    amounts[1] = ( this.state.btcCount*this.state.btcPrice);
   }
-  if(this.state.ethCount!==0){
+  if(this.state.ethCount!==undefined){
     labels.push('ETH');
-    amounts.push( this.state.ethCount*this.state.ethPrice);
+    amounts[2]=( this.state.ethCount*this.state.ethPrice);
   }
-  if(this.state.ltcCount!==0){
+  if(this.state.ltcCount!==undefined){
     labels.push('LTC');
-    amounts.push( this.state.ltcCount*this.state.ltcPrice);
+    amounts[3]=( this.state.ltcCount*this.state.ltcPrice);
   }
-  if(this.state.bchCount!==0){
+  if(this.state.bchCount!==undefined){
     labels.push('BCH');
-    amounts.push( this.state.bchCount*this.state.bchPrice);
+    amounts[4]=( this.state.bchCount*this.state.bchPrice);
   }
 
 
@@ -117,4 +120,4 @@ class Chart extends Component{
   }
 }
 
-export default Chart;
+export default Portfolio;
