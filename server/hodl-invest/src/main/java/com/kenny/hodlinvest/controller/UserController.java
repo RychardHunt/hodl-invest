@@ -29,8 +29,6 @@ public class UserController {
 //    private final Map<String, Token> tokenMap = new HashMap<>();
 
     @Autowired
-    private UserDynamoDatabase userDynamoDatabase;
-    @Autowired
     private TokenDynamoDatabase tokenDynamoDatabase;
 
     @Autowired
@@ -54,10 +52,12 @@ public class UserController {
             path = "{username}"
     )
     public User getUserByName(@PathVariable String username){
-        if(userService.userExists(username))
-            throw new UserException("Username already exists.");
+        User user = userService.getUserByName(username);
 
-        return userService.getUserByName(username);
+        if(user == null)
+            throw new UserNotFoundException("Username " + user + " does not exist");
+
+        return user;
     }
 
     @RequestMapping(
@@ -68,10 +68,6 @@ public class UserController {
     public void addNewUser(@RequestBody User user){
         if(user.getUsername() == null || user.getPasswordHash().equals(""))
             throw new UserException("Username or password is null. Please put in a username and password field in order to create the user");
-
-        if(userService.userExists(user.getUsername())){
-            throw new UserException("Username already exists.");
-        }
 
         userService.addUser(user.getUsername(), user);
     }
@@ -129,10 +125,7 @@ public class UserController {
         String password = bodyMap.get("password");
 
         if(username == null || password == null)
-            throw new UserException("Username or password is null. Message body is " + bodyMap);
-
-        if(!userService.userExists(username))
-            throw new UserNotFoundException("User does not exist");
+            throw new UserException("Username or password is missing from message body. Message body is " + bodyMap);
 
         if(userService.authenticateUser(username, password)){
             Token token = new Token(null, username);
@@ -159,12 +152,12 @@ public class UserController {
     )
     public void buyCryptocoin(@RequestBody Map<String, String> bodyMap, @PathVariable("ticker") String ticker, @PathVariable("amount") double amount){
         Secure.validateToken(bodyMap, tokenDynamoDatabase);
-        User user = userDynamoDatabase.selectUser(bodyMap.get("username"));
+        String username = bodyMap.get("username");
 
-        transactionService.processBuyRequest(user, cryptocoinService.getInfo().get(ticker.toUpperCase()).getName(), ticker.toUpperCase(), amount,  cryptocoinService.getInfo().get(ticker.toUpperCase()).getPrice());
+        if(username == null)
+            throw new UserException("Username is missing. Please put it in the message body. Message body is " + bodyMap);
 
-        userDynamoDatabase.updateUserPortfolio(user.getUsername(), ticker.toUpperCase(), amount);
-        userDynamoDatabase.updateUserMoney(user.getUsername(), user.getPlayMoney());
+        transactionService.processBuyRequest(username, cryptocoinService.getInfo().get(ticker.toUpperCase()).getName(), ticker.toUpperCase(), amount,  cryptocoinService.getInfo().get(ticker.toUpperCase()).getPrice());
     }
 
     @RequestMapping(
@@ -174,12 +167,11 @@ public class UserController {
     )
     public void sellCryptocoin(@RequestBody Map<String, String> bodyMap, @PathVariable String ticker, @PathVariable double amount){
         Secure.validateToken(bodyMap, tokenDynamoDatabase);
-        User user = userDynamoDatabase.selectUser(bodyMap.get("username"));
-        System.out.println(user.toString());
-        transactionService.processSellRequest(user,  cryptocoinService.getInfo().get(ticker.toUpperCase()).getName(), ticker.toUpperCase(), amount, cryptocoinService.getInfo().get(ticker.toUpperCase()).getPrice());
-        System.out.println(user.toString());
+        String username = bodyMap.get("username");
 
-        userDynamoDatabase.updateUserPortfolio(user.getUsername(), ticker.toUpperCase(), user.getPortfolio().get(ticker.toUpperCase()));
-        userDynamoDatabase.updateUserMoney(user.getUsername(), user.getPlayMoney());
+        if(username == null)
+            throw new UserException("Username is missing. Please put it in the message body. Message body is " + bodyMap);
+
+        transactionService.processSellRequest(username,  cryptocoinService.getInfo().get(ticker.toUpperCase()).getName(), ticker.toUpperCase(), amount, cryptocoinService.getInfo().get(ticker.toUpperCase()).getPrice());
     }
 }

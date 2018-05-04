@@ -99,6 +99,7 @@ public class UserDynamoDatabase {
     }
 
     public void updateUserPortfolio(String username, String cryptocoin, Double amount){
+        System.out.println("Username: " + username + " cryptocoin " + cryptocoin + " amount " + amount);
         if(selectUser(username) == null)
             throw new UserNotFoundException("User " + username + " does not exist in database");
 
@@ -111,8 +112,7 @@ public class UserDynamoDatabase {
         Map<String, Object> expressionAttributeValues = new HashMap<>();
         expressionAttributeValues.put(":val1", amount);
 
-        UpdateItemOutcome outcome = table.updateItem("username", username, "set portfolio.#C = :val1", expressionAttributeNames, expressionAttributeValues);
-        System.out.println(outcome.toString());
+        table.updateItem("username", username, "set portfolio.#C = :val1", expressionAttributeNames, expressionAttributeValues);
     }
 
     public void updateUserTransactions(String username, Transaction transactions){

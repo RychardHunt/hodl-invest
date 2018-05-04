@@ -26,7 +26,7 @@ public class UserService {
 
     public void addUser(String username, User user){
         if(userExists(username)){
-            throw new IllegalStateException("Username already exists");
+            throw new UserException("Username already exists");
         }
         else{
             userDynamoDatabase.insertUser(user);
@@ -65,11 +65,18 @@ public class UserService {
     public Map<String, Double> getPortfolio(String username){
         User user = userDynamoDatabase.selectUser(username);
 
+        if(user == null)
+            throw new UserNotFoundException("Can not get portfolio of null user");
+
         return user.getPortfolio();
     }
 
     public List<Transaction> getUserTransactions(String username){
         User user = userDynamoDatabase.selectUser(username);
+
+        if(user == null)
+            throw new UserNotFoundException("Can not get transactions of null user");
+
         return user.getTransactions();
     }
 

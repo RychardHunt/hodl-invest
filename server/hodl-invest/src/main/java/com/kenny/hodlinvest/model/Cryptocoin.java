@@ -48,7 +48,8 @@ public class Cryptocoin {
     @Override
     public String toString() {
         return "Cryptocoin{" +
-                "ticker='" + ticker + '\'' +
+                "name='" + name + '\'' +
+                ", ticker='" + ticker + '\'' +
                 ", price=" + price +
                 '}';
     }
