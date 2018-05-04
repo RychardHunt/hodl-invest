@@ -45,6 +45,8 @@ class BuySellPanel extends Component {
     return true;
   }
 
+  
+
   coinToUsd(input, ticker) {
     if (input === '' || input === '.') {
       return '0';
@@ -207,6 +209,14 @@ class BuySellPanel extends Component {
               }
 
               displayForm() {
+			
+    var userRequest=new XMLHttpRequest();
+    userRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/users/"+this.props.username,false);
+
+    userRequest.send();
+    console.log("testing+"+userRequest.responseText);
+    var Userdata=JSON.parse(userRequest.responseText);
+
                 var ticker = this.state.coinSelected;
                 if (this.state.isBuySelected) {
                   return <form>
@@ -216,11 +226,11 @@ class BuySellPanel extends Component {
                   <option value="eth">ETH</option>
                   <option value="ltc">LTC</option>
                   <option value="bch">BCH</option>
-                  <option value="xrp">XRP</option>
-                  <option value="xlm">XLM</option>
+                  {/*<option value="xrp">XRP</option>
+                  <option value="xlm">XLM</option>*/}
                   </select>
                   <br/>
-                  Coin Available:
+                  USD Available:{Math.round(Userdata.playMoney * 100) / 100}
                   <br/>
                   Enter coin amount:
                   <input value={this.state.Input} onChange={this.handleInput.bind(this)}/>
@@ -229,7 +239,22 @@ class BuySellPanel extends Component {
                   <br/>
                   <button onClick={this.sendToServer.bind(this)}>Buy</button>
                   </form>
-                } else {
+                } else {if(this.props.username!=""){
+		   if(this.state.coinSelected=="eth"){
+			 this.state.coinAmount=Userdata.portfolio.ETH;}
+			if(this.state.coinSelected=="btc"){
+			this.state.coinAmount=Userdata.portfolio.BTC;}
+			if(this.state.coinSelected=="ltc"){
+			this.state.coinAmount=Userdata.portfolio.LTC;}
+			if(this.state.coinSelected=="bch"){
+			this.state.coinAmount=Userdata.portfolio.BCH;}
+			{/*if(this.state.coinSelected=="XRP"){
+			this.state.coinAmount=Userdata.portfolio.XRP;}
+			if(this.state.coinSelected=="XLM"){
+			this.state.coinAmount=Userdata.portfolio.XLM;}*/}
+}
+			else{this.state.coinAmount=0;}
+
                   return <form>
                   Select coin:
                   <select value={this.state.coinSelected} onChange={this.handleCoinSelect.bind(this)}>
@@ -237,11 +262,11 @@ class BuySellPanel extends Component {
                   <option value="btc">BTC</option>
                   <option value="ltc">LTC</option>
                   <option value="bch">BCH</option>
-                  <option value="xrp">XRP</option>
-                  <option value="xlm">XLM</option>
+                  {/*<option value="xrp">XRP</option>
+                  <option value="xlm">XLM</option>*/}
                   </select>
                   <br/>
-                  USD Available: {this.props.playMoney}
+                  Coin Available: {this.state.coinAmount}
                   <br/>
                   Enter coin amount:
                   <input value={this.state.input} onChange={this.handleInput.bind(this)}/>
