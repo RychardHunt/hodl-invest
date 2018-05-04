@@ -3,6 +3,11 @@ package com.kenny.hodlinvest.database;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.*;
+import java.sql.Timestamp;
+
+// We have two tables, "users_info" and "transaction_history"
+// We store all user portfolio and everything user in user table, and everything transaction related is stored in transaction table
+// Call method: 1) import this class, and use method. Ex: ConnectBase.deleteUser(username);
 
 public class ConnectBase{
 
@@ -13,6 +18,7 @@ public class ConnectBase{
         String username = dbUri.getUserInfo().split(":")[0];
         String password = dbUri.getUserInfo().split(":")[1];
         String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
+
 
         Connection con = DriverManager.getConnection(dbUrl, username, password);
         java.util.Map map = con.getTypeMap();
@@ -73,6 +79,7 @@ public class ConnectBase{
         }
     }
 
+    // add new user to user table
     public static void addNewUser(
             String username,
             String password,
@@ -102,24 +109,36 @@ public class ConnectBase{
         System.out.println(newUser);
         runQuery(newUser);
     }
-    
 
+    // add new transaction to transaction history
+    public static void addNewTransaction(
+            int transaction_id,
+            String username,
+            double playmoney,
+            double btc,
+            double eth,
+            double xrp,
+            double bch,
+            double ltc){
 
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-    public static void createTable(String table){
-        String table = "CREATE TABLE table_name(    column1 datatype,    column2 datatype,    column3 datatype,   columnN datatype );"
+        String newTransaction = "INSERT INTO transaction_history VALUES(" +
+                "'" + transaction_id + "'" + ", " +
+                "'" + username + "'" + ", " +
+                "'" + timestamp + "'" + ", " +
+                playmoney + ", " +
+                btc + ", " +
+                eth + ", " +
+                xrp + ", " +
+                bch + ", " +
+                ltc + ")";
 
-        runQuery(table);
+        System.out.println(newTransaction);
+        runQuery(newTransaction);
     }
 
-
-//    CREATE TYPE employee_type AS (name text, salary numeric);
-//
-//    CREATE TABLE employees OF employee_type (
-//            PRIMARY KEY (name),
-//    salary WITH OPTIONS DEFAULT 1000
-//            );
-    
+    // Update money from referral
     public static void updateMoney(String username, String refer, String rewardPlayMoneyAmount){
 
         String updatedUser = "UPDATE users_info SET refer = " +
@@ -130,13 +149,22 @@ public class ConnectBase{
                 "'" + username + "'";
 
         runQuery(updatedUser);
+        System.out.println(updatedUser);
     }
 
+    // delete all the transaction by user
+    public static void deleteAllTransactionByUser(String username){
+        String deleteAllTransactionByUser = "DELETE FROM transaction_history WHERE username = '" + username + "' RETURNING *;";
+        runQuery(deleteAllTransactionByUser);
+        System.out.println(deleteAllTransactionByUser);
+    }
+
+    // delete user from user table and also all transactions associated with user in the transaction table
     public static void deleteUser(String username){
-        String deleteUser = "DELETE FROM users_info WHERE username = " + "'" + username + "'";
+        ConnectBase.deleteAllTransactionByUser(username);
+        String deleteUser = "DELETE FROM + users_info WHERE username = ' " + username + "' RETURNING *;";
+        System.out.println(deleteUser);
         runQuery(deleteUser);
     }
-
-
 
 }

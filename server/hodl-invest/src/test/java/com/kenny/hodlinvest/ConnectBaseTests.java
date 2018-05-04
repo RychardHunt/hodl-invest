@@ -23,27 +23,19 @@ public class ConnectBaseTests {
         }catch (Exception e){
             e.printStackTrace();
         }
-//        ConnectBase.runQuery("INSERT INTO public.Users VALUES('hello', 'im', 13);");
-//        ConnectBase.runQuery("INSERT INTO Users VALUES('hellohellohello', 'im', 15);");
-//        ConnectBase.runQuery("TRUNCATE users; DELETE FROM users;");
 
+//        ConnectBase.addNewUser("testConnectBase", "fakepassword", "alex", "alex@gmail.com", 0, 1000, 1, 2, 3, 4, 0);
 
-//        String insertNewUser = "INSERT INTO Users VALUES('hellohellohello', 'im', 15);";
+//        ConnectBase.deleteUser("testConenctBase");
 
-//        ConnectBase.runQuery("CREATE TABLE USERS_INFO ( username varchar(16) PRIMARY key NOT null, password varchar(255) not null, name varchar(20), email varchar(60) not null, refer smallint, playMoney float(25), btc float(25), eth float(25), xrp float(25), bch float(25), ltc float(25) )");
-//        ConnectBase.runQuery("drop table users_info");
+//        ConnectBase.addNewTransaction(3,"testConnectBase", -30,-2,-1,-1,-4,4000);
 
-//        ConnectBase.addNewUser(
-//                "intellij", "fakepassword", "alex","alex@gmail.com",0,987654321.123456789,
-//                987654321.123456789,987654321.123456789,987654321.123456789,987654321.123456789,987654321.123456789);
-
-//        ConnectBase.deleteUser("intellij");
-
-        ResultSet rs = ConnectBase.selectQuery("SELECT * FROM users_info");
+        ConnectBase.deleteAllTransactionByUser("testConnectBase");
+        ResultSet rs = ConnectBase.selectQuery("SELECT * FROM users_info;");
         if(rs != null){
             try{
                 while(rs.next()){
-                    String st = rs.getString(3);
+                    String st = rs.getString(1);
                     System.out.println(st + "------------------------------------------------------------");
                 }
             }catch(SQLException e){
@@ -54,30 +46,7 @@ public class ConnectBaseTests {
 
         }
 
-        if(rs == null){
-            while(base10Num > 1){
-                result = (base10Num % 2) + result;
-                base10Num /= 2;
-            }
-            assert base10Num == 0 || base10Num == 1 : "value is not <= 1: " + base10Num;
 
-            result = base10Num + result;
-            assert all0sAnd1s(result);
-
-            if( isNeg )
-                result = "-" + result;
-
-            try{
-                while(rs.next()){
-                    String st = rs.getString(1);
-                    System.out.println(st + "------------------------------------------------------------");
-                }
-            }catch(SQLException e){
-                e.printStackTrace();
-                fail("There is a problem");
-            }
-
-        }
 
     }
 
