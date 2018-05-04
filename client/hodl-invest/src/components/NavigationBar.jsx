@@ -4,9 +4,12 @@ import {Link} from 'react-router-dom';
 import './NavigationBar.css'
 window.logswitch="false";
 window.logtext="Login";
+
+
 class NavigationBar extends Component {
+
 	render(){
-		
+
 		var hreflocation="/login";
 		var text="Login";
 		if(window.logswitch=="true"){
@@ -16,9 +19,10 @@ class NavigationBar extends Component {
 		}
 
 		function testlogin(){
-		if (window.logswitch=="true")
-			{window.location.reload();
-		}}
+			if (window.logswitch=="true") {
+				window.location.href = './';
+			}
+		}
 
 		function registerlink(){if(window.logswitch!="true"){
 		return(<NavItem eventKey={3} componentClass={Link} href="/register" to="/register">Register</NavItem>);}

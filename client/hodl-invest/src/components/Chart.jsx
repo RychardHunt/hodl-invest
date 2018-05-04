@@ -19,15 +19,14 @@ var timesArr;
 var opensArr;
 
 class Chart extends Component{
-
   constructor(props){
-      super( props );
-      this.state = {
-        chartData:props.chartData,
-      };
-      this.toggleChart = this.toggleChart.bind(this);
-  }
+    super( props );
+    this.state = {
+      chartData:props.chartData,
+    };
+    this.toggleChart = this.toggleChart.bind(this);
 
+  }
   getCoinData(){
     var url = 'https://min-api.cryptocompare.com/data/histoday?fsym='+this.props.coin+'&tsym=USD&limit=3';
     var userUrl='https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=3';
@@ -63,7 +62,8 @@ class Chart extends Component{
                   "username": this.props.username
               });
       userDataURL = "https://hodl-invest-server.herokuapp.com/api/v1/users/" + userids.username
-    } catch(err) {
+    }
+    catch(err) {
       //giving default user
       userDataURL = "https://hodl-invest-server.herokuapp.com/api/v1/users/zoro"
     }
@@ -104,9 +104,7 @@ class Chart extends Component{
 
   componentWillMount(){
       this.getCoinData();
-      console.log("This is opens arr"+ opensArr);
 
-    // this.getUserData();
   }
 
   render(){
