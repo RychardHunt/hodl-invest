@@ -19,11 +19,15 @@ class App extends Component {
     }
   }
 
- updateState(_token, _username) {
+ updateState(_token, _username, callback) {
+   var callback = callback;
+    if (!callback) {
+      callback = null;
+    }
     this.setState({
       token: _token,
       username: _username
-    })
+    }, callback)
   }
 
   render() {
