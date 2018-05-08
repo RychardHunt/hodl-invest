@@ -16,10 +16,6 @@ class Chart extends Component{
       bchCount:this.props.bchCount
 
     }
-    console.log("BTC Price: "+this.props.btcPrice);
-    console.log("Eth Count "+this.props.ethCount);
-
-
   }
 
 

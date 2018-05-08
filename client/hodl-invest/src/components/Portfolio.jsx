@@ -4,6 +4,7 @@ import {Pie} from 'react-chartjs-2';
 class Chart extends Component{
   constructor(props){
     super(props);
+
     this.state = {
       chartData:props.chartData,
       usdCount:this.props.usdCount,
@@ -28,6 +29,7 @@ class Chart extends Component{
   }
 
   getDerivedStateFromProps(nextProps, prevState){
+
     this.setState({
       btcPrice: this.nextProps.btcPrice,
       ethPrice: this.nextProps.ethPrice,
@@ -94,6 +96,19 @@ class Chart extends Component{
   }
 
   render(){
+    this.state = {
+      chartData:this.props.chartData,
+      usdCount:this.props.usdCount,
+      btcPrice: this.props.btcPrice,
+      ethPrice: this.props.ethPrice,
+      ltcPrice: this.props.ltcPrice ,
+      bchPrice: this.props.bchPrice,
+      btcCount:this.props.btcCount,
+      ltcCount: this.props.ltcCount,
+      ethCount: this.props.ethCount,
+      bchCount:this.props.bchCount
+
+    }
     return (
       <div className="chart">
         <Pie

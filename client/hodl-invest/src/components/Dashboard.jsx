@@ -30,54 +30,70 @@ class Dashboard extends Component {
   }
 
   updateState(_isBuy, _coin) {
-    if(_coin==="BTC"){
-        if(_isBuy){
-      this.setState({
-        btcCount: this.state.btcCount+1
-      });
-    }
-    else{
-      this.setState({
-        btcCount: this.state.btcCount-1
-      });
-    }
-    }
-    if(_coin==="ETH"){
-        if(_isBuy){
-      this.setState({
-        ethCount: this.state.ethCount+1
-      });
-    }
-    else{
-      this.setState({
-        ethCount: this.state.ethCount-1
-      });
-    }
-    }
-    if(_coin==="LTC"){
-        if(_isBuy){
-      this.setState({
-        ltcCount: this.state.ltcCount+1
-      });
-    }
-    else{
-      this.setState({
-        ltcCount: this.state.ltcCount-1
-      });
-    }
-    }
-    if(_coin==="BCH"){
-        if(_isBuy){
-      this.setState({
-        ltcCount: this.state.bchCount+1
-      });
-    }
-    else{
-      this.setState({
-        ltcCount: this.state.bchCount-1
-      });
-    }
-    }
+    console.log("Update state en marche");
+    this.state={
+        playMoney: 0,
+        btcPrice: 0,
+        ethPrice: 0,
+        ltcPrice: 0,
+        bchPrice: 0,
+        btcCount: -1,
+        ethCount:-1,
+        ltcCount:-1,
+        bchCount: -1,
+        portfolio: 0
+      }
+      console.log("BTC state " +this.state.btcCount);
+        this.getUserData();
+        this.render();
+    // if(_coin==="BTC"){
+    //     if(_isBuy){
+    //   this.setState({
+    //     btcCount: this.state.btcCount+1
+    //   });
+    // }
+    // else{
+    //   this.setState({
+    //     btcCount: this.state.btcCount-1
+    //   });
+    // }
+    // }
+    // if(_coin==="ETH"){
+    //     if(_isBuy){
+    //   this.setState({
+    //     ethCount: this.state.ethCount+1
+    //   });
+    // }
+    // else{
+    //   this.setState({
+    //     ethCount: this.state.ethCount-1
+    //   });
+    // }
+    // }
+    // if(_coin==="LTC"){
+    //     if(_isBuy){
+    //   this.setState({
+    //     ltcCount: this.state.ltcCount+1
+    //   });
+    // }
+    // else{
+    //   this.setState({
+    //     ltcCount: this.state.ltcCount-1
+    //   });
+    // }
+    // }
+    // if(_coin==="BCH"){
+    //     if(_isBuy){
+    //   this.setState({
+    //     ltcCount: this.state.bchCount+1
+    //   });
+    // }
+    // else{
+    //   this.setState({
+    //     ltcCount: this.state.bchCount-1
+    //   });
+    // }
+    // }
    }
   getUserData(){
     let Dashboard=this;
@@ -94,7 +110,7 @@ class Dashboard extends Component {
         portfolio: userData.portfolio
 
       });
-          console.log("Count "+Dashboard.state.ltcCount);
+
     }
 
     userRequest.send();
@@ -154,7 +170,7 @@ bchRequest.send();
       if(this.props.username!==""){
         xhr.addEventListener("readystatechange", function () {
           if (this.readyState === 4) {
-            console.log(this.responseText);
+
 
           //  console.log("Play money is "+userData.playMoney);
           }
@@ -169,7 +185,7 @@ bchRequest.send();
 
   render() {
     if(this.props.username!==""&&(this.state.ltcPrice!==0&&this.state.btcPrice!==0&&this.state.ltcCount!==-1
-    &&this.state.bchPrice!==0&&this.state.ethCount!==-1)&&this.state.ethPrice!==0){
+    &&this.state.bchPrice!==0&&this.state.ethCount!==-1)&&this.state.ethPrice!==0&&this.state.btcCount!==-1){
     return (
       <div>
         <center> <h1>{this.props.username} Dashboard </h1> </center>

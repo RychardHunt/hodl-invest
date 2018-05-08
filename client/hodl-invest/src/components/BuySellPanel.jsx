@@ -45,7 +45,7 @@ class BuySellPanel extends Component {
     return true;
   }
 
-  
+
 
   coinToUsd(input, ticker) {
     if (input === '' || input === '.') {
@@ -194,7 +194,7 @@ class BuySellPanel extends Component {
                   else if (this.readyState === 4 && this.status === 400) {
                     alert("Insufficient quantity available! Please lower order quantity!");
                   } else{
-                    // BuySellPanel.props.updateState(BuySellPanel.state.isBuySelected, BuySellPanel.state.coinSelected);
+                    BuySellPanel.props.updateState(BuySellPanel.state.isBuySelected, BuySellPanel.state.coinSelected);
                   }
                   BuySellPanel.props.updateState(BuySellPanel.state.isBuySelected, BuySellPanel.state.coinSelected);
                   BuySellPanel.props.reloadTransactions();
@@ -209,12 +209,11 @@ class BuySellPanel extends Component {
               }
 
               displayForm() {
-			
+
     var userRequest=new XMLHttpRequest();
     userRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/users/"+this.props.username,false);
 
     userRequest.send();
-    console.log("testing+"+userRequest.responseText);
     var Userdata=JSON.parse(userRequest.responseText);
 
                 var ticker = this.state.coinSelected;
