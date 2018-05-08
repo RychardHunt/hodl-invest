@@ -6,17 +6,19 @@ class Chart extends Component{
     super(props);
     this.state = {
       chartData:props.chartData,
-      usdCount:this.props.usdCount,
       btcPrice: this.props.btcPrice,
       ethPrice: this.props.ethPrice,
       ltcPrice: this.props.ltcPrice ,
       bchPrice: this.props.bchPrice,
-      btcCount:this.props.btcCount,
+      btcCount:this.props.btCount,
       ltcCount: this.props.ltcCount,
       ethCount: this.props.ethCount,
       bchCount:this.props.bchCount
 
     }
+    console.log("BTC Price: "+this.props.btcPrice);
+    console.log("Eth Count "+this.props.ethCount);
+
 
   }
 
@@ -33,7 +35,7 @@ class Chart extends Component{
       ethPrice: this.nextProps.ethPrice,
       ltcPrice: this.nextProps.ltcPrice ,
       bchPrice: this.nextProps.bchPrice,
-      btcCount:this.nextProps.btcCount,
+      btcCount:this.nextProps.btCount,
       ltcCount: this.nextProps.ltcCount,
       ethCount: this.nextProps.ethCount,
       bchCount:this.nextProps.bchCount
@@ -45,9 +47,9 @@ class Chart extends Component{
   getUserData(){
     var labels=[];
     var amounts=[]
-    if(this.state.usdCount!==0){
+    if(this.state.playMoney!==0){
       labels.push('USD');
-      amounts.push( this.state.usdCount);
+      amounts.push( this.state.playMoney);
     }
   if(this.state.btcCount!==0){
     labels.push('BTC');
