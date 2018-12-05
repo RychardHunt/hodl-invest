@@ -8,15 +8,20 @@ import Login from './components/Login'
 import Registration from './components/Registration'
 import Dashboard from './components/Dashboard'
 import NavigationBar from './components/NavigationBar'
+import {connect} from 'react-redux';
 
 class App extends Component {
 
   constructor(props) {
     super(props);
+    this.onUpdateUser = this.onUpdateUser.bind(this);
     this.state = {
       token: '',
       username: ''
     }
+  }
+  onUpdateUser(){
+    this.props.onUpdateUser('Sammy');
   }
 
  updateState(_token, _username, callback) {
@@ -39,7 +44,7 @@ class App extends Component {
           <Route path ="/login" render={()=><Login updateState={this.updateState.bind(this)} />} />
           <Route path ="/register" component={Registration} />
           <Route path ="/about" component={About} />
-          <Route path ="/dashboard" render={()=><Dashboard token={this.state.token} username={this.state.username} />} />
+          <Route path ="/dashboard" render={()=><Dashboard token={this.state.token} />} />
         </div>
       </Router>
     );

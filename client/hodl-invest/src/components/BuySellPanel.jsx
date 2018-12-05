@@ -45,7 +45,7 @@ class BuySellPanel extends Component {
     return true;
   }
 
-  
+
 
   coinToUsd(input, ticker) {
     if (input === '' || input === '.') {
@@ -209,7 +209,7 @@ class BuySellPanel extends Component {
               }
 
               displayForm() {
-			
+
     var userRequest=new XMLHttpRequest();
     userRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/users/"+this.props.username,false);
 

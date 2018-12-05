@@ -3,6 +3,7 @@ import Chart from './Chart';
 import AllCharts from './AllCharts'
 import Transaction from './Transaction';
 import Portfolio from './Portfolio'
+import {connect} from 'react-redux';
 
 class Dashboard extends Component {
 
@@ -22,7 +23,7 @@ class Dashboard extends Component {
           portfolio: 0
       }
 
-      if(this.props.username!=""){
+      if(this.props.username!="NO_USER"){
       this.getUserData();
       this.getCoinPrices();
     }
@@ -195,5 +196,11 @@ bchRequest.send();
 }
   }
 }
+function mapStateToProps(state){
+  return {
+    username : state.username
+  }
 
-export default Dashboard;
+}
+
+export default connect(mapStateToProps)(Dashboard);

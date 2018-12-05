@@ -2,32 +2,42 @@ import React, {Component} from 'react';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import './NavigationBar.css'
+import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { logoutUser} from '../actions/loginAction';
 window.logswitch="false";
 window.logtext="Login";
 
 
-class NavigationBar extends Component {
+class NavigationBar extends Component{
+
+	 registerlink(){
+		if(!this.props.isLoggedIn){
+				return(<NavItem eventKey={3} componentClass={Link} href="/register" to="/register">Register</NavItem>);}
+		else{return;}
+	 }
+	 logoutUser(){
+		 if (this.props.isLoggedIn) {
+			 this.props.logoutUser();
+			 window.location.href = './';
+		 }
+	 }
+
+
 
 	render(){
 
 		var hreflocation="/login";
 		var text="Login";
-		if(window.logswitch=="true"){
+		if(this.props.isLoggedIn){
 			hreflocation=".";
 			window.logtext="Logout";
 
 		}
 
-		function testlogin(){
-			if (window.logswitch=="true") {
-				window.location.href = './';
-			}
-		}
 
-		function registerlink(){if(window.logswitch!="true"){
-		return(<NavItem eventKey={3} componentClass={Link} href="/register" to="/register">Register</NavItem>);}
-		else{return;}
-		}
+
+
 
 		return(
 				<Navbar default collapseOnSelect>
@@ -45,8 +55,8 @@ class NavigationBar extends Component {
 							<NavItem eventKey={2} componentClass={Link} href="/dashboard" to="/dashboard">
 								Dashboard
 							</NavItem>
-							{registerlink()}
-							<NavItem eventKey={4} componentClass={Link} onClick={testlogin} href={hreflocation} to={hreflocation}>
+							{this.registerlink()}
+							<NavItem eventKey={4} componentClass={Link} onClick={() => this.logoutUser()} href={hreflocation} to={hreflocation}>
 								{window.logtext}
 							</NavItem>
 						</Nav>
@@ -56,4 +66,14 @@ class NavigationBar extends Component {
 	}
 }
 
-export default NavigationBar;
+	function mapStateToProps(state){
+		return {
+			isLoggedIn: state.isLoggedIn
+		}
+	}
+	function matchDispatchToProps(dispatch){
+		return bindActionCreators({logoutUser: logoutUser }, dispatch);
+
+	}
+
+export default connect(mapStateToProps, matchDispatchToProps)(NavigationBar);

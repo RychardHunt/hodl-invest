@@ -1,5 +1,10 @@
 import React, {Component} from 'react';
 import './Registration.css';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {loginUser, logoutUser} from '../actions/loginAction';
+
+
 
 class Login extends Component{
 
@@ -19,11 +24,11 @@ class Login extends Component{
    handleSubmit(event) {
        var xhr = new XMLHttpRequest();
        let login = this;
-
        xhr.addEventListener("readystatechange", function () {
          if (this.readyState === 4 && this.status === 200) {
            var jsonObj = JSON.parse(this.responseText);
            login.props.updateState(jsonObj.token, jsonObj.username);
+           login.props.loginUser(jsonObj.username);
            alert("Welcome " + jsonObj.username + "! Please proceed to Dashboard!");
            document.cookie = "token=" + jsonObj.token;
            document.cookie ="username=" + jsonObj.username;
@@ -110,4 +115,18 @@ class Login extends Component{
      }
 
    }
-   export default Login;
+   function mapStateToProps(state){
+     let isLoggedIn = true;
+     if(state.username === ''){
+       isLoggedIn = false;
+     }
+     return {
+       username: state.username,
+       isLoggedIn: isLoggedIn
+     }
+   }
+   function matchDispatchToProps(dispatch){
+     return bindActionCreators({loginUser: loginUser, logoutUser: logoutUser }, dispatch);
+
+   }
+   export default connect(mapStateToProps, matchDispatchToProps)(Login);
