@@ -24,16 +24,7 @@ class App extends Component {
     this.props.onUpdateUser('Sammy');
   }
 
- updateState(_token, _username, callback) {
-   var callback = callback;
-    if (!callback) {
-      callback = null;
-    }
-    this.setState({
-      token: _token,
-      username: _username
-    }, callback)
-  }
+
 
   render() {
     return (
@@ -41,10 +32,10 @@ class App extends Component {
         <div>
           <NavigationBar />
           <Route exact path ="/" component={Home} />
-          <Route path ="/login" render={()=><Login updateState={this.updateState.bind(this)} />} />
+          <Route path ="/login" render={()=><Login/>} />
           <Route path ="/register" component={Registration} />
           <Route path ="/about" component={About} />
-          <Route path ="/dashboard" render={()=><Dashboard token={this.state.token} />} />
+          <Route path ="/dashboard" render={()=><Dashboard/>} />
         </div>
       </Router>
     );

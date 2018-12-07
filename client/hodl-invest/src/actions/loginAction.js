@@ -1,15 +1,14 @@
 
 
-export const loginUser = (username) => {
+export const loginUser = (username, token) => {
 
 
      return (dispatch) => {
-      console.log(username);
       dispatch({
         type: "LOGIN",
         payload: {
           username: username,
-          isLoggedIn: true
+          token: token
         }
 
       });

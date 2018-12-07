@@ -9,6 +9,7 @@ export default function loginReducer(state = initialState, action){
     case "LOGIN":
       return {
         username: action.payload.username,
+        token: action.payload.token,
         isLoggedIn: true
       };
     case "LOGOUT":

@@ -1,12 +1,17 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import './BuySellPanel.css';
-
+import {getCoinValue} from '../library/utility.js';
+import {COIN_LIST} from '../library/settings';
 
 class BuySellPanel extends Component {
 
   constructor(props) {
     super(props);
+
+    let coin_price_dict = new Map();
     this.state = {
+      coin_price_dict: coin_price_dict,
       isBuySelected: true,
       usdAmount: '0',
       coinAmount: '0',
@@ -19,7 +24,21 @@ class BuySellPanel extends Component {
       xrpPrice: 0,
       xlmPrice: 0
     };
-    this.getBtcValue();
+    this.getCoinValues();
+
+  }
+  getCoinValues() {
+    let BuySellPanel = this;
+    for (const coin of COIN_LIST) {
+
+      const connect_url = "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/" + coin;
+      fetch(connect_url).then(function(response) {
+        response.text().then(function(text) {
+          let coin_dict = BuySellPanel.state.coin_price_dict.set(coin, parseFloat(text));
+          BuySellPanel.setState({coin_price_dict: coin_dict});
+        });
+      });
+    }
   }
 
   static validateInput(input) {
@@ -45,250 +64,140 @@ class BuySellPanel extends Component {
     return true;
   }
 
-
-
   coinToUsd(input, ticker) {
+
     if (input === '' || input === '.') {
       return '0';
     }
     let parsedInput = parseFloat(input);
-    if (ticker == "btc") {
-      return '' + (
-        (parsedInput * this.state.btcPrice).toFixed(2));
-      } else if(ticker==="eth"){
-        return '' + (
-          (parsedInput * this.state.ethPrice).toFixed(2));
-        }
-        else if(ticker==="ltc"){
-          return '' + (
-            (parsedInput * this.state.ltcPrice).toFixed(2));
-          }
-          else if(ticker==="bch"){
-            return '' + (
-              (parsedInput * this.state.bchPrice).toFixed(2));
-            }  else if(ticker==="xrp"){
-              return '' + (
-                (parsedInput * this.state.xrpPrice).toFixed(2));
-              }else{
-                return '' + (
-                  (parsedInput * this.state.xlmPrice).toFixed(2));
-                }
-              }
+    return '' + (
+    parsedInput * this.state.coin_price_dict.get(ticker)).toFixed(2);
+  }
 
+  displayBuy() {
+    this.setState({isBuySelected: true});
+  }
 
-              getBtcValue(){
-                //Bitcoin Request
-                let BuySellPanel=this;
-                var btcRequest=new XMLHttpRequest();
-                btcRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/btc" );
-                btcRequest.onload=function(){
-                  console.log("We are here in BTC");
-                  BuySellPanel.setState({
-                    btcPrice: btcRequest.responseText
-                  });
-                }
-                btcRequest.send();
+  displaySell() {
+    this.setState({isBuySelected: false, usdAmount: '0', input: '', coinSelected: 'btc'})
+  }
 
-                //  ETH request
-                var ethRequest=new XMLHttpRequest();
-                ethRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/eth" );
-                ethRequest.onload=function(){
-                  BuySellPanel.setState({
-                    ethPrice: ethRequest.responseText
-                  });
-                }
-                ethRequest.send();
+  handleCoinSelect(event) {
+    this.setState({
+      usdAmount: this.coinToUsd(this.state.input, event.target.value),
+      coinSelected: event.target.value
 
-                //LTC Request
-                var ltcRequest=new XMLHttpRequest();
-                ltcRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/ltc" );
-                ltcRequest.onload=function(){
-                  BuySellPanel.setState({
-                    ltcPrice: ltcRequest.responseText
-                  });
-                }
-                ltcRequest.send();
+    });
+  }
 
-                //BCH Request
-                var bchRequest=new XMLHttpRequest();
-                bchRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/bch" );
-                bchRequest.onload=function(){
-                  BuySellPanel.setState({
-                    bchPrice: bchRequest.responseText
-                  });
-                }
-                bchRequest.send();
+  handleInput(event) {
+    let input = event.target.value;
 
-                //XRPRequest
-                var xrpRequest=new XMLHttpRequest();
-                xrpRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/xrp" );
-                xrpRequest.onload=function(){
-                  BuySellPanel.setState({
-                    xrpPrice: xrpRequest.responseText
-                  });
-                }
-                xrpRequest.send();
+    if (!BuySellPanel.validateInput(input)) {
+      return
+    }
+    //Update state
+    console.log("our amount is " + this.coinToUsd(input, this.state.coinSelected));
+    this.setState({
+      usdAmount: this.coinToUsd(input, this.state.coinSelected),
+      input: input
+    });
+  }
 
-                //XLM Request
-                var xlmRequest=new XMLHttpRequest();
-                xlmRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/xlm" );
-                xlmRequest.onload=function(){
-                  BuySellPanel.setState({
-                    xlmPrice: xlmRequest.responseText
-                  });
-                  console.log("XLM is :" +xlmRequest.responseText);
-                }
-                xlmRequest.send();
-              }
+  sendToServer(event) {
 
-              displayBuy() {
-                this.setState({isBuySelected: true});
-              }
+    let BuySellPanel = this;
+    var buyOrSell;
+    if (this.state.isBuySelected) {
+      console.log("The event is buy");
+      buyOrSell = "buy";
+    } else {
+      console.log("the event is sell")
+      buyOrSell = "sell";
+    }
+    let data = JSON.stringify({"token": this.props.token, "username": this.props.username});
 
-              displaySell() {
-                this.setState({isBuySelected: false, usdAmount: '0', input: '', coinSelected: 'btc'})
-              }
+    let xhr = new XMLHttpRequest();
+    xhr.withCredentials = false;
+    // var update=this.props.updateDashboard(BuySellPanel.state.isBuySelected, BuySellPanel.state.coinSelected);
+    xhr.addEventListener("readystatechange", function() {
+      if (this.readyState === 4 && this.status === 500) {
+        alert("Please click on a ticker from the drop down menu!");
+      } else if (this.readyState === 4 && this.status === 400) {
+        alert("Insufficient quantity available! Please lower order quantity!");
+      } else {
+        // BuySellPanel.props.updateState(BuySellPanel.state.isBuySelected, BuySellPanel.state.coinSelected);
+      }
+      BuySellPanel.props.updateState(BuySellPanel.state.isBuySelected, BuySellPanel.state.coinSelected);
+      BuySellPanel.props.reloadTransactions();
+    });
 
-              handleCoinSelect(event) {
-                this.setState({
-                  usdAmount: this.coinToUsd(this.state.input, event.target.value),
-                  coinSelected: event.target.value
+    xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/" + buyOrSell + "/" + this.state.coinSelected + "/" + this.state.input);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("Cache-Control", "no-cache");
 
-                });
-              }
+    xhr.send(data);
+    event.preventDefault();
+  }
 
-              handleInput(event) {
-                let input = event.target.value;
+  displayForm() {
 
-                if (!BuySellPanel.validateInput(input)) {
-                  return
-                }
-                //Update state
-                console.log("our amount is " + this.coinToUsd(input, this.state.coinSelected));
-                this.setState({
-                  usdAmount: this.coinToUsd(input, this.state.coinSelected),
-                  input: input
-                });
-              }
-
-              sendToServer(event) {
-
-                let BuySellPanel = this;
-                var buyOrSell;
-                if (this.state.isBuySelected) {
-                  console.log("The event is buy");
-                  buyOrSell = "buy";
-                } else {
-                  console.log("the event is sell")
-                  buyOrSell = "sell";
-                }
-                let data = JSON.stringify({"token": this.props.token, "username": this.props.username});
-
-                let xhr = new XMLHttpRequest();
-                xhr.withCredentials = false;
-                // var update=this.props.updateDashboard(BuySellPanel.state.isBuySelected, BuySellPanel.state.coinSelected);
-                xhr.addEventListener("readystatechange", function() {
-                  if (this.readyState === 4 && this.status === 500) {
-                    alert("Please actually click on a ticker from the drop down menu!");
-                  }
-                  else if (this.readyState === 4 && this.status === 400) {
-                    alert("Insufficient quantity available! Please lower order quantity!");
-                  } else{
-                    // BuySellPanel.props.updateState(BuySellPanel.state.isBuySelected, BuySellPanel.state.coinSelected);
-                  }
-                  BuySellPanel.props.updateState(BuySellPanel.state.isBuySelected, BuySellPanel.state.coinSelected);
-                  BuySellPanel.props.reloadTransactions();
-                });
-
-                xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/" + buyOrSell + "/" + this.state.coinSelected + "/" + this.state.input);
-                xhr.setRequestHeader("Content-Type", "application/json");
-                xhr.setRequestHeader("Cache-Control", "no-cache");
-
-                xhr.send(data);
-                event.preventDefault();
-              }
-
-              displayForm() {
-
-    var userRequest=new XMLHttpRequest();
-    userRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/users/"+this.props.username,false);
+    var userRequest = new XMLHttpRequest();
+    userRequest.open("GET", "https://hodl-invest-server.herokuapp.com/api/v1/users/" + this.props.username, false);
 
     userRequest.send();
-    console.log("testing+"+userRequest.responseText);
-    var Userdata=JSON.parse(userRequest.responseText);
+    var Userdata = JSON.parse(userRequest.responseText);
+    console.log(Userdata);
 
-                var ticker = this.state.coinSelected;
-                if (this.state.isBuySelected) {
-                  return <form>
-                  Select coin:
-                  <select value={this.state.coinSelected} onChange={this.handleCoinSelect.bind(this)}>
-                  <option value="btc">BTC</option>
-                  <option value="eth">ETH</option>
-                  <option value="ltc">LTC</option>
-                  <option value="bch">BCH</option>
-                  {/*<option value="xrp">XRP</option>
-                  <option value="xlm">XLM</option>*/}
-                  </select>
-                  <br/>
-                  USD Available:{Math.round(Userdata.playMoney * 100) / 100}
-                  <br/>
-                  Enter coin amount:
-                  <input value={this.state.Input} onChange={this.handleInput.bind(this)}/>
-                  <br/>
-                  Total cost: ${this.state.usdAmount}
-                  <br/>
-                  <button onClick={this.sendToServer.bind(this)}>Buy</button>
-                  </form>
-                } else {if(this.props.username!=""){
-		   if(this.state.coinSelected=="eth"){
-			 this.state.coinAmount=Userdata.portfolio.ETH;}
-			if(this.state.coinSelected=="btc"){
-			this.state.coinAmount=Userdata.portfolio.BTC;}
-			if(this.state.coinSelected=="ltc"){
-			this.state.coinAmount=Userdata.portfolio.LTC;}
-			if(this.state.coinSelected=="bch"){
-			this.state.coinAmount=Userdata.portfolio.BCH;}
-			{/*if(this.state.coinSelected=="XRP"){
-			this.state.coinAmount=Userdata.portfolio.XRP;}
-			if(this.state.coinSelected=="XLM"){
-			this.state.coinAmount=Userdata.portfolio.XLM;}*/}
+    var ticker = this.state.coinSelected;
+    var choices = [];
+    for (const coin of COIN_LIST) {
+      let upperCase = coin.toUpperCase();
+      choices.push(<option value={coin}>{upperCase}</option>);
+    }
+    let buttonLabel;
+    let infoLine;
+    if(this.state.isBuySelected){
+      buttonLabel = "Buy"
+      infoLine =<div> USD Available: {Math.round(Userdata.playMoney * 100) / 100}<br/></div>;
+    }
+    else{
+      buttonLabel = "Sell"
+      infoLine = <div> Coin Available: {this.state.coinAmount}<br/></div>;
+
+    }
+
+      return( <form>
+        Select coin:
+        <select value={this.state.coinSelected} onChange={this.handleCoinSelect.bind(this)}>
+          {choices}
+        </select>
+        {infoLine}
+        Enter coin amount:
+        <input value={this.state.Input} onChange={this.handleInput.bind(this)}/>
+        <br/>
+        Total cost: ${this.state.usdAmount}
+        <br/>
+        <button onClick={this.sendToServer.bind(this)}>{buttonLabel}</button>
+      </form>
+    );
+
+    }
+
+
+  render() {
+    return (<div className="buy-sell-panel">
+      <div className="tab">
+        <button onClick={this.displayBuy.bind(this)}>Buy</button>
+        <button onClick={this.displaySell.bind(this)}>Sell</button>
+      </div>
+      <div className="tabcontent">
+        {this.displayForm()}
+      </div>
+    </div>)
+  }
 }
-			else{this.state.coinAmount=0;}
-
-                  return <form>
-                  Select coin:
-                  <select value={this.state.coinSelected} onChange={this.handleCoinSelect.bind(this)}>
-                  <option value="eth">ETH</option>
-                  <option value="btc">BTC</option>
-                  <option value="ltc">LTC</option>
-                  <option value="bch">BCH</option>
-                  {/*<option value="xrp">XRP</option>
-                  <option value="xlm">XLM</option>*/}
-                  </select>
-                  <br/>
-                  Coin Available: {this.state.coinAmount}
-                  <br/>
-                  Enter coin amount:
-                  <input value={this.state.input} onChange={this.handleInput.bind(this)}/>
-                  <br/>
-                  Total value: ${this.state.usdAmount}
-                  <br/>
-                  <button onClick={this.sendToServer.bind(this)}>Sell</button>
-                  </form>
-                }
-              }
-
-              render() {
-                return (<div className="buy-sell-panel">
-                <div className="tab">
-                <button onClick={this.displayBuy.bind(this)}>Buy</button>
-                <button onClick={this.displaySell.bind(this)}>Sell</button>
-                </div>
-                <div className="tabcontent">
-                {this.displayForm()}
-                </div>
-                </div>)
-              }
-            }
-
-            export default BuySellPanel;
+function mapStateToProps(state) {
+  return {username: state.username, token: state.token}
+}
+export default connect(mapStateToProps)(BuySellPanel);

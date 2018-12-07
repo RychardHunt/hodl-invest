@@ -14,11 +14,11 @@ class Dashboard extends Component {
           playMoney: 0,
           btcPrice: 0,
           ethPrice: 0,
-          ltcPrice: 0,
+          ltcPrice: 6,
           bchPrice: 0,
           btcCount: -1,
           ethCount:-1,
-          ltcCount:-1,
+          ltcCount: 4,
           bchCount: -1,
           portfolio: 0
       }
@@ -174,9 +174,9 @@ bchRequest.send();
     return (
       <div>
         <center> <h1>{this.props.username} Dashboard </h1> </center>
-        <Transaction token={this.props.token} username={this.props.username} portfolioData={this.state.portfolio.BTC} updateState={this.updateState.bind(this)} />
+        <Transaction token={this.props.token}  portfolioData={this.state.portfolio.BTC} updateState={this.updateState.bind(this)} />
         <AllCharts />
-        <Portfolio ltcCount={this.state.ltcCount} ethCount={this.state.ethCount}
+        <Portfolio usdCount = {this.state.playMoney} ltcCount={this.state.ltcCount} ethCount={this.state.ethCount}
           btcCount={this.state.btcCount} bchCount={this.state.bchCount}
           btcPrice={this.state.btcPrice}   ethPrice={this.state.ethPrice}
           ltcPrice={this.state.ltcPrice} bchPrice={this.state.bchPrice}
@@ -188,7 +188,7 @@ bchRequest.send();
   return(
     <div>
       <center> <h1>{this.props.username} Dashboard </h1> </center>
-        <Transaction token={this.props.token} username={this.props.username} updateState={this.updateState.bind(this)} />
+        <Transaction updateState={this.updateState.bind(this)} />
         <AllCharts />
         </div>
 

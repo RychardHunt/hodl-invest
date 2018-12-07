@@ -10,14 +10,13 @@ class Chart extends Component{
       ethPrice: this.props.ethPrice,
       ltcPrice: this.props.ltcPrice ,
       bchPrice: this.props.bchPrice,
-      btcCount:this.props.btCount,
+      usdCount: this.props.usdCount,
+      btcCount:this.props.btcCount,
       ltcCount: this.props.ltcCount,
       ethCount: this.props.ethCount,
       bchCount:this.props.bchCount
 
     }
-    console.log("BTC Price: "+this.props.btcPrice);
-    console.log("Eth Count "+this.props.ethCount);
 
 
   }
@@ -29,27 +28,13 @@ class Chart extends Component{
     legendPosition:'right',
   }
 
-  getDerivedStateFromProps(nextProps, prevState){
-    this.setState({
-      btcPrice: this.nextProps.btcPrice,
-      ethPrice: this.nextProps.ethPrice,
-      ltcPrice: this.nextProps.ltcPrice ,
-      bchPrice: this.nextProps.bchPrice,
-      btcCount:this.nextProps.btCount,
-      ltcCount: this.nextProps.ltcCount,
-      ethCount: this.nextProps.ethCount,
-      bchCount:this.nextProps.bchCount
-
-    });
-
-  }
 
   getUserData(){
     var labels=[];
     var amounts=[]
-    if(this.state.playMoney!==0){
+    if(this.state.usdCount!==0){
       labels.push('USD');
-      amounts.push( this.state.playMoney);
+      amounts.push(this.state.usdCount);
     }
   if(this.state.btcCount!==0){
     labels.push('BTC');

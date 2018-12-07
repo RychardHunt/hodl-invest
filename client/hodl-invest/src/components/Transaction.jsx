@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './Transaction.css';
 import TransactionHistory from './TransactionHistory';
 import BuySellPanel from "./BuySellPanel";
+import {connect} from 'react-redux';
 
 class Transaction extends Component {
 
@@ -33,10 +34,15 @@ class Transaction extends Component {
 
   render() {
     return (<div className="transaction">
-      <BuySellPanel portfolio={this.props.portfolio} reloadTransactions={this.getTransactions.bind(this)} token={this.props.token} username={this.props.username} updateState={this.props.updateState} />
+      <BuySellPanel portfolio={this.props.portfolio} reloadTransactions={this.getTransactions.bind(this)}   updateState={this.props.updateState} />
       <TransactionHistory transactions={this.state.transactions}/>
     </div>)
   }
 }
+function mapStateToProps(state){
+  return{
+    username: state.username
+  }
+}
 
-export default Transaction;
+export default connect(mapStateToProps)( Transaction);
