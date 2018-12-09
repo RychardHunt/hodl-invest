@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import './BuySellPanel.css';
-import {getCoinValue} from '../library/utility.js';
+import {getCoinValue, validateInput} from '../library/utility.js';
+import {buyCoins, sellCoins} from '../actions/portfolioAction';
+import { bindActionCreators } from 'redux';
 import {COIN_LIST} from '../library/settings';
 
 class BuySellPanel extends Component {
@@ -24,9 +26,12 @@ class BuySellPanel extends Component {
       xrpPrice: 0,
       xlmPrice: 0
     };
+    this.sendToServer = this.sendToServer.bind(this);
     this.getCoinValues();
 
   }
+
+
   getCoinValues() {
     let BuySellPanel = this;
     for (const coin of COIN_LIST) {
@@ -41,28 +46,7 @@ class BuySellPanel extends Component {
     }
   }
 
-  static validateInput(input) {
-    //Only numbers and periods
-    for (let i = 0; i < input.length; ++i) {
-      let currentChar = input.charAt(i);
-      if (!((currentChar >= '0' && currentChar <= '9') || currentChar === '.')) {
-        return false;
-      }
-    }
-    //Only one period
-    let hasPeriod = false;
-    for (let i = 0; i < input.length; ++i) {
-      let currentChar = input.charAt(i);
-      if (currentChar === '.') {
-        if (hasPeriod) {
-          return false;
-        } else {
-          hasPeriod = true;
-        }
-      }
-    }
-    return true;
-  }
+
 
   coinToUsd(input, ticker) {
 
@@ -79,7 +63,7 @@ class BuySellPanel extends Component {
   }
 
   displaySell() {
-    this.setState({isBuySelected: false, usdAmount: '0', input: '', coinSelected: 'btc'})
+    this.setState({isBuySelected: false, usdAmount: '0', coinSelected: 'btc'})
   }
 
   handleCoinSelect(event) {
@@ -93,7 +77,8 @@ class BuySellPanel extends Component {
   handleInput(event) {
     let input = event.target.value;
 
-    if (!BuySellPanel.validateInput(input)) {
+    if (!validateInput(input)) {
+      console.log("invalid");
       return
     }
     //Update state
@@ -105,7 +90,7 @@ class BuySellPanel extends Component {
   }
 
   sendToServer(event) {
-
+    event.preventDefault();
     let BuySellPanel = this;
     var buyOrSell;
     if (this.state.isBuySelected) {
@@ -121,23 +106,35 @@ class BuySellPanel extends Component {
     xhr.withCredentials = false;
     // var update=this.props.updateDashboard(BuySellPanel.state.isBuySelected, BuySellPanel.state.coinSelected);
     xhr.addEventListener("readystatechange", function() {
+      console.log("Ready state "+ this.readyState+ " "+this.status);
       if (this.readyState === 4 && this.status === 500) {
         alert("Please click on a ticker from the drop down menu!");
       } else if (this.readyState === 4 && this.status === 400) {
         alert("Insufficient quantity available! Please lower order quantity!");
-      } else {
+      } else if(this.readyState ===4  && this.status === 200){
+        if(BuySellPanel.state.isBuySelected){
+          BuySellPanel.props.buyCoins(BuySellPanel.state.coinSelected, parseInt(BuySellPanel.state.input));
+        }
+        else{
+        BuySellPanel.props.sellCoins(BuySellPanel.state.coinSelected, parseInt(BuySellPanel.state.input));
+      }
         // BuySellPanel.props.updateState(BuySellPanel.state.isBuySelected, BuySellPanel.state.coinSelected);
       }
-      BuySellPanel.props.updateState(BuySellPanel.state.isBuySelected, BuySellPanel.state.coinSelected);
-      BuySellPanel.props.reloadTransactions();
+      // BuySellPanel.props.reloadTransactions();
     });
-
-    xhr.open("POST", "https://hodl-invest-server.herokuapp.com/api/v1/users/" + buyOrSell + "/" + this.state.coinSelected + "/" + this.state.input);
+    const connect_url = "https://hodl-invest-server.herokuapp.com/api/v1/users/" + buyOrSell + "/" + this.state.coinSelected + "/" + this.state.input;
+    console.log(connect_url);
+    xhr.open("POST", connect_url );
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("Cache-Control", "no-cache");
 
     xhr.send(data);
-    event.preventDefault();
+
+
+  }
+  printStuff(e){
+    e.preventDefault();
+    console.log("aloha");
   }
 
   displayForm() {
@@ -147,13 +144,11 @@ class BuySellPanel extends Component {
 
     userRequest.send();
     var Userdata = JSON.parse(userRequest.responseText);
-    console.log(Userdata);
-
     var ticker = this.state.coinSelected;
     var choices = [];
     for (const coin of COIN_LIST) {
       let upperCase = coin.toUpperCase();
-      choices.push(<option value={coin}>{upperCase}</option>);
+      choices.push(<option key={coin} value={coin}>{upperCase}</option>);
     }
     let buttonLabel;
     let infoLine;
@@ -163,10 +158,9 @@ class BuySellPanel extends Component {
     }
     else{
       buttonLabel = "Sell"
-      infoLine = <div> Coin Available: {this.state.coinAmount}<br/></div>;
+      infoLine = <div> Coin Available: {Userdata.portfolio[this.state.coinSelected.toUpperCase()]}<br/></div>;
 
     }
-
       return( <form>
         Select coin:
         <select value={this.state.coinSelected} onChange={this.handleCoinSelect.bind(this)}>
@@ -178,7 +172,7 @@ class BuySellPanel extends Component {
         <br/>
         Total cost: ${this.state.usdAmount}
         <br/>
-        <button onClick={this.sendToServer.bind(this)}>{buttonLabel}</button>
+        <button onClick={this.sendToServer}>{buttonLabel}</button>
       </form>
     );
 
@@ -186,6 +180,7 @@ class BuySellPanel extends Component {
 
 
   render() {
+
     return (<div className="buy-sell-panel">
       <div className="tab">
         <button onClick={this.displayBuy.bind(this)}>Buy</button>
@@ -197,7 +192,10 @@ class BuySellPanel extends Component {
     </div>)
   }
 }
-function mapStateToProps(state) {
-  return {username: state.username, token: state.token}
+function matchDispatchToProps(dispatch){
+  return bindActionCreators({buyCoins: buyCoins, sellCoins: sellCoins}, dispatch);
 }
-export default connect(mapStateToProps)(BuySellPanel);
+function mapStateToProps(state) {
+  return {username: state.login.username, token: state.login.token, coinList: state.portfolio.coinList}
+}
+export default connect(mapStateToProps, matchDispatchToProps)(BuySellPanel);

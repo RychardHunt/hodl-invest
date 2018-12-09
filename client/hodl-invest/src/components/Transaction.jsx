@@ -18,8 +18,7 @@ class Transaction extends Component {
 
   getTransactions() {
     let transaction = this;
-    let username = this.props.username;
-    let url = 'https://hodl-invest-server.herokuapp.com/api/v1/users/' + username + '/transactions';
+    let url = 'https://hodl-invest-server.herokuapp.com/api/v1/users/' + this.props.username + '/transactions';
     let xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
     xhr.addEventListener('readystatechange', function() {
@@ -41,7 +40,7 @@ class Transaction extends Component {
 }
 function mapStateToProps(state){
   return{
-    username: state.username
+    username: state.login.username
   }
 }
 

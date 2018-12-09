@@ -12,9 +12,12 @@ window.logtext="Login";
 class NavigationBar extends Component{
 
 	 registerlink(){
-		if(!this.props.isLoggedIn){
-				return(<NavItem eventKey={3} componentClass={Link} href="/register" to="/register">Register</NavItem>);}
-		else{return;}
+		if(this.props.isLoggedIn){
+				return(<NavItem eventKey = {3} componentClass={Link} href="/dashboard" to="/dashboard"> Dashboard</NavItem>)
+			}
+		else{
+				return(<NavItem eventKey={3} componentClass={Link} href="/register" to="/register">Register</NavItem>);
+			}
 	 }
 	 logoutUser(){
 		 if (this.props.isLoggedIn) {
@@ -52,10 +55,7 @@ class NavigationBar extends Component{
 							<NavItem eventKey={1} componentClass={Link} href="/" to="/">
 								Home
 							</NavItem>
-							<NavItem eventKey={2} componentClass={Link} href="/dashboard" to="/dashboard">
-								Dashboard
-							</NavItem>
-							{this.registerlink()}
+								{this.registerlink()}
 							<NavItem eventKey={4} componentClass={Link} onClick={() => this.logoutUser()} href={hreflocation} to={hreflocation}>
 								{window.logtext}
 							</NavItem>
@@ -68,7 +68,7 @@ class NavigationBar extends Component{
 
 	function mapStateToProps(state){
 		return {
-			isLoggedIn: state.isLoggedIn
+			isLoggedIn: state.login.isLoggedIn
 		}
 	}
 	function matchDispatchToProps(dispatch){

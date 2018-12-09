@@ -1,4 +1,5 @@
 import loginReducer from './reducers/loginReducer';
+import buySellReducer from './reducers/buySellReducer';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import {combineReducers, createStore, applyMiddleware } from 'redux';
@@ -33,7 +34,8 @@ function loadFromLocalStorage(){
 
 const middleware = [thunk]
 const persistedState = loadFromLocalStorage();
-const store = createStore(loginReducer,
+const rootReducer = combineReducers({login: loginReducer, portfolio: buySellReducer})
+const store = createStore(rootReducer,
                persistedState,
                composeWithDevTools(applyMiddleware(...middleware))
 

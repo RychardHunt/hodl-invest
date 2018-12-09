@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Bar, Line, Pie} from 'react-chartjs-2';
+import { Line} from 'react-chartjs-2';
 
 
 
@@ -29,7 +29,6 @@ class Chart extends Component{
   }
   getCoinData(){
     var url = 'https://min-api.cryptocompare.com/data/histoday?fsym='+this.props.coin+'&tsym=USD&limit=3';
-    var userUrl='https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=3';
 
 
     function Get(url){
@@ -41,7 +40,6 @@ class Chart extends Component{
 
     var json_obj = JSON.parse(Get(url)); //This object holds the result of the get request
     timesArr = [];
-    var unixArr = [];
     opensArr = [];
 
     var data = json_obj.Data;

@@ -116,11 +116,11 @@ class Login extends Component{
    }
    function mapStateToProps(state){
      let isLoggedIn = true;
-     if(state.username === ''){
+     if(state.login.username === ''){
        isLoggedIn = false;
      }
      return {
-       username: state.username,
+       username: state.login.username,
        isLoggedIn: isLoggedIn
      }
    }
