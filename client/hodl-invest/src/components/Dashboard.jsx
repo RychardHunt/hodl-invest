@@ -4,6 +4,7 @@ import Transaction from './Transaction';
 import Portfolio from './Portfolio'
 import {connect} from 'react-redux';
 import {buyCoins, sellCoins, initialize} from '../actions/portfolioAction.js';
+import {updateCoinPrices} from '../actions/coinDataAction.js';
 import {getCoinValue} from '../library/utility.js';
 import {COIN_LIST} from '../library/settings.js';
 import { bindActionCreators } from 'redux';
@@ -56,7 +57,9 @@ class Dashboard extends Component {
 
   getCoinPrices(){
     for(const coin of COIN_LIST){
-    getCoinValue(coin, this.setState.bind(this));
+    console.log("Yaro");
+    getCoinValue(coin, this.props.updateCoinPrices);
+
   }
 
   }
@@ -79,8 +82,6 @@ class Dashboard extends Component {
   }
 
   render() {
-    if(this.props.username!==""&&(this.state.ltcPrice!==0&&this.state.btcPrice!==0&&this.state.ltcCount!==-1
-    &&this.state.bchPrice!==0&&this.state.ethCount!==-1)&&this.state.ethPrice!==0){
     return (
       <div>
         <center> <h1>{this.props.username} Dashboard </h1> </center>
@@ -94,17 +95,6 @@ class Dashboard extends Component {
       </div>
     );
   }
-  else{
-  return(
-    <div>
-      <center> <h1>{this.props.username} Dashboard </h1> </center>
-        <Transaction/>
-        <AllCharts />
-        </div>
-
-  )
-}
-  }
 }
 function mapStateToProps(state){
   return {
@@ -114,7 +104,7 @@ function mapStateToProps(state){
 
 }
 function matchDispatchToProps(dispatch){
-  return bindActionCreators({buyCoins: buyCoins, sellCoins: sellCoins, addCoinsToPortfolio: initialize }, dispatch);
+  return bindActionCreators({buyCoins: buyCoins, sellCoins: sellCoins, addCoinsToPortfolio: initialize, updateCoinPrices: updateCoinPrices }, dispatch);
 
 }
 

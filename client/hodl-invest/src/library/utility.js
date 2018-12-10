@@ -1,13 +1,19 @@
+
+
 export  function getCoinValue(coin, callback){
+
 
   const connect_url = "https://hodl-invest-server.herokuapp.com/api/v1/cryptocoins/" + coin;
   fetch(connect_url).then(function(response) {
     response.text().then(function(text) {
-      callback({ [coin] : parseFloat(text)});
+        console.log("John "+ callback);
+      callback( coin ,  parseFloat(text));
     });
   });
 
 }
+
+
 
 export function validateInput(input) {
   //Only numbers and periods

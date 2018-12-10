@@ -1,5 +1,6 @@
 import loginReducer from './reducers/loginReducer';
 import buySellReducer from './reducers/buySellReducer';
+import coinPriceReducer from './reducers/coinPriceReducer';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import {combineReducers, createStore, applyMiddleware } from 'redux';
@@ -34,7 +35,7 @@ function loadFromLocalStorage(){
 
 const middleware = [thunk]
 const persistedState = loadFromLocalStorage();
-const rootReducer = combineReducers({login: loginReducer, portfolio: buySellReducer})
+const rootReducer = combineReducers({login: loginReducer, portfolio: buySellReducer, coinData : coinPriceReducer})
 const store = createStore(rootReducer,
                persistedState,
                composeWithDevTools(applyMiddleware(...middleware))

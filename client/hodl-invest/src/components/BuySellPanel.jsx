@@ -19,12 +19,6 @@ class BuySellPanel extends Component {
       coinAmount: '0',
       input: '',
       coinSelected: 'btc',
-      btcPrice: 0,
-      ethPrice: 0,
-      ltcPrice: 0,
-      bchPrice: 0,
-      xrpPrice: 0,
-      xlmPrice: 0
     };
     this.sendToServer = this.sendToServer.bind(this);
     this.getCoinValues();
@@ -118,9 +112,8 @@ class BuySellPanel extends Component {
         else{
         BuySellPanel.props.sellCoins(BuySellPanel.state.coinSelected, parseInt(BuySellPanel.state.input));
       }
-        // BuySellPanel.props.updateState(BuySellPanel.state.isBuySelected, BuySellPanel.state.coinSelected);
       }
-      // BuySellPanel.props.reloadTransactions();
+      BuySellPanel.props.reloadTransactions();
     });
     const connect_url = "https://hodl-invest-server.herokuapp.com/api/v1/users/" + buyOrSell + "/" + this.state.coinSelected + "/" + this.state.input;
     console.log(connect_url);
